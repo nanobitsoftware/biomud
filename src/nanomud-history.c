@@ -328,5 +328,5 @@ LRESULT APIENTRY history_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		break;
 	}
 
-	return DefWindowProc(hwnd, msg, wparam, lparam);
+	return DefWindowProc(hwnd, msg, wparam, lparam); // Commit.
 }
