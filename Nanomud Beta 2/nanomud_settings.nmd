@@ -1,0 +1,26 @@
+name Unamed
+
+host dsl-mud.org
+port 4000
+color 1
+max_buffer 5500000
+UseMemoryCompression 0
+IsBetaTester 1
+EnableTestLogging 0
+OptimizeDualScreen 0
+EnableScripts 0
+EnableAliases 0
+EnableTriggers 0
+EnablePaths 0
+EnableMacros 0
+EnableSplashScreen 0
+EnableClientChat 0
+EnablePing 0
+EnableUsageReports 0
+EnableBlinkies 1
+EnableSound 0
+EnableTN 0
+ShowTimeStamps 0
+ShowDebug 0
+BetaEdit 0
+ShowMouseCoords 0

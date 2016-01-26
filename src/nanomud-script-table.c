@@ -1,0 +1,10 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+#include <windows.h>
+#include <winsock.h>
+#include <richedit.h>
+#include "NanoMud.h"
+#include <assert.h>
+#include "nanomud-script.h"

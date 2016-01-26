@@ -1,0 +1,814 @@
+Wed Dec 9, 2015 11:39:06 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:39:06 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:39:06 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:39:50 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:39:50 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:39:50 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:40:11 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:40:11 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:40:11 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:40:57 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:40:58 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:40:58 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:41:33 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:41:33 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:41:33 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:41:44 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:41:44 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:41:44 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:42:27 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:42:27 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:42:27 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:43:42 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:43:42 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:43:42 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:43:53 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:43:53 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:43:53 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:47:21 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:47:21 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:47:21 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:47:35 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:47:35 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:47:35 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:48:00 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:48:01 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:48:01 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:48:10 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:48:10 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:48:10 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:48:46 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:48:46 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:48:46 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:48:53 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:48:54 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:48:54 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:49:14 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:49:15 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:49:15 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:49:24 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:49:25 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:49:25 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:50:00 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:50:00 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:50:00 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:50:51 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:50:51 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:50:51 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:51:27 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:51:27 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:51:27 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:52:20 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:52:20 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:52:20 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:52:51 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:52:51 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:52:52 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:53:12 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:53:13 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:53:13 p.m.: Took 0 MS to parse all of that.
+Wed Dec 9, 2015 11:57:32 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:57:32 p.m.: Def attr: 0
+Wed Dec 9, 2015 11:57:32 p.m.: Took 0 MS to parse all of that.
+Fri Dec 11, 2015 11:52:16 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:52:17 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:52:17 p.m.: Took 0 MS to parse all of that.
+Fri Dec 11, 2015 11:53:30 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:53:30 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:53:30 p.m.: Took 0 MS to parse all of that.
+Fri Dec 11, 2015 11:53:56 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:53:56 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:53:56 p.m.: Took 0 MS to parse all of that.
+Fri Dec 11, 2015 11:54:22 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:54:22 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:54:22 p.m.: Took 0 MS to parse all of that.
+Fri Dec 11, 2015 11:56:19 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:56:19 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:56:20 p.m.: Took 0 MS to parse all of that.
+Fri Dec 11, 2015 11:57:04 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:57:05 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:57:05 p.m.: Took 0 MS to parse all of that.
+Fri Dec 11, 2015 11:57:23 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:57:24 p.m.: Def attr: 0
+Fri Dec 11, 2015 11:57:24 p.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:00:54 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:00:54 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:00:54 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:04:32 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:04:32 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:04:32 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:06:46 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:06:46 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:06:46 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:06:55 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:06:55 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:06:55 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:06:58 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 0
+Sat Dec 12, 2015 00:06:59 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:06:59 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:02 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:02 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:03 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:04 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:04 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 1
+Sat Dec 12, 2015 00:07:16 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 2
+Sat Dec 12, 2015 00:07:16 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 2
+Sat Dec 12, 2015 00:07:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 3
+Sat Dec 12, 2015 00:07:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 3
+Sat Dec 12, 2015 00:07:26 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:26 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:27 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:27 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:28 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:28 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:28 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:28 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:28 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:28 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:29 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:36 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:36 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:36 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:36 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:37 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:47 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:47 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:57 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:57 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:59 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:07:59 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 4
+Sat Dec 12, 2015 00:08:01 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 5
+Sat Dec 12, 2015 00:08:01 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 5
+Sat Dec 12, 2015 00:08:02 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 6
+Sat Dec 12, 2015 00:08:02 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 6
+Sat Dec 12, 2015 00:08:02 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 7
+Sat Dec 12, 2015 00:08:02 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 7
+Sat Dec 12, 2015 00:08:02 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:02 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:04 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:04 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:11 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:11 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:12 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:13 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:16 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:16 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:17 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:18 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:19 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:20 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:21 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:22 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:08:23 a.m.: Error! Fetchline tried to grab an invalid line of 0 with a max count of 8
+Sat Dec 12, 2015 00:27:00 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:27:01 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:27:01 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:27:33 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:27:33 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:27:33 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:27:55 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:27:56 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:27:56 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:28:02 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:28:02 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:28:02 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:28:11 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:28:11 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:28:11 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:30:09 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:30:09 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:30:09 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:31:26 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:31:26 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:31:26 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:31:32 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:31:32 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:31:32 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:32:21 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:32:22 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:32:22 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:32:45 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:32:46 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:32:46 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:33:42 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:33:42 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:33:42 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 00:39:11 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:39:12 a.m.: Def attr: 0
+Sat Dec 12, 2015 00:39:12 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 01:04:57 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:04:57 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:04:57 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 01:08:38 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:08:38 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:08:38 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 01:10:09 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:10:10 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:10:10 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 01:10:24 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:10:24 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:10:24 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 01:11:31 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:11:31 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:11:31 a.m.: Took 0 MS to parse all of that.
+Sat Dec 12, 2015 01:12:09 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:12:10 a.m.: Def attr: 0
+Sat Dec 12, 2015 01:12:10 a.m.: Took 0 MS to parse all of that.
+Sun Dec 13, 2015 07:51:30 p.m.: Def attr: 0
+Sun Dec 13, 2015 07:51:30 p.m.: Def attr: 0
+Sun Dec 13, 2015 07:51:30 p.m.: Took 0 MS to parse all of that.
+Sun Dec 13, 2015 07:51:54 p.m.: Def attr: 0
+Sun Dec 13, 2015 07:51:54 p.m.: Def attr: 0
+Sun Dec 13, 2015 07:51:54 p.m.: Took 0 MS to parse all of that.
+Sun Dec 13, 2015 07:59:34 p.m.: Def attr: 0
+Sun Dec 13, 2015 07:59:34 p.m.: Def attr: 0
+Sun Dec 13, 2015 07:59:34 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 07:45:25 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:45:25 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:45:25 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 07:54:40 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:54:40 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:54:40 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 07:56:33 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:56:33 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:56:33 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 07:57:00 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:57:00 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:57:00 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 07:57:42 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:57:43 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:57:43 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 07:57:53 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:57:54 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:57:54 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 07:58:21 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:58:21 p.m.: Def attr: 0
+Mon Dec 14, 2015 07:58:21 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 08:53:12 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:53:12 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:53:12 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 08:53:31 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:53:32 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:53:32 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 08:55:30 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:55:31 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:55:31 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 08:55:51 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:55:51 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:55:51 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 08:55:56 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:55:56 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:55:56 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 08:57:10 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:57:10 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:57:10 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 08:57:39 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:57:39 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:57:39 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 08:58:02 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:58:02 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:58:02 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 08:59:49 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:59:50 p.m.: Def attr: 0
+Mon Dec 14, 2015 08:59:50 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:00:15 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:00:15 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:00:15 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:00:30 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:00:30 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:00:30 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:02:09 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:02:09 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:02:09 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:03:04 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:03:05 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:03:05 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:03:26 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:03:26 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:03:26 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:05:03 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:05:04 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:05:04 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:05:35 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:05:35 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:05:35 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:06:54 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:06:55 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:06:55 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:07:39 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:07:39 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:07:39 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:08:29 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:08:30 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:08:30 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:09:40 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:09:40 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:09:40 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:10:25 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:10:25 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:10:25 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:11:07 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:11:07 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:11:07 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:13:03 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:13:04 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:13:04 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:14:07 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:14:07 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:14:08 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:14:33 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:14:34 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:14:34 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:15:38 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:15:38 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:15:38 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:17:58 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:17:59 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:17:59 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:22:57 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:22:58 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:22:58 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:23:45 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:23:45 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:23:45 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:23:59 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:23:59 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:23:59 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:24:24 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:24:24 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:24:24 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:26:25 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:26:25 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:26:25 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:33:00 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:33:00 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:33:00 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:35:26 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:35:26 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:35:26 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:37:04 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:37:05 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:37:05 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:39:31 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:39:31 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:39:31 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:41:06 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:41:06 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:41:06 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:43:43 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:43:43 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:43:43 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:44:26 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:44:27 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:44:27 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:45:46 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:45:46 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:45:46 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:48:21 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:48:22 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:48:22 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:55:04 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:55:04 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:55:04 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:55:22 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:55:22 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:55:22 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:56:56 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:56:56 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:56:56 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 09:58:13 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:58:13 p.m.: Def attr: 0
+Mon Dec 14, 2015 09:58:13 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:00:24 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:00:24 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:00:24 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:01:27 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:01:27 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:01:27 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:02:52 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:02:52 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:02:52 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:05:31 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:05:31 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:05:31 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:08:52 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:08:52 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:08:52 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:10:16 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:10:16 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:10:16 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:13:25 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:13:25 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:13:25 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:14:12 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:14:12 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:14:12 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:15:37 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:15:37 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:15:37 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:16:38 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:16:38 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:16:38 p.m.: Took 0 MS to parse all of that.
+Mon Dec 14, 2015 10:16:47 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:16:48 p.m.: Def attr: 0
+Mon Dec 14, 2015 10:16:48 p.m.: Took 0 MS to parse all of that.
