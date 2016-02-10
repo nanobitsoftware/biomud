@@ -42,6 +42,7 @@ typedef struct
 	int start_x;
 	int end_y;
 	int end_x;
+	int nothing;
 }
 sel;
 #undef AT_BLINK
@@ -645,9 +646,6 @@ void paint_line(TERMBUF *ter)
 
 		if (is_same(ter->line[i], ter->line[i + 1]))
 			continue;
-
-		if (c_color > 60)
-			LOG("Sending: %s, Color: %d, Bk: %d", buf, c_color, bKcolor);
 
 		FlushBuffer(buf, c_color, bKcolor, underlined);
 		underlined = FALSE;
@@ -2014,7 +2012,8 @@ void terminal_initialize()
 			c_table[i].color = RGB(0, 0, 0);
 			break;
 		case SELECTED:
-			c_table[i].color = RGB(32, 48, 64);
+			c_table[i].color = RGB(0, 192, 255);
+			/*RGB(32, 48, 64);*/
 			break;
 		default:
 			c_table[i].color = RGB(211, 211, 211);
@@ -2170,7 +2169,7 @@ void terminal_beep(void)
 
 	if (GetTickCount() - last_bell < timeout)
 	{
-		// Do no beep as we have not reached our timeout threshold yet.
+		// Do not beep as we have not reached our timeout threshold yet.
 		return;
 	}
 

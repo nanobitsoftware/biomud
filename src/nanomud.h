@@ -92,7 +92,7 @@
 #define LOG_INFO  2
 #define LOG_ERROR 3
 #define LOG_ECHO  4
-#define MAX_TERM_LINE 10000
+#define MAX_TERM_LINE 100
 
 /* Defines used to GUI stuff. Do not change these values! - MH
  * If you have to add stuff, go in the order, or perhaps the

@@ -47,6 +47,7 @@
     <ClCompile Include="..\src\nanomud-terminal.c" />
     <ClCompile Include="..\src\nanomud-test.c" />
     <ClCompile Include="..\src\NWC_Main.c" />
+    <ClCompile Include="..\src\regex9\regexp9.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mud-client_private.h" />
@@ -55,6 +56,7 @@
     <ClInclude Include="..\src\nanomud-script.h" />
     <ClInclude Include="..\src\nanomud.h" />
     <ClInclude Include="..\src\NWC.h" />
+    <ClInclude Include="..\src\regex9\regexp9.h" />
     <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>

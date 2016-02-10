@@ -46,7 +46,7 @@ typedef struct mem_heap HEAP;
 unsigned long int alloced = 0;
 unsigned long int unalloced = 0;
 
-#define MALLOC_MAGIC 0xA00F
+#define MALLOC_MAGIC 0xF00F
 
 struct mem_heap
 {
