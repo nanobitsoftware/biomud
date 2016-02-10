@@ -57,6 +57,7 @@
     <ClInclude Include="..\src\nanomud.h" />
     <ClInclude Include="..\src\NWC.h" />
     <ClInclude Include="..\src\regex9\regexp9.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\biomud_icon.ico" />
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6CB303D3-EBEA-48F2-BB04-A512F98E1DA7}</ProjectGuid>

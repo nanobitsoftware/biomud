@@ -131,6 +131,9 @@
     <ClInclude Include="..\src\regex9\regexp9.h">
       <Filter>RegEx9</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Nanomud Beta 21.rc">
@@ -139,6 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\biomud_icon.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icon1.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
