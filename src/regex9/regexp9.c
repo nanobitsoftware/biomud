@@ -39,7 +39,7 @@
 //#include <unistd.h>
 #include "regexp9.h"
 
-#define nil 002
+#define nil 0
 #define exits(x) exit(x && *x ? 1 : 0)
 
 /****************************************************
