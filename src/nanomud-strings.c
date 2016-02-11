@@ -591,3 +591,79 @@ void strip_newline(char *str)
 			str[i] = ' '; // Replace it with a space.
 	}
 }
+
+/* Below is stuff for regex. First, we start with the (minimal) documentation.
+
+REGEXP9(3)	REGEXP9(3)
+
+NAME
+regcomp, regcomplit, regcompnl, regexec, regsub, rregexec, rregsub, regerror – regular expression
+SYNOPSIS
+#include <utf.h>
+#include <fmt.h>
+#include <regexp9.h>
+Reprog    *regcomp(char *exp)
+Reprog    *regcomplit(char *exp)
+Reprog    *regcompnl(char *exp)
+int    regexec(Reprog *prog, char *string, Resub *match, int msize)
+void regsub(char *source, char *dest, int dlen, Resub *match, int msize)
+int    rregexec(Reprog *prog, Rune *string, Resub *match, int msize)
+void rregsub(Rune *source, Rune *dest, int dlen, Resub *match, int msize)
+void regerror(char *msg)
+DESCRIPTION
+Regcomp compiles a regular expression and returns a pointer to the generated description. The space is allocated by malloc(3) and may be released by free. Regular expressions are exactly as in regexp9(7).
+Regcomplit is like regcomp except that all characters are treated literally. Regcompnl is like regcomp except that the . metacharacter matches all characters, including newlines.
+Regexec matches a null-terminated string against the compiled regular expression in prog. If it matches, regexec returns 1 and fills in the array match with character pointers to the substrings of string that correspond to the parenthesized subexpressions of exp: match[i].sp points to the beginning and match[i].ep points just beyond the end of the ith substring. (Subexpression i begins at the ith left parenthesis, counting from 1.) Pointers in match[0] pick out the substring that corresponds to the whole regular expression. Unused elements of match are filled with zeros. Matches involving *, +, and ? are extended as far as possible. The number of array elements in match is given by msize. The structure of elements of match is:
+typedef struct {
+union {
+char *sp;
+Rune *rsp;
+};
+union {
+char *ep;
+Rune *rep;
+};
+} Resub;
+If match[0].sp is nonzero on entry, regexec starts matching at that point within string. If match[0].ep is nonzero on entry, the last character matched is the one preceding that point.
+Regsub places in dest a substitution instance of source in the context of the last regexec performed using match. Each instance of \n, where n is a digit, is replaced by the string delimited by match[n].sp and match[n].ep. Each instance of & is replaced by the string delimited by match[0].sp and match[0].ep. The substitution will always be null terminated and trimmed to fit into dlen bytes.
+Regerror, called whenever an error is detected in regcomp, writes the string msg on the standard error file and exits. Regerror can be replaced to perform special error processing. If the user supplied regerror returns rather than exits, regcomp will return 0.
+Rregexec and rregsub are variants of regexec and regsub that use strings of Runes instead of strings of chars. With these routines, the rsp and rep fields of the match array elements should be used.
+SOURCE
+http://swtch.com/plan9port/unix
+
+*/
+
+/*
+
+Resub rs[1];
+Reprog *p;
+char *buf, *q;
+int l = 0;
+if (argc == 1) {
+fprintf(stderr, "Usage: cat in.file | %s <regexp>\n", argv[0]);
+return 0;
+}
+p = regcomp9(argv[1]);
+buf = calloc(BUF_SIZE, 1);
+while (fgets(buf, BUF_SIZE - 1, stdin)) {
+++l;
+for (q = buf; *q; ++q); if (q > buf) *(q-1) = 0;
+memset(rs, 0, sizeof(Resub));
+if (regexec9(p, buf, rs, 1))
+printf("%d:%s\n", l, buf);
+}
+free(buf);
+return 0;
+
+*/
+
+void * check_match(char *str /* string to check*/, char *pattern /* pattern we check with */)
+{
+	/* Using void* because I plan to return a pointer to WHERE we want to look. This could be anything
+	* and could even be a struct with multiple infos. That's why I have these wrappers; so I can change
+	out the regex engine at will. */
+
+	/* The plan is the thread all regex, searching, replacing, or any other non-destructive functions. This
+	way we can keep some sanity on the single thread. I do believe I will -only- allow non-destructive threads
+	to be spawned. Just seems safe. You can peek, but dont' touch.*/
+}

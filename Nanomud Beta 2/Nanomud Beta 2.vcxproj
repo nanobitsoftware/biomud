@@ -48,6 +48,7 @@
     <ClCompile Include="..\src\nanomud-test.c" />
     <ClCompile Include="..\src\NWC_Main.c" />
     <ClCompile Include="..\src\regex9\regexp9.c" />
+    <ClCompile Include="..\src\sqlite3\sqlite3.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mud-client_private.h" />
@@ -57,6 +58,7 @@
     <ClInclude Include="..\src\nanomud.h" />
     <ClInclude Include="..\src\NWC.h" />
     <ClInclude Include="..\src\regex9\regexp9.h" />
+    <ClInclude Include="..\src\sqlite3\sqlite3.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
   </ItemGroup>

@@ -16,6 +16,9 @@
     <Filter Include="RegEx9">
       <UniqueIdentifier>{6ad85b8a-3d58-42f4-b27e-123cce8bed1a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sqlite3">
+      <UniqueIdentifier>{93fc0442-d248-479e-b350-fe71ad5e5c8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\nanomud-about.c">
@@ -105,6 +108,9 @@
     <ClCompile Include="..\src\regex9\regexp9.c">
       <Filter>RegEx9</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\sqlite3\sqlite3.c">
+      <Filter>sqlite3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\nanomud-plugin-api.h">
@@ -133,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sqlite3\sqlite3.h">
+      <Filter>sqlite3</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
