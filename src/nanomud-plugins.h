@@ -6,18 +6,18 @@
  * change has been done!
  */
 
- /*-----------------------------------------------------*/
- /*Layout of this file is as follows:
-  * - Defines
-  * - Typedefs
-  * - Globals
-  * - Structs
-  * - Prototypes.
- */
+/*-----------------------------------------------------*/
+/*Layout of this file is as follows:
+ * - Defines
+ * - Typedefs
+ * - Globals
+ * - Structs
+ * - Prototypes.
+*/
 
- /* DEFINES */
+/* DEFINES */
 
-  // Bit masks, in readable format. Used for hook masks or any other masks required.
+// Bit masks, in readable format. Used for hook masks or any other masks required.
 #define A                       1
 #define B                       2
 #define C                       4
@@ -51,10 +51,10 @@
 #define ee                      1073741824
 #define ff                      2147483648u
 
- // Hook bit masks for all hooks available. If we run out of bit space,
- // then we'll use a different way to implement this. But since this is all
- // done in the private side, changing the hook interface bits will not require
- // plug-in code to be changed. Win-win.
+// Hook bit masks for all hooks available. If we run out of bit space,
+// then we'll use a different way to implement this. But since this is all
+// done in the private side, changing the hook interface bits will not require
+// plug-in code to be changed. Win-win.
 
 #define HOOK_EXIT                A // Requests hooks when Nanomud is Exited.
 #define HOOK_PLUGIN_EXIT         B // Requests hooks when any plugin is exited.
@@ -94,26 +94,26 @@ typedef struct hook_data HOOKDATA;
 
 struct hook_data
 {
-	unsigned long int hooks;         // Bit field for hooks requested by the plugin.
-	unsigned long int hooks_allowed; // Allowed hooks, after requested.
+    unsigned long int hooks;         // Bit field for hooks requested by the plugin.
+    unsigned long int hooks_allowed; // Allowed hooks, after requested.
 };
 
 struct plugin_data
 {
-	HOOKDATA hook;                      // Hooks for plugin. Not a pointer, as it contains nothing to allocate.
-	char * filename;                     // Filename of plugin, without the directory.
-	char * plugin_directory;             // Directory of plugin, without the filename.
-	int    debug_timeout;                // Time in seconds before the plugin is considered "hung"
-	void(*FunctionEntry)(void);         // Pointer to entry function, after registration.
-	void(*FunctionHeartBeat)(void);     // Heartbeat function pointer. that says, "I'm still here" whenever the api asks (to prevent invalid plugins)
-										 // This is ABSOLUTELY REQUIRED.
-	void(*FunctionExit)(void);          // Pointer to Function for when plugin is unloaded. Should contain ALL cleanup code.
-	void(*FunctionThreadCallback)(void); // Pointer to a 'thread callback' for if the plugin wishes a timed call of the plugin at all times,
-										 // regardless of state.
+    HOOKDATA hook;                      // Hooks for plugin. Not a pointer, as it contains nothing to allocate.
+    char* filename;                      // Filename of plugin, without the directory.
+    char* plugin_directory;              // Directory of plugin, without the filename.
+    int    debug_timeout;                // Time in seconds before the plugin is considered "hung"
+    void(*FunctionEntry)(void);         // Pointer to entry function, after registration.
+    void(*FunctionHeartBeat)(void);     // Heartbeat function pointer. that says, "I'm still here" whenever the api asks (to prevent invalid plugins)
+    // This is ABSOLUTELY REQUIRED.
+    void(*FunctionExit)(void);          // Pointer to Function for when plugin is unloaded. Should contain ALL cleanup code.
+    void(*FunctionThreadCallback)(void); // Pointer to a 'thread callback' for if the plugin wishes a timed call of the plugin at all times,
+    // regardless of state.
 };
 
 /* PROTOTYPES */
 /* prototypes for main plugin functions, internal */
 void plugin_heartbeat(void);
-int plugin_has_hook(PLUGINDATA *pi, unsigned long int hook);
-static char * plugin_error_string(int err);
+int plugin_has_hook(PLUGINDATA* pi, unsigned long int hook);
+static char* plugin_error_string(int err);

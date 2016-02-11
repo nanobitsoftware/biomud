@@ -22,8 +22,8 @@
  *  For the NanoMud
  */
 
- //#define BG_MASK 0x000CC000UL
- //#define ATBLINK 0xFFFFFFFFUL
+//#define BG_MASK 0x000CC000UL
+//#define ATBLINK 0xFFFFFFFFUL
 
 #define ATBLINK 0x10000000UL
 
@@ -47,7 +47,7 @@
 #define BRIGHT  0x01000000UL
 //#define UINT_MAX 65535
 #define ULINT_MAX 4294967292 // Yes, I know the correct answer is "4294967295" But i'll use that,
-							 // minus one to avoid a few...problems.
+// minus one to avoid a few...problems.
 #define Mud_client_Version "0.2.3400"
 #define WIN_32_LEAN_AND_MEAN  /* No MFC Here folks! */
 
@@ -55,11 +55,11 @@
 #ifdef bool
 #undef bool
 #define bool unsigned short int  /* It appears windows really doesn't equal unix :P
-							 * so we'll make our OWN bool statement! NYAH! */
+                             * so we'll make our OWN bool statement! NYAH! */
 #define BOOL unsigned short int
 #else
 #define bool unsigned short int  /* It appears windows really doesn't equal unix :P
-							 * so we'll make our OWN bool statement! NYAH! */
+                             * so we'll make our OWN bool statement! NYAH! */
 #define BOOL unsigned short int
 
 #endif
@@ -74,7 +74,7 @@
 #define TRUE 1   // Defined here, so i KNOW what is what */
 #define FALSE 0  // .          .             .        .  */
 
-							 //typedef int sh_int;
+//typedef int sh_int;
 #define IS_IN_DEBUGGING_MODE 0 /* Debugging mode. 0: Off 1: on */
 #define IS_BETA_RELEASE 1
 #define IS_RELEASE 0
@@ -99,7 +99,7 @@
  * pattern as they are shown here. For a new menu, jump 10
  * Numeric digits ahead and start from that for its menu - MH */
 
- /* file */
+/* file */
 #define ID_FILE_EXIT  1001
 #define ID_FILE_OPEN  1002
 #define ID_FILE_DISCONNECT 1008
@@ -185,7 +185,7 @@
 #define free(x)   nano_free  (x, __FILE__, __LINE__)
 #define malloc(x) nano_malloc(x, __FILE__, __LINE__)
 #define realloc(x, y) nano_realloc (x,y, __FILE__, __LINE__)
-#define str_dup(x)	str_dup1(x, __FILE__, __LINE__)
+#define str_dup(x)  str_dup1(x, __FILE__, __LINE__)
 
 #define check_line(x) n_check_line(x, __LINE__)
 #define AT_NONE      0
@@ -257,15 +257,15 @@ typedef struct termbuf      SBuf;
 typedef struct cmd_history  CMDHISTORY;
 
 /* Global vars */
-TERMBUF *backcurr;
-TERMBUF *backfirst;
-TERMBUF *backfree;
-TERMBUF *backlist;
-TERMBUF *backprev;
-TERMBUF *mainfree;
+TERMBUF* backcurr;
+TERMBUF* backfirst;
+TERMBUF* backfree;
+TERMBUF* backlist;
+TERMBUF* backprev;
+TERMBUF* mainfree;
 
 static HWND hwnd;
-SBuf *send_buff[101];
+SBuf* send_buff[101];
 BOOL blinked;
 BOOL nasty;
 BOOL PAUSE_UPDATING;
@@ -273,7 +273,7 @@ bool tabbed;
 BOOL TERM_ECHO_OFF;
 BOOL updating;
 BOOL TERM_READY;
-BUFFER *screen_buffer;
+BUFFER* screen_buffer;
 char oldbuff;
 HFONT hf;
 HINSTANCE g_hInst;
@@ -297,10 +297,10 @@ int TOTAL_SEND;
 int TOTAL_SENT;
 RECT mudrect;
 RECT trc;
-SDATA * this_session;
-SELTEXT *selection;
+SDATA* this_session;
+SELTEXT* selection;
 SOCKET sock;
-TBUF *tbuf;
+TBUF* tbuf;
 ul_int curline;
 unsigned long c_attr_f;
 unsigned long def_attr;
@@ -316,176 +316,178 @@ BOOL cmd_init;
 
 struct matches
 {
-	BOOL match_end;
-	BOOL match_start;
-	BOOL skip_space;
-	char ** match_exp;
-	int	total;
+    BOOL match_end;
+    BOOL match_start;
+    BOOL skip_space;
+    char** match_exp;
+    int total;
 };
 
 struct  test_table
 {
-	char *               code;
+    char*                code;
 };
 
 struct color_table
 {
-	int	type;
-	COLORREF color;
+    int type;
+    COLORREF color;
 };
 
 struct seltext
 {
-	char * text;
-	unsigned long int lstart;
-	unsigned long int lstop;
-	unsigned long int cstop;
-	unsigned long int cstart;
-	BOOL selected;
+    char* text;
+    unsigned long int lstart;
+    unsigned long int lstop;
+    unsigned long int cstop;
+    unsigned long int cstart;
+    BOOL selected;
 };
 
 struct editor
 {
-	BOOL                      auto_resize; // Special case for input bar
-	BOOL                      blinked;
-	BOOL                      editable;
-	BOOL                      enter_sends;
-	BOOL                      has_focus;
-	BOOL                      has_window;
-	BOOL                      masked;
-	BOOL					  has_selection;
-	char *                    buffer;
-	char *                    mask_char;
-	char *                    name;
-	HDC                       dc;
-	HWND                      window;
-	int                       cols;
-	int                       cur_view_char;
-	int                       rows;
-	int						  cur_view_x;
-	int						  cur_view_y;
-	int						  wraps;
-	RECT                      r;
-	SELTEXT *				  selection;
-	TERMBUF *                 current_line;
-	TERMBUF **                lines;
-	unsigned long int         buf_len;
-	unsigned long int         buf_x;
-	unsigned long int         buf_y;
-	unsigned long int         bufcount;
-	unsigned long int         caret_pos_x;
-	unsigned long int         caret_pos_y;
-	unsigned long int         max_buffer_len;
-	unsigned long int         max_lines;
-	unsigned long int		* t_buf;
+    BOOL                      auto_resize; // Special case for input bar
+    BOOL                      blinked;
+    BOOL                      editable;
+    BOOL                      enter_sends;
+    BOOL                      has_focus;
+    BOOL                      has_window;
+    BOOL                      masked;
+    BOOL                      has_selection;
+    char*                     buffer;
+    char*                     mask_char;
+    char*                     name;
+    HDC                       dc;
+    HWND                      window;
+    int                       cols;
+    int                       cur_view_char;
+    int                       rows;
+    int                       cur_view_x;
+    int                       cur_view_y;
+    int                       wraps;
+    RECT                      r;
+    SELTEXT*                  selection;
+    TERMBUF*                  current_line;
+    TERMBUF**                 lines;
+    unsigned long int         buf_len;
+    unsigned long int         buf_x;
+    unsigned long int         buf_y;
+    unsigned long int         bufcount;
+    unsigned long int         caret_pos_x;
+    unsigned long int         caret_pos_y;
+    unsigned long int         max_buffer_len;
+    unsigned long int         max_lines;
+    unsigned long int*        t_buf;
 };
 
 struct termbuffer
 {
-	BOOL   has_blink;
-	BOOL   not_finished;
-	BOOL   processed;
-	BOOL	 debug_include;
-	BOOL	 has_underline;
-	char   *buffer;
-	char stamp[1];
-	int   canary; // For...stuff.
-	long int len;
-	unsigned long   *line;
-	unsigned long int ln;
+    BOOL   has_blink;
+    BOOL   not_finished;
+    BOOL   processed;
+    BOOL     debug_include;
+    BOOL     has_underline;
+    char*   buffer;
+    char stamp[1];
+    int   canary; // For...stuff.
+    long int len;
+    unsigned long*   line;
+    unsigned long int ln;
 };
 
 struct ansi_table
 {
-	char *seq;
-	int  fore;
-	int  back;
+    char* seq;
+    int  fore;
+    int  back;
 };
 
 struct termbuf
 {
-	char   * buffer;
-	int     x_start;
-	int     y_start;
-	int     x_end;
-	int     y_end;
-	HDC     hdc;
-	HDC     page;
-	HWND    hwnd;
-	HANDLE  h;
+    char*    buffer;
+    int     x_start;
+    int     y_start;
+    int     x_end;
+    int     y_end;
+    HDC     hdc;
+    HDC     page;
+    HWND    hwnd;
+    HANDLE  h;
 };
 
 struct hash
 {
-	int val;
-	int place;
-	HASH *next;
-	void *ptr;
+    int val;
+    int place;
+    HASH* next;
+    void* ptr;
 };
 
 struct sbuff
 {
-	char *buffer;
+    char* buffer;
 };
 
 struct cmd_history
 {
-	char   command[MAX_INPUT_LENGTH + 10];
-	size_t timestamp;
+    char   command[MAX_INPUT_LENGTH + 10];
+    size_t timestamp;
 };
 
 CMDHISTORY cmdhistory[MAX_INPUT_HISTORY];
 
 struct session_data
 {
-	BOOL    beta_edit;
-	BOOL    color;
-	BOOL    connected;
-	BOOL    EnableAliases;
-	BOOL    EnableBlinkies;
-	BOOL    EnableClasses;
-	BOOL    EnableClientChat;
-	BOOL    EnableMacros;
-	BOOL    EnablePaths;
-	BOOL    EnablePing;
-	BOOL    EnableScripts;
-	BOOL    EnableSound;
-	BOOL    EnableSplashScreen;
-	BOOL    EnableTestLogging;
-	BOOL    EnableTN; // telnet negotiation. Future telnet connect stuff. I guess.
-	BOOL    EnableTriggers;
-	BOOL    EnableUsageReports;
-	BOOL    IsBetaTester;
-	BOOL    OptimizeDualScreen;
-	BOOL    ShowTimeStamps;
-	BOOL    UseMemoryCompression;
-	BOOL	  Mouse_coords;
-	BOOL	  show_debug;
-	char    attr;
-	char *  host;
-	char *  name;
-	DWORD   ping;
-	DWORD   ping_sent; // Time of last sent buffer;
-	DWORD   ping_recv; // Time of last Recv buffer
-	DWORD   last_ping; // Last time stamp of the ping.
-	int     desc;
-	int     port;
-	int	  char_wrap;
-	SOCKET  rawSocket;
-	struct  sockaddr_in saDest;
-	struct  sockaddr_in saSrc;
-	TERMBUF **termlist;
-	unsigned long int     max_buffer;
-	void(*proc) (char*, ...);
+    BOOL    beta_edit;
+    BOOL    color;
+    BOOL    connected;
+    BOOL    EnableAliases;
+    BOOL    EnableBlinkies;
+    BOOL    EnableClasses;
+    BOOL    EnableClientChat;
+    BOOL    EnableMacros;
+    BOOL    EnablePaths;
+    BOOL    EnablePing;
+    BOOL    EnableScripts;
+    BOOL    EnableSound;
+    BOOL    EnableSplashScreen;
+    BOOL    EnableTestLogging;
+    BOOL    EnableTN; // telnet negotiation. Future telnet connect stuff. I guess.
+    BOOL    EnableTriggers;
+    BOOL    EnableUsageReports;
+    BOOL    IsBetaTester;
+    BOOL    OptimizeDualScreen;
+    BOOL    ShowTimeStamps;
+    BOOL    UseMemoryCompression;
+    BOOL      Mouse_coords;
+    BOOL      show_debug;
+    char    attr;
+    char*   host;
+    char*   name;
+    DWORD   ping;
+    DWORD   ping_sent; // Time of last sent buffer;
+    DWORD   ping_recv; // Time of last Recv buffer
+    DWORD   last_ping; // Last time stamp of the ping.
+    int     desc;
+    int     port;
+    int   char_wrap;
+    SOCKET  rawSocket;
+    struct  sockaddr_in saDest;
+    struct  sockaddr_in saSrc;
+    TERMBUF** termlist;
+    unsigned long int     max_buffer;
+    void(*proc) (char*, ...);
 };
 
-enum colors {
-	red, blue, green, black, yellow, cyan, magenta
+enum colors
+{
+    red, blue, green, black, yellow, cyan, magenta
 };
 
-typedef struct {
-	unsigned int x;
-	unsigned int y;
+typedef struct
+{
+    unsigned int x;
+    unsigned int y;
 } poss;
 
 /*      @(#)telnet.h 1.7 88/08/19 SMI; from UCB 5.1 5/30/85     */
@@ -495,9 +497,9 @@ typedef struct {
  * specifies the terms and conditions for redistribution.
  */
 
- /*
-  * Definitions for the TELNET protocol.
-  */
+/*
+ * Definitions for the TELNET protocol.
+ */
 
 #ifndef _arpa_telnet_h
 #define _arpa_telnet_h
@@ -523,9 +525,10 @@ typedef struct {
 #define SYNCH   242             /* for telfunc calls */
 
 #ifdef TELCMDS
-char *telcmds[] = {
-		"SE", "NOP", "DMARK", "BRK", "IP", "AO", "AYT", "EC",
-		"EL", "GA", "SB", "WILL", "WONT", "DO", "DONT", "IAC",
+char* telcmds[] =
+{
+    "SE", "NOP", "DMARK", "BRK", "IP", "AO", "AYT", "EC",
+    "EL", "GA", "SB", "WILL", "WONT", "DO", "DONT", "IAC",
 };
 #endif
 
@@ -561,13 +564,14 @@ char *telcmds[] = {
 
 #ifdef TELOPTS
 #define NTELOPTS        (1+TELOPT_EOR)
-char *telopts[NTELOPTS] = {
-		"BINARY", "ECHO", "RCP", "SUPPRESS GO AHEAD", "NAME",
-		"STATUS", "TIMING MARK", "RCTE", "NAOL", "NAOP",
-		"NAOCRD", "NAOHTS", "NAOHTD", "NAOFFD", "NAOVTS",
-		"NAOVTD", "NAOLFD", "EXTEND ASCII", "LOGOUT", "BYTE MACRO",
-		"DATA ENTRY TERMINAL", "SUPDUP", "SUPDUP OUTPUT",
-		"SEND LOCATION", "TERMINAL TYPE", "END OF RECORD",
+char* telopts[NTELOPTS] =
+{
+    "BINARY", "ECHO", "RCP", "SUPPRESS GO AHEAD", "NAME",
+    "STATUS", "TIMING MARK", "RCTE", "NAOL", "NAOP",
+    "NAOCRD", "NAOHTS", "NAOHTD", "NAOFFD", "NAOVTS",
+    "NAOVTD", "NAOLFD", "EXTEND ASCII", "LOGOUT", "BYTE MACRO",
+    "DATA ENTRY TERMINAL", "SUPDUP", "SUPDUP OUTPUT",
+    "SEND LOCATION", "TERMINAL TYPE", "END OF RECORD",
 };
 #endif
 
@@ -579,53 +583,53 @@ char *telopts[NTELOPTS] = {
 
 #pragma pack(1)
 
-#define ICMP_ECHOREPLY	0
-#define ICMP_ECHOREQ	8
+#define ICMP_ECHOREPLY  0
+#define ICMP_ECHOREQ    8
 
 // IP Header -- RFC 791
 typedef struct tagIPHDR
 {
-	u_char  VIHL;			// Version and IHL
-	u_char	TOS;			// Type Of Service
-	short	TotLen;			// Total Length
-	short	ID;				// Identification
-	short	FlagOff;		// Flags and Fragment Offset
-	u_char	TTL;			// Time To Live
-	u_char	Protocol;		// Protocol
-	u_short	Checksum;		// Checksum
-	struct	in_addr iaSrc;	// Internet Address - Source
-	struct	in_addr iaDst;	// Internet Address - Destination
-}IPHDR, *PIPHDR;
+    u_char  VIHL;           // Version and IHL
+    u_char  TOS;            // Type Of Service
+    short   TotLen;         // Total Length
+    short   ID;             // Identification
+    short   FlagOff;        // Flags and Fragment Offset
+    u_char  TTL;            // Time To Live
+    u_char  Protocol;       // Protocol
+    u_short Checksum;       // Checksum
+    struct  in_addr iaSrc;  // Internet Address - Source
+    struct  in_addr iaDst;  // Internet Address - Destination
+} IPHDR, *PIPHDR;
 
 // ICMP Header - RFC 792
 typedef struct tagICMPHDR
 {
-	u_char	Type;			// Type
-	u_char	Code;			// Code
-	u_short	Checksum;		// Checksum
-	u_short	ID;				// Identification
-	u_short	Seq;			// Sequence
-	char	Data;			// Data
-}ICMPHDR, *PICMPHDR;
+    u_char  Type;           // Type
+    u_char  Code;           // Code
+    u_short Checksum;       // Checksum
+    u_short ID;             // Identification
+    u_short Seq;            // Sequence
+    char    Data;           // Data
+} ICMPHDR, *PICMPHDR;
 
 bool echo_off;
-#define REQ_DATASIZE 8		// Echo Request Data size
+#define REQ_DATASIZE 8      // Echo Request Data size
 
 // ICMP Echo Request
 typedef struct tagECHOREQUEST
 {
-	ICMPHDR icmpHdr;
-	DWORD	dwTime;
-	char	cData[REQ_DATASIZE];
-}ECHOREQUEST, *PECHOREQUEST;
+    ICMPHDR icmpHdr;
+    DWORD   dwTime;
+    char    cData[REQ_DATASIZE];
+} ECHOREQUEST, *PECHOREQUEST;
 
 // ICMP Echo Reply
 typedef struct tagECHOREPLY
 {
-	IPHDR	ipHdr;
-	ECHOREQUEST	echoRequest;
-	char    cFiller[256];
-}ECHOREPLY, *PECHOREPLY;
+    IPHDR   ipHdr;
+    ECHOREQUEST echoRequest;
+    char    cFiller[256];
+} ECHOREPLY, *PECHOREPLY;
 
 #define handle_except(a,b,c,d) _except_handler(a,b,c,d, __FILE__, __LINE__)
 
@@ -642,16 +646,16 @@ typedef struct tagECHOREPLY
 #ifndef NANOMUD_NANO
 void initialize_editors(void);
 void destroy_editors(void);
-void free_editor(EDITOR * edit);
-EDITOR * new_editor(char * name);
-BOOL editor_createwindow(EDITOR *edit, HWND parent, int left, int top, int right, int bottom);
+void free_editor(EDITOR* edit);
+EDITOR* new_editor(char* name);
+BOOL editor_createwindow(EDITOR* edit, HWND parent, int left, int top, int right, int bottom);
 void editor_caretblink(void);
-void editor_flushbuffer(EDITOR *edit, char *buffer, COLORREF fore, COLORREF back);
-EDITOR * get_editor(char * edit);
-LRESULT APIENTRY editor_keyboard(EDITOR *edit, LPARAM lParam, WPARAM wParam, UINT msg);
-TERMBUF * editor_newline(EDITOR * edit);
-TERMBUF * editor_getline(EDITOR * edit, unsigned long int x);
-void editor_paint(EDITOR * edit);
+void editor_flushbuffer(EDITOR* edit, char* buffer, COLORREF fore, COLORREF back);
+EDITOR* get_editor(char* edit);
+LRESULT APIENTRY editor_keyboard(EDITOR* edit, LPARAM lParam, WPARAM wParam, UINT msg);
+TERMBUF* editor_newline(EDITOR* edit);
+TERMBUF* editor_getline(EDITOR* edit, unsigned long int x);
+void editor_paint(EDITOR* edit);
 #endif
 
 #define _func_nano_test(x) (give_term_error("%d", sizeof(x)))
@@ -660,124 +664,124 @@ void editor_paint(EDITOR * edit);
 //unsigned long int get_hash(unsigned char *str);
 //void* nano_malloc(size_t chunk, const char * file, int line);
 bool create_frame(int x, int y);
-BOOL do_copy_clip(char *text);
-BOOL do_get_clip(char *text);
-BOOL editor_delchar(EDITOR *edit);
-BOOL editor_handle_enter(EDITOR*edit, TERMBUF * temp);
-BOOL editor_insert(EDITOR *edit, char *str);
-BOOL editor_selectall(EDITOR *edit);
-BOOL Exclaim_YesNo(char *message);
-BOOL is_operator(char *point);
-BOOL match_expression(char *input, MATCH *m);
-bool str_cmp(const char *astr, const char *bstr);
-BOOL str_search(const char *str);
-BOOL string_compare(const char *ostr, const char *tstr);
-bool strprefix(const char *astr, const char *bstr);
-BOOL wraps(char *buf);
-char * commaize(unsigned long long int x, char buf[]);
-char * decrypt_line(char *line);
-char * editor_get_text_all(EDITOR *edit);
-char * encrypt_line(char * line);
-char * get_date(void);
-char * get_time(void);
-char * load_file(void);
-char * ret_string(TERMBUF * ter, char str[]);
-char * save_file(char *filter);
-char * strip_ansi(const char * str);
-char *get_logical_date(void);
-char *one_argument(char *argument, char *arg_first);
-char *script_strip(char *argument, char *arg_first);
-char *str_dup1(const char *str, char * file, int line);
+BOOL do_copy_clip(char* text);
+BOOL do_get_clip(char* text);
+BOOL editor_delchar(EDITOR* edit);
+BOOL editor_handle_enter(EDITOR* edit, TERMBUF* temp);
+BOOL editor_insert(EDITOR* edit, char* str);
+BOOL editor_selectall(EDITOR* edit);
+BOOL Exclaim_YesNo(char* message);
+BOOL is_operator(char* point);
+BOOL match_expression(char* input, MATCH* m);
+bool str_cmp(const char* astr, const char* bstr);
+BOOL str_search(const char* str);
+BOOL string_compare(const char* ostr, const char* tstr);
+bool strprefix(const char* astr, const char* bstr);
+BOOL wraps(char* buf);
+char* commaize(unsigned long long int x, char buf[]);
+char* decrypt_line(char* line);
+char* editor_get_text_all(EDITOR* edit);
+char* encrypt_line(char* line);
+char* get_date(void);
+char* get_time(void);
+char* load_file(void);
+char* ret_string(TERMBUF* ter, char str[]);
+char* save_file(char* filter);
+char* strip_ansi(const char* str);
+char* get_logical_date(void);
+char* one_argument(char* argument, char* arg_first);
+char* script_strip(char* argument, char* arg_first);
+char* str_dup1(const char* str, char* file, int line);
 COLORREF  get_char_color(unsigned long int c);
-DWORD RecvEchoReply(SOCKET s, LPSOCKADDR_IN lpsaFrom, u_char *pTTL);
+DWORD RecvEchoReply(SOCKET s, LPSOCKADDR_IN lpsaFrom, u_char* pTTL);
 DWORD WINAPI check_ping(void);
 DWORD WINAPI check_que(void);
-DWORD WINAPI do_parse(TERMBUF *ter, BOOL bleh);
+DWORD WINAPI do_parse(TERMBUF* ter, BOOL bleh);
 HDC get_context(void);
-HWND create_status_window(HWND hwnd, CHAR * name, int length, int height);
-int  strip_ansi_len(const char * str);
-int add_term(TERMBUF *term, char* line, int lline, char*file);
-int CloseWinsock(HWND hwnd, char * HostName);
-int fnmatch(const char *pattern, const char *string, int flags);
+HWND create_status_window(HWND hwnd, CHAR* name, int length, int height);
+int  strip_ansi_len(const char* str);
+int add_term(TERMBUF* term, char* line, int lline, char* file);
+int CloseWinsock(HWND hwnd, char* HostName);
+int fnmatch(const char* pattern, const char* string, int flags);
 int GetWindowWrap(HWND hwnd);
-int HandleWinsockConnection(HWND hwnd, char * HostName);
+int HandleWinsockConnection(HWND hwnd, char* HostName);
 int random();
-int read_string(char buf[], FILE *fp, unsigned int slen);
+int read_string(char buf[], FILE* fp, unsigned int slen);
 int SendEchoRequest(SOCKET s, LPSOCKADDR_IN lpstToAddr);
-int term_wrap_last_space(TERMBUF * ter);
+int term_wrap_last_space(TERMBUF* ter);
 int WaitForEchoReply(SOCKET s);
 LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo);
 LRESULT APIENTRY AboutProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 LRESULT APIENTRY CreditProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
-LRESULT APIENTRY editor_mouse(EDITOR *edit, LPARAM lParam, WPARAM wParam, UINT msg);
+LRESULT APIENTRY editor_mouse(EDITOR* edit, LPARAM lParam, WPARAM wParam, UINT msg);
 LRESULT APIENTRY EditProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT APIENTRY NWCTEST(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 LRESULT APIENTRY WindowProcedure(HWND, UINT, WPARAM, LPARAM);
 LRESULT CALLBACK SettingsProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
-MATCH * compile_match(char *input);
-TERMBUF * fetch_line(unsigned long int idx);
-TERMBUF * new_line(int line, char*file);
-TERMBUF * new_term(char * buffer);
-TERMBUF * new_termbuffer(void);
-u_short in_cksum(u_short *addr, int len);
+MATCH* compile_match(char* input);
+TERMBUF* fetch_line(unsigned long int idx);
+TERMBUF* new_line(int line, char* file);
+TERMBUF* new_term(char* buffer);
+TERMBUF* new_termbuffer(void);
+u_short in_cksum(u_short* addr, int len);
 unsigned long int get_memory_usage();
 unsigned long int get_rand();
 unsigned long int get_x(int x);
-unsigned long int precache_file(char *str);
-void  strip_space(char*str);
-void *nano_realloc(void *seg, size_t sz, const char * file, int line);
-void *new_nano_malloc(size_t chunk, int line, char *file);
-void add_newline(const char *buffer);
+unsigned long int precache_file(char* str);
+void  strip_space(char* str);
+void* nano_realloc(void* seg, size_t sz, const char* file, int line);
+void* new_nano_malloc(size_t chunk, int line, char* file);
+void add_newline(const char* buffer);
 void blink_term(void);
 void check_output(void);
-void check_url(TERMBUF * term);
+void check_url(TERMBUF* term);
 void CheckPing(void);
 void chop_line(TERMBUF* ter);
 void clear_buffer(void);
-void clear_editor(EDITOR * edit);
+void clear_editor(EDITOR* edit);
 void clear_match_buf(void);
 void ClearTerminal(void);
-void compile_script(char * scr);
+void compile_script(char* scr);
 void create_hdc_buf(void);
 void create_s_table(void);
 void create_status(void);
 void CreateAboutBox(void);
 void CreateCreditBox(void);
 void CreateSettings(void);
-void destroy_status_window(HWND *status_window);
-void do_blinked(TERMBUF *temp, int idx, char str[]);
+void destroy_status_window(HWND* status_window);
+void do_blinked(TERMBUF* temp, int idx, char str[]);
 void do_peek(void);
 void do_term_test(void);
-void do_timed(char *ch1);
+void do_timed(char* ch1);
 void do_update_paint(HDC hdc, int left, int top, int right, int bottom);
-void do_url(const char * url);
+void do_url(const char* url);
 void draw_board();
 void dump_heap(void);
-void editor_deleteline(EDITOR *edit, int line);
-void editor_resize(EDITOR *edit);
-void export_ansi(char *file);
-void export_text_log(char *file);
-void export_to_html(char *file);
+void editor_deleteline(EDITOR* edit, int line);
+void editor_resize(EDITOR* edit);
+void export_ansi(char* file);
+void export_text_log(char* file);
+void export_to_html(char* file);
 void find_unused_buffers(void);
-void fix_line(TERMBUF *line1, TERMBUF *line2);
-void FlushBuffer(char *buffer, int color2, int bKcolor2, BOOL underlined);
+void fix_line(TERMBUF* line1, TERMBUF* line2);
+void FlushBuffer(char* buffer, int color2, int bKcolor2, BOOL underlined);
 void FormatText(HWND hwnd);
 void free_context(HDC context);
-void free_edit(EDITOR * edit);
-void free_line(TERMBUF *rem);
+void free_edit(EDITOR* edit);
+void free_line(TERMBUF* rem);
 void free_scripts(void);
 void FreeTerm(void);
 void func_nano_test(char str[]);
 void get_scroll_pos(void);
-void give_term_debug(char *to_echo, ...);
-void give_term_echo(char *to_echo, ...);
-void give_term_error(char *to_echo, ...);
-void give_term_info(char *to_echo, ...);
-void GiveError(char * wrong, BOOL KillProcess);
-void GiveError(char * wrong, BOOL KillProcess);
-void handle_input(char * in);
+void give_term_debug(char* to_echo, ...);
+void give_term_echo(char* to_echo, ...);
+void give_term_error(char* to_echo, ...);
+void give_term_info(char* to_echo, ...);
+void GiveError(char* wrong, BOOL KillProcess);
+void GiveError(char* wrong, BOOL KillProcess);
+void handle_input(char* in);
 void handle_selection(void);
-void import_file(char *file);
+void import_file(char* file);
 void init_scripts(void);
 void initialize_engine(void);
 void InitializeClient(HINSTANCE hInst);
@@ -785,24 +789,24 @@ void initwinsock(void);
 void interp_mouse(int rws, int cls, int state);
 void load_scripts(void);
 void load_settings(void);
-void LOG(char *fmt, ...);
-void log_html(const char * str, int color, FILE *fp);
+void LOG(char* fmt, ...);
+void log_html(const char* str, int color, FILE* fp);
 void make_list(void);
 void make_new_test(void);
 void make_test();
 void MakeBuffers(void);
-void n_check_line(EDITOR *edit, int line);
-void nano_free(void * seg, const char * file, int line);
-void new_nano_free(void * mem, char *file, int line);
-void output_status_window(char * msg, HWND *status_window);
-void paint_line(TERMBUF *ter);
+void n_check_line(EDITOR* edit, int line);
+void nano_free(void* seg, const char* file, int line);
+void new_nano_free(void* mem, char* file, int line);
+void output_status_window(char* msg, HWND* status_window);
+void paint_line(TERMBUF* ter);
 void paint_selection(int start, int stop, int cstart, int cstop, int i /* line number */);
-void parse_ansi(/*char *str*/TERMBUF *ter, BOOL is_logging_html);
-void parse_script(const unsigned char * script);
+void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html);
+void parse_script(const unsigned char* script);
 void ParseLines(unsigned char* readbuff);
 void play_beep(void);
 void prepare_copy(void);
-void realize_lines_internal(char *lline, int line, char*file);
+void realize_lines_internal(char* lline, int line, char* file);
 void redraw_terminal(void);
 void return_usage(void);
 void save_scripts(void);
@@ -821,24 +825,24 @@ void update_scroll(void);
 void update_status(void);
 void update_term(void);
 void walk_heap(void);
-void write_buffer(const char *str);
-void write_buffer(const char *str);
-void* nano_malloc(size_t chunk, const char * file, int line);
+void write_buffer(const char* str);
+void write_buffer(const char* str);
+void* nano_malloc(size_t chunk, const char* file, int line);
 void terminal_beep(void);
 void init_cmd_history(void);
 void save_history(void);
 void load_history(void);
-void add_history(size_t timestamp, char * command);
+void add_history(size_t timestamp, char* command);
 void del_history(void);
 size_t nano_c_time(void);
 void create_history_window(void);
 LRESULT APIENTRY history_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 void init_logs(void);
-void add_log(int type, char *data);
+void add_log(int type, char* data);
 void dump_echo(void);
 void export_log(void);
-void strip_newline(char *str);
+void strip_newline(char* str);
 void clear_log(void);
 void create_logwindow(void);
 LRESULT APIENTRY logwin_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
-void GiveNotify(char * wrong);
+void GiveNotify(char* wrong);

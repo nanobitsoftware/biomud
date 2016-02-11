@@ -34,7 +34,7 @@
 #include <excpt.h>
 #include <fcntl.h>
 #include <sys/types.h>
- //#include <unistd.h>
+//#include <unistd.h>
 #include <fcntl.h>
 
 BOOL editing;
@@ -51,16 +51,16 @@ BOOL initialized;
  * do it.
  */
 
- /* Just as the name implies. We have to intialize everything such as the edit
-  * control and all that for the sheer fact that this may be used quite a bit.
-  * So we have to make sure everything is actually loaded into memory first.
-  * Yes, this window (dialogue) will be loaded completely into memory ever
-  * since opening the client. Why? Simple. 1) It'll allow it to load quicker
-  * and not have to worry about initializing every time, 2) Allows for it to
-  * keep it's last edited data, 3) allows us to re-use it. For this reason,
-  * clean-up is a MUST.
-  * want a short comment? Read below.
-  */
+/* Just as the name implies. We have to intialize everything such as the edit
+ * control and all that for the sheer fact that this may be used quite a bit.
+ * So we have to make sure everything is actually loaded into memory first.
+ * Yes, this window (dialogue) will be loaded completely into memory ever
+ * since opening the client. Why? Simple. 1) It'll allow it to load quicker
+ * and not have to worry about initializing every time, 2) Allows for it to
+ * keep it's last edited data, 3) allows us to re-use it. For this reason,
+ * clean-up is a MUST.
+ * want a short comment? Read below.
+ */
 void intialize_scripts_dialogue(void)
 {
 }
@@ -78,7 +78,7 @@ void cleanup_script_dialogue(void)
  * syntax errors, etc). If all else fails, always return FALSE.
  */
 
-BOOL edit_script(char * script)
+BOOL edit_script(char* script)
 {
-	return FALSE;
+    return FALSE;
 }

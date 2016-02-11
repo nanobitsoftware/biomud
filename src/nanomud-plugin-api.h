@@ -16,7 +16,7 @@ typedef char                   PFUNC_CHAR;
 typedef int                    PFUNC_INT;
 typedef unsigned short int     PFUNC_BOOL;
 typedef void                   PFUNC_VOID;
-typedef unsigned long int	   PFUNC_ULINT;
+typedef unsigned long int      PFUNC_ULINT;
 typedef unsigned short int     PFUNC_USINT;
 typedef TERMBUF                PFUNC_TERM;
 typedef struct api_client_info API_CLIENT;
@@ -58,14 +58,14 @@ PFUNC_ULINT PFUNC_TOTAL_ALLOC;
  */
 struct api_client_info
 {
-	char * author;   // Author of the plugin (REQUIRED)
-	char * company;  // Company of the plugin (OPTIONAL)
-	char * name;     // Name of the plugin (REQUIRED)
-	char * notes;    // Any notes about the plugin (OPTIONAL)
-	char * used_api; // Plugin's version of API (REQUIRED)
-	char * version;  // Version of plugin (OPTIONAL BUT SUGGESTED)
-	char * website;  // Website of Plugin's author. (OPTIONAL)
-	int    build;    // Build number of plugin (OPTIONAL)
+    char* author;    // Author of the plugin (REQUIRED)
+    char* company;   // Company of the plugin (OPTIONAL)
+    char* name;      // Name of the plugin (REQUIRED)
+    char* notes;     // Any notes about the plugin (OPTIONAL)
+    char* used_api;  // Plugin's version of API (REQUIRED)
+    char* version;   // Version of plugin (OPTIONAL BUT SUGGESTED)
+    char* website;   // Website of Plugin's author. (OPTIONAL)
+    int    build;    // Build number of plugin (OPTIONAL)
 };
 
 /* Function prototypes that may be used with plugins.
@@ -74,15 +74,15 @@ struct api_client_info
  * defines for the type casting.
  */
 
- /* pfunc_write_terminal: Writes string 'str' to the terminal
-  * and returns 1 if successful, -1 if not successful. Will
-  * log any errors to the standard log buffer. String may not
-  * be longer than the MAX_PSTRING_LENGTH variable or the
-  * string will be truncated down to that size. If you
-  * believe your string will be longer than that, then
-  * split it into multiple pfunc_write_terminal commands
-  */
-PFUNC_INT pfunc_write_terminal(PFUNC_CHAR *str);
+/* pfunc_write_terminal: Writes string 'str' to the terminal
+ * and returns 1 if successful, -1 if not successful. Will
+ * log any errors to the standard log buffer. String may not
+ * be longer than the MAX_PSTRING_LENGTH variable or the
+ * string will be truncated down to that size. If you
+ * believe your string will be longer than that, then
+ * split it into multiple pfunc_write_terminal commands
+ */
+PFUNC_INT pfunc_write_terminal(PFUNC_CHAR* str);
 
 /* pfunc_get_line_len will return the length
  * of a terminal line. It will not return the
@@ -111,7 +111,7 @@ PFUNC_INT pfunc_get_line_len(PFUNC_ULINT ln);
  * of the plugin writer to free this buffer at a later
  * time by the use of pfunc_free.
  */
-PFUNC_ULINT * pfunc_get_line_masked(PFUNC_INT ln);
+PFUNC_ULINT* pfunc_get_line_masked(PFUNC_INT ln);
 
 /* pfunc_malloc acts just like a normal malloc
  * call, except that it allocates its memory
@@ -124,7 +124,7 @@ PFUNC_ULINT * pfunc_get_line_masked(PFUNC_INT ln);
  *
  * Uses nanomud_malloc interanlly.
  */
-PFUNC_VOID * pfunc_malloc(PFUNC_ULINT chunk);
+PFUNC_VOID* pfunc_malloc(PFUNC_ULINT chunk);
 
 /* pfunc_free is the interface in which
  * plugin writers will be required to use to
@@ -145,7 +145,7 @@ PFUNC_VOID * pfunc_malloc(PFUNC_ULINT chunk);
  *
  * Will return -1 on failure, non-zero on success.
  */
-PFUNC_INT pfunc_free(PFUNC_VOID *ptr);
+PFUNC_INT pfunc_free(PFUNC_VOID* ptr);
 
 /* pfunc_get_line_text will return the full
  * text of the line that is requested if it
@@ -161,7 +161,7 @@ PFUNC_INT pfunc_free(PFUNC_VOID *ptr);
  *
  * Returns plain text string!
  */
-PFUNC_CHAR * pfunc_get_line_text(PFUNC_INT ln);
+PFUNC_CHAR* pfunc_get_line_text(PFUNC_INT ln);
 
 /* pfunc_get_version will return the version
  * (current) of the mudclient. Nothing more,
@@ -170,7 +170,7 @@ PFUNC_CHAR * pfunc_get_line_text(PFUNC_INT ln);
  * User is responsibe for freeing the string
  * that is returned with the pfunc_free function.
  */
-PFUNC_CHAR * pfunc_get_version(PFUNC_VOID);
+PFUNC_CHAR* pfunc_get_version(PFUNC_VOID);
 
 /* pfunc_get_api_version will return the current,
  * compiled in, version of the nano-api system that
@@ -210,7 +210,7 @@ PFUNC_BOOL pfunc_get_api_version(PFUNC_CHAR str[]);
  * other errors occur. Please check for a return of NULL
  * to prevent any null-referencing.
  */
-PFUNC_TERM * pfunc_ret_line(PFUNC_INT ln);
+PFUNC_TERM* pfunc_ret_line(PFUNC_INT ln);
 
 /* pfunc_update will cause the main terminal screen to force
  * an update via its internal call update_term(). This call
@@ -238,7 +238,7 @@ PFUNC_VOID pfunc_update_term(PFUNC_VOID);
  * Function returns no data.
  */
 
-PFUNC_VOID pfunc_give_error(PFUNC_CHAR * msg, PFUNC_BOOL killproc);
+PFUNC_VOID pfunc_give_error(PFUNC_CHAR* msg, PFUNC_BOOL killproc);
 
 /* pfunc_send_sock will send information over the socket of the client.
  * It will use the interal 'send' mechanism to make sure abuse does not
@@ -260,7 +260,7 @@ PFUNC_VOID pfunc_give_error(PFUNC_CHAR * msg, PFUNC_BOOL killproc);
  * This is INTENTIONAL and not a bug or design fault.
  */
 
-PFUNC_BOOL pfunc_send_sock(PFUNC_CHAR * msg);
+PFUNC_BOOL pfunc_send_sock(PFUNC_CHAR* msg);
 
 /* pfunc_newapi will create a new api struct for the user
  * and return a pointer to said struct. This is required for
@@ -281,7 +281,7 @@ PFUNC_BOOL pfunc_send_sock(PFUNC_CHAR * msg);
  * exceed this when inputting information or undefined results
  * (and corruption) will occur.
  */
-PFUNC_API * pfunc_newapi(PFUNC_VOID);
+PFUNC_API* pfunc_newapi(PFUNC_VOID);
 
 /* pfunc_register will register the plugin with nanomud's plugin
  * system. All required information from the struct will be checked
@@ -295,33 +295,33 @@ PFUNC_API * pfunc_newapi(PFUNC_VOID);
  *
  * Example usage of pfunc_register (working sample)
  *
-	PFUNC_API * api;
-	int res;
+    PFUNC_API * api;
+    int res;
 
-	api = pfunc_newapi();
+    api = pfunc_newapi();
 
-	if (!api)
-		Error("API failed to allocate correctly");
+    if (!api)
+        Error("API failed to allocate correctly");
 
-	sprintf (api->name, "Super awesome plugin ");
-	sprintf (api->author,"Michael Hayes");
-	sprintf (api->used_api, "%s", NANO_API_VER);
-	sprintf (api->version, "0.0.1");
-	sprintf (api->website, "www.nanobit.net");
-	sprintf (api->notes, "This plugin ROCK!");
-	sprintf (api->company, "Nanobit");
-	api->build = 1004;
+    sprintf (api->name, "Super awesome plugin ");
+    sprintf (api->author,"Michael Hayes");
+    sprintf (api->used_api, "%s", NANO_API_VER);
+    sprintf (api->version, "0.0.1");
+    sprintf (api->website, "www.nanobit.net");
+    sprintf (api->notes, "This plugin ROCK!");
+    sprintf (api->company, "Nanobit");
+    api->build = 1004;
 
-	res = pfunc_register(api);
+    res = pfunc_register(api);
 
-	if (res < REGISTER_SUCCESS)
-	{
-		Error("Registration failed");
-	}
-	else if (res == REGISTER_SUCCESS)
-	{
-		<do other stuff>
-	}
+    if (res < REGISTER_SUCCESS)
+    {
+        Error("Registration failed");
+    }
+    else if (res == REGISTER_SUCCESS)
+    {
+        <do other stuff>
+    }
  *
  * Possible responses from this function:
  * *REGISTER_SUCCESS == Successful registration of plugin
@@ -335,7 +335,7 @@ PFUNC_API * pfunc_newapi(PFUNC_VOID);
  * is null terminated at the end of the string (not the end of the buffer
  * unless you happened to use the entire buffer)
  */
-PFUNC_INT pfunc_register(API_CLIENT *api);
+PFUNC_INT pfunc_register(API_CLIENT* api);
 
 /* pfunc_request_term_hook is the function that will allow the
  * plugin to request a hook of the terminal data is it is received.

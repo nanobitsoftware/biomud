@@ -41,46 +41,54 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define KEY 0x0FF0FFBA
 char SBOX[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 
-char * encrypt_line(char * line)
+char* encrypt_line(char* line)
 {
-	char *point;
-	char *buffer;
-	int i;
+    char* point;
+    char* buffer;
+    int i;
 
-	if (!line)
-		return NULL;
+    if (!line)
+        {
+            return NULL;
+        }
 
-	buffer = malloc(strlen(line) + 2);
+    buffer = malloc(strlen(line) + 2);
 
-	for (i = 0, point = line; *point; point++, i++)
-	{
-		if (*point == '\0' || *point == '\n')
-			break;
+    for (i = 0, point = line; *point; point++, i++)
+        {
+            if (*point == '\0' || *point == '\n')
+                {
+                    break;
+                }
 
-		buffer[i] = (line[i] ^ KEY);
-	}
+            buffer[i] = (line[i] ^ KEY);
+        }
 
-	return buffer;
+    return buffer;
 }
 
-char * decrypt_line(char *line)
+char* decrypt_line(char* line)
 {
-	char *point;
-	char *buffer;
-	int i;
+    char* point;
+    char* buffer;
+    int i;
 
-	if (!line)
-		return NULL;
+    if (!line)
+        {
+            return NULL;
+        }
 
-	buffer = malloc(strlen(line) + 2);
+    buffer = malloc(strlen(line) + 2);
 
-	for (i = 0, point = line; *point; point++, i++)
-	{
-		if (*point == '\0' || *point == '\n')
-			break;
-		buffer[i] = (line[i] ^ KEY);
-	}
-	return buffer;
+    for (i = 0, point = line; *point; point++, i++)
+        {
+            if (*point == '\0' || *point == '\n')
+                {
+                    break;
+                }
+            buffer[i] = (line[i] ^ KEY);
+        }
+    return buffer;
 }
 
 #endif
