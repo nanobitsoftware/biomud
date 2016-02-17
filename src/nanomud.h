@@ -170,11 +170,12 @@
 #define MYSOCKET_CONNECT 22222
 #define WM_SOCKET 1005
 #define MUD_RECV  1006
-
+#define MSL 4096
 /* End of gui defines and whatnot */
 
 #define DEBUG_FILE "c:\\nanobit\\nanomud_debug"
 #define SETTINGS_FILE "c:\\nanobit\\nanomud_settings.nmd"
+#define DB_FILE      "c:\\nanobit\biomud.sqlite.db" // DB file
 
 #define LOWER(c)        ((c) >= 'A' && (c) <= 'Z' ? (c)+'a'-'A' : (c))
 #define UPPER(c)        ((c) >= 'a' && (c) <= 'z' ? (c)+'A'-'a' : (c))

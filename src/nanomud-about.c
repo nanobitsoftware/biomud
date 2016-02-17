@@ -43,9 +43,9 @@ void CreateAboutBox(void)
     RECT main_window;
 
     if (IsWindow(MudAbout))
-        {
-            return;
-        }
+    {
+        return;
+    }
     GetWindowRect(MudMain, &main_window);
     MudAbout = CreateWindowEx(WS_EX_TOPMOST | WS_EX_CONTROLPARENT, "About", "NanoMud About", DS_3DLOOK | WS_POPUP | WS_SYSMENU,
                               (main_window.right / 2) - 300, (main_window.bottom / 2) - 200, 600, 400, 0, 0, g_hInst, 0);
@@ -56,89 +56,89 @@ void CreateAboutBox(void)
     ShowWindow(MudAbout, SW_SHOW);
 
     if (!IsWindow(MudAbout))
-        {
-            GiveError("Unable to create about dialog box.", 0);
-            return;
-        }
+    {
+        GiveError("Unable to create about dialog box.", 0);
+        return;
+    }
     return;
 }
 
 LRESULT CALLBACK AboutProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
+    {
+    case WM_CREATE:
+    {
+        HWND About_Ok_Button;
+        HWND About_License_Edit;
+        HWND About_About;
+        RECT aboutrect;
+        RECT main_window;
+
+        int len;
+        char copyright[1024];
+
+        copyright[0] = '\0';
+
+        GetClientRect(MudAbout, &aboutrect);
+        GetWindowRect(MudMain, &main_window);
+        MoveWindow(MudAbout, ((main_window.right - main_window.left) / 2), ((main_window.bottom - main_window.top) / 2), 600, 400, TRUE);
+        GetClientRect(MudAbout, &aboutrect);
+        About_License_Edit = CreateWindowEx(WS_EX_CLIENTEDGE, "RichEdit50W", "",
+                                            WS_CHILD | WS_VISIBLE | WS_VSCROLL | ES_MULTILINE | ES_READONLY | ES_CENTER, 0, 200, 600, 200, hwnd, NULL, g_hInst, 0);
+        ShowWindow(About_License_Edit, SW_SHOW);
+
+        FormatText(About_License_Edit);
+        len = SendMessage(About_License_Edit, WM_GETTEXTLENGTH, 0, 0);
+        SendMessage(About_License_Edit, EM_SETSEL, len, len);
+        SendMessage(About_License_Edit, EM_REPLACESEL, strlen(GNU_License_Char), (LPARAM)(LPCSTR)GNU_License_Char);
+        About_About = CreateWindowEx(WS_EX_CLIENTEDGE, "STATIC", "",
+                                     WS_CHILD | SS_CENTER, 2, 2, 596, 196, hwnd, NULL, g_hInst, 0);
+        ShowWindow(About_About, SW_SHOW);
+
+        About_Ok_Button = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "",
+                                         BS_TEXT | WS_CHILD, 520, 176, 70, 20, hwnd, (HMENU)ID_ABOUT_OK_BUTTON, g_hInst, 0);
+        SendMessage(About_Ok_Button, WM_SETTEXT, strlen("Ok"), (LPARAM)(LPCSTR)"Ok");
+        ShowWindow(About_Ok_Button, SW_SHOW);
+        sprintf(copyright, "%s\n%s", Mud_client_Version, Copy_Right);
+        SendMessage(About_About, WM_SETTEXT, strlen(copyright), (LPARAM)(LPCSTR)copyright);
+
+        /* nasty = TRUE;
+        for (i=0;i<1000;i++)
         {
-        case WM_CREATE:
+        ParseLines(str_dup(GNU_License_Char));
+        do_peek();
+        }
+        nasty = FALSE;
+        update_term();
+        */
+    }
+    break;
+    case WM_COMMAND:
+        switch (LOWORD(wParam))
         {
-            HWND About_Ok_Button;
-            HWND About_License_Edit;
-            HWND About_About;
-            RECT aboutrect;
-            RECT main_window;
-
-            int len;
-            char copyright[1024];
-
-            copyright[0] = '\0';
-
-            GetClientRect(MudAbout, &aboutrect);
-            GetWindowRect(MudMain, &main_window);
-            MoveWindow(MudAbout, ((main_window.right - main_window.left) / 2), ((main_window.bottom - main_window.top) / 2), 600, 400, TRUE);
-            GetClientRect(MudAbout, &aboutrect);
-            About_License_Edit = CreateWindowEx(WS_EX_CLIENTEDGE, "RichEdit50W", "",
-                                                WS_CHILD | WS_VISIBLE | WS_VSCROLL | ES_MULTILINE | ES_READONLY | ES_CENTER, 0, 200, 600, 200, hwnd, NULL, g_hInst, 0);
-            ShowWindow(About_License_Edit, SW_SHOW);
-
-            FormatText(About_License_Edit);
-            len = SendMessage(About_License_Edit, WM_GETTEXTLENGTH, 0, 0);
-            SendMessage(About_License_Edit, EM_SETSEL, len, len);
-            SendMessage(About_License_Edit, EM_REPLACESEL, strlen(GNU_License_Char), (LPARAM)(LPCSTR)GNU_License_Char);
-            About_About = CreateWindowEx(WS_EX_CLIENTEDGE, "STATIC", "",
-                                         WS_CHILD | SS_CENTER, 2, 2, 596, 196, hwnd, NULL, g_hInst, 0);
-            ShowWindow(About_About, SW_SHOW);
-
-            About_Ok_Button = CreateWindowEx(WS_EX_CLIENTEDGE, "BUTTON", "",
-                                             BS_TEXT | WS_CHILD, 520, 176, 70, 20, hwnd, (HMENU)ID_ABOUT_OK_BUTTON, g_hInst, 0);
-            SendMessage(About_Ok_Button, WM_SETTEXT, strlen("Ok"), (LPARAM)(LPCSTR)"Ok");
-            ShowWindow(About_Ok_Button, SW_SHOW);
-            sprintf(copyright, "%s\n%s", Mud_client_Version, Copy_Right);
-            SendMessage(About_About, WM_SETTEXT, strlen(copyright), (LPARAM)(LPCSTR)copyright);
-
-            /* nasty = TRUE;
-            for (i=0;i<1000;i++)
-            {
-            ParseLines(str_dup(GNU_License_Char));
-            do_peek();
-            }
-            nasty = FALSE;
-            update_term();
-            */
+        case ID_ABOUT_OK_BUTTON:
+            DestroyWindow(MudAbout);
+            break;
         }
         break;
-        case WM_COMMAND:
-            switch (LOWORD(wParam))
-                {
-                case ID_ABOUT_OK_BUTTON:
-                    DestroyWindow(MudAbout);
-                    break;
-                }
-            break;
-        case WM_KEYDOWN:
+    case WM_KEYDOWN:
+    {
+        switch (wParam)
         {
-            switch (wParam)
-                {
-                case 27:
-                case 13:
-                {
-                    DestroyWindow(MudAbout);
-                    SetFocus(MudMain);
-                    break;
-                }
-                }
+        case 27:
+        case 13:
+        {
+            DestroyWindow(MudAbout);
+            SetFocus(MudMain);
+            break;
         }
+        }
+    }
 
-        default:
-            return DefWindowProc(hwnd, message, wParam, lParam);
-        }
+    default:
+        return DefWindowProc(hwnd, message, wParam, lParam);
+    }
 
     return 0;
 }
