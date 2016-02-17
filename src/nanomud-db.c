@@ -13,8 +13,8 @@
 * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
-
 #include <stdio.h>
+
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
@@ -23,4 +23,8 @@
 #include <richedit.h>
 #include "NanoMud.h"
 #include <assert.h>
-#include "nanomud-script.h"
+#include <excpt.h>
+#include <fcntl.h>
+#include <sys/types.h>
+//#include <unistd.h>
+#include <fcntl.h>

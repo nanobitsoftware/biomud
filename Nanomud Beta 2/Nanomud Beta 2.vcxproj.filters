@@ -111,6 +111,9 @@
     <ClCompile Include="..\src\sqlite3\sqlite3.c">
       <Filter>sqlite3</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\nanomud-db.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\nanomud-plugin-api.h">
