@@ -25,7 +25,7 @@
 #include <time.h>
 #include <commctrl.h>
 #include "BioMUD.h"
-#include "NWC.h"
+#include "nwc_lib/NWC.h"
 
 #ifndef BioMUD_NANO
 

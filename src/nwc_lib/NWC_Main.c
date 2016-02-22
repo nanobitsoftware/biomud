@@ -25,9 +25,8 @@
 #include <time.h>
 #include <commctrl.h>
 
-#include "BioMUD.h"
-#include "NWC.h"
-
+#include "../BioMUD.h"
+#include "../nwc_lib/NWC.h"
 int IDX;
 BOOL INITIALIZED;
 

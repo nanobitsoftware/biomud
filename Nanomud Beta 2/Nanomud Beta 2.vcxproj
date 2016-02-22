@@ -36,6 +36,7 @@
     <ClCompile Include="..\src\memory.c" />
     <ClCompile Include="..\src\misc-dialog.c" />
     <ClCompile Include="..\src\net.c" />
+    <ClCompile Include="..\src\NWC_LIb\NWC_Main.c" />
     <ClCompile Include="..\src\plugins-main.c" />
     <ClCompile Include="..\src\plugins-pfunc.c" />
     <ClCompile Include="..\src\script-edit.c" />
@@ -47,7 +48,6 @@
     <ClCompile Include="..\src\strings.c" />
     <ClCompile Include="..\src\terminal.c" />
     <ClCompile Include="..\src\test.c" />
-    <ClCompile Include="..\src\NWC_Main.c" />
     <ClCompile Include="..\src\regex9\regexp9.c" />
     <ClCompile Include="..\src\sqlite3\sqlite3.c">
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">None</DebugInformationFormat>
@@ -66,7 +66,7 @@
     <ClInclude Include="..\src\biomud-plugins.h" />
     <ClInclude Include="..\src\biomud-script.h" />
     <ClInclude Include="..\src\biomud.h" />
-    <ClInclude Include="..\src\NWC.h" />
+    <ClInclude Include="..\src\NWC_LIb\NWC.h" />
     <ClInclude Include="..\src\regex9\regexp9.h" />
     <ClInclude Include="..\src\sqlite3\sqlite3.h" />
     <ClInclude Include="resource.h" />

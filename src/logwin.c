@@ -27,7 +27,7 @@
 #include "BioMUD.h"
 #include <commctrl.h>
 
-#include "NWC.h"
+#include "nwc_lib/NWC.h"
 
 // Keeping this struct and typedef in this scope, as it has no real need outside of this source file.
 typedef struct log_data LOGDATA;

@@ -19,11 +19,11 @@
     <Filter Include="sqlite3">
       <UniqueIdentifier>{93fc0442-d248-479e-b350-fe71ad5e5c8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NWC Library">
+      <UniqueIdentifier>{6e0511f6-c9f1-42d0-8f93-8ce17acb7ca0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\NWC_Main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\regex9\regexp9.c">
       <Filter>RegEx9</Filter>
     </ClCompile>
@@ -114,11 +114,11 @@
     <ClCompile Include="..\src\test.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\NWC_LIb\NWC_Main.c">
+      <Filter>NWC Library</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\NWC.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\mud-client_private.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -145,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="..\src\biomud-script.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\NWC_LIb\NWC.h">
+      <Filter>NWC Library</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

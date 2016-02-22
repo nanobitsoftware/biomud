@@ -35,7 +35,7 @@
 #include "BioMUD.h"
 #include <commctrl.h>
 #include "BioMUD-script.h"
-#include "NWC.h"
+#include "nwc_lib/NWC.h"
 #include "BioMUD-plugin-api.h"
 #include "BioMUD-plugins.h"
 

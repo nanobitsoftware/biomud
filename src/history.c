@@ -26,7 +26,7 @@
 #include <malloc.h>
 #include <commctrl.h>
 #include "BioMUD.h"
-#include "NWC.h"
+#include "nwc_lib/NWC.h"
 
 #define history_file "c:/nanobit/BioMUD_history.dat"
 

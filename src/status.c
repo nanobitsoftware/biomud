@@ -29,7 +29,7 @@
 #include <process.h>
 #include "BioMUD.h"
 #include "BioMUD-script.h"
-#include "NWC.h"
+#include "nwc_lib/NWC.h"
 #include "BioMUD-plugin-api.h"
 
 #define ID_BUFFER 7000
