@@ -21,6 +21,6 @@
 #include <windows.h>
 #include <winsock.h>
 #include <richedit.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 #include <assert.h>
-#include "nanomud-script.h"
+#include "BioMUD-script.h"

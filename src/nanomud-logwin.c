@@ -24,7 +24,7 @@
 #include <richedit.h>
 #include <assert.h>
 #include <malloc.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 #include <commctrl.h>
 
 #include "NWC.h"
@@ -42,7 +42,7 @@ struct log_data
 
 #define ID_LOG_LIST   50001
 #define ID_LOG_EXPORT 50002
-#define nano_log "c:/nanobit/nanomud_log_export.txt"
+#define nano_log "c:/nanobit/BioMUD_log_export.txt"
 HWND LogWindow;
 LOGDATA* first_log;
 LOGDATA* last_log;

@@ -14,7 +14,7 @@
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/*  NanoMudTelnet.c
+/*  BioMUDTelnet.c
 *  This file handles all winsock/telnet connection routines
 *  as well as any misc. networking routines that will be
 *  needed.
@@ -27,7 +27,7 @@
 #include <windows.h>
 #include <winsock.h>
 #include <richedit.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 
 int last_sent;
 BOOL congestion;
@@ -66,17 +66,17 @@ void CheckPing()
     nRet = WaitForEchoReply(this_session->rawSocket);
 
     if (nRet == SOCKET_ERROR)
-        {
-            this_session->ping = -1;
+    {
+        this_session->ping = -1;
 
-            return;
-        }
+        return;
+    }
     if (!nRet)
-        {
-            this_session->ping = -1;
+    {
+        this_session->ping = -1;
 
-            return;
-        }
+        return;
+    }
     dwElapsed = RecvEchoReply(this_session->rawSocket, &this_session->saSrc, &cTTL);
     //  cTTL = NULL;
     //dwElapsed = GetTickCount();
@@ -105,9 +105,9 @@ int SendEchoRequest(SOCKET s, LPSOCKADDR_IN lpstToAddr)
     //  return FALSE;
 
     for (nRet = 0; nRet < REQ_DATASIZE; nRet++)
-        {
-            echoReq.cData[nRet] = ' ' + nRet;
-        }
+    {
+        echoReq.cData[nRet] = ' ' + nRet;
+    }
 
     echoReq.dwTime = GetTickCount();
 
@@ -133,16 +133,16 @@ DWORD RecvEchoReply(SOCKET s, LPSOCKADDR_IN lpsaFrom, u_char* pTTL)
     //      ReportError("recvfrom()");
 
     if (echoReply.echoRequest.icmpHdr.ID != GetCurrentThreadId())
-        {
-            return 0;
-        }
+    {
+        return 0;
+    }
     //LOG ("Received: %d", echoReply.echoRequest.dwTime);
     if (echoReply.echoRequest.dwTime != last_sent)
-        {
-            congestion = TRUE;
-            //LOG("Congestion incountered. Skipping packets");
-            return last_sent;
-        }
+    {
+        congestion = TRUE;
+        //LOG("Congestion incountered. Skipping packets");
+        return last_sent;
+    }
     congestion = FALSE;
     *pTTL = echoReply.ipHdr.TTL;
     return(echoReply.echoRequest.dwTime);
@@ -182,19 +182,19 @@ u_short in_cksum(u_short* addr, int len)
     *  16 bits.
     */
     while (nleft > 1)
-        {
-            sum += *w++;
-            nleft -= 2;
-        }
+    {
+        sum += *w++;
+        nleft -= 2;
+    }
 
     /* mop up an odd byte, if necessary */
     if (nleft == 1)
-        {
-            u_short u = 0;
+    {
+        u_short u = 0;
 
-            *(u_char*)(&u) = *(u_char*)w;
-            sum += u;
-        }
+        *(u_char*)(&u) = *(u_char*)w;
+        sum += u;
+    }
 
     /*
     * add back carry outs from top 16 bits to low 16 bits
@@ -231,21 +231,21 @@ int HandleWinsockConnection(HWND hwnd, char* HostName)
     address.sin_family = AF_INET;
     address.sin_port = htons(this_session->port);
     if ((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
-        {
-            exit(0);
-        }
+    {
+        exit(0);
+    }
     if ((host = gethostbyname(HostName)) == NULL)
-        {
-            give_term_error("Unable to find mud! %s", HostName);
-            return 0;
-        }
+    {
+        give_term_error("Unable to find mud! %s", HostName);
+        return 0;
+    }
 
     address.sin_addr.s_addr = *((unsigned long*)host->h_addr);
     if ((this_session->desc = connect(sock, (struct sockaddr*) &address, sizeof(address))) != 0)
-        {
-            MessageBox(hwnd, "Unable to connect.", "Error", MB_OK);
-            return 0;
-        }
+    {
+        MessageBox(hwnd, "Unable to connect.", "Error", MB_OK);
+        return 0;
+    }
     this_session->rawSocket = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
     /*  if (this_session->rawSocket == SOCKET_ERROR)
         {
@@ -255,9 +255,9 @@ int HandleWinsockConnection(HWND hwnd, char* HostName)
     */
     lpHost = gethostbyname(this_session->host);
     if (lpHost == NULL)
-        {
-            return 0;
-        }
+    {
+        return 0;
+    }
     this_session->saDest.sin_addr.s_addr = *((u_long FAR*) (lpHost->h_addr));
     this_session->saDest.sin_family = AF_INET;
     this_session->saDest.sin_port = 0;
@@ -300,52 +300,53 @@ DWORD WINAPI check_ping(void)
     timeout.tv_usec = 0;
     //this_session->rawSocket = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
     while (1000)
+    {
+        return;
+        //update_term();
+        sleep(1000);
+        //timeout.tv_sec = 1000;
+        //timeout.tv_usec = 0;
+
+        //FD_ZERO(&set);
+        //FD_SET(100, &set);
+
+        //select(FD_SETSIZE, &set, NULL, NULL, &timeout);
+        //sleep(2000);
+        //        char temp[1000];
+
+        t_total = (float)total_alloc;
+        //update_term();
+
+        if (t_total > 1000)
         {
-            //update_term();
-            sleep(1000);
-            //timeout.tv_sec = 1000;
-            //timeout.tv_usec = 0;
-
-            //FD_ZERO(&set);
-            //FD_SET(100, &set);
-
-            //select(FD_SETSIZE, &set, NULL, NULL, &timeout);
-            //sleep(2000);
-            //        char temp[1000];
-
-            t_total = (float)total_alloc;
-            //update_term();
-
-            if (t_total > 1000)
-                {
-                    b_type = 1; // KB
-                    t_total = t_total / 1000;
-                }
-            if (t_total > 1000)
-                {
-                    b_type = 2; // MB
-                    t_total = t_total / 1000;
-                }
-            if (t_total > 1000)
-                {
-                    b_type = 3; // GB
-                    t_total = t_total / 1000;
-                }
-
-            CheckPing();
-            //commaize(t_total,tt_char);
-            commaize(bufcount, b_buf);
-            sprintf(ping_string, "%d", this_session->ping);
-
-            //sprintf(temp, "%u", (unsigned int)this_session->ping);
-            sprintf(buf, "BioMud - (Ping:%s%s)(Buffer: %s)(Memory %3.6f %s)",
-                    this_session->ping == -1 ? "N/A" : ping_string, this_session->ping != -1 ? "ms" : "", b_buf, t_total, b_type == 0 ? "bytes" : b_type == 1 ? "kilobytes" : b_type == 2 ? "megabytes" : "gigabytes");
-
-            SendMessage(MudMain, WM_SETTEXT, /*strlen(buf)-2*/0, (LPARAM)(LPCSTR)buf);
-
-            update_status();
-            TERM_READY = TRUE;
+            b_type = 1; // KB
+            t_total = t_total / 1000;
         }
+        if (t_total > 1000)
+        {
+            b_type = 2; // MB
+            t_total = t_total / 1000;
+        }
+        if (t_total > 1000)
+        {
+            b_type = 3; // GB
+            t_total = t_total / 1000;
+        }
+
+        CheckPing();
+        //commaize(t_total,tt_char);
+        commaize(bufcount, b_buf);
+        sprintf(ping_string, "%d", this_session->ping);
+
+        //sprintf(temp, "%u", (unsigned int)this_session->ping);
+        sprintf(buf, "BioMud - (Ping:%s%s)(Buffer: %s)(Memory %3.6f %s)",
+                this_session->ping == -1 ? "N/A" : ping_string, this_session->ping != -1 ? "ms" : "", b_buf, t_total, b_type == 0 ? "bytes" : b_type == 1 ? "kilobytes" : b_type == 2 ? "megabytes" : "gigabytes");
+
+        SendMessage(MudMain, WM_SETTEXT, /*strlen(buf)-2*/0, (LPARAM)(LPCSTR)buf);
+
+        update_status();
+        TERM_READY = TRUE;
+    }
 
     return 0;
 }
@@ -365,9 +366,9 @@ void initwinsock()
     err = WSAStartup(wVersionRequested, &wsaData);
 
     if (err != 0)
-        {
-            GiveError("Unable to find winsock.", 1);
-        }
+    {
+        GiveError("Unable to find winsock.", 1);
+    }
 
     return;
 }

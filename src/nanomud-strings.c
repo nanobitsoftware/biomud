@@ -23,7 +23,7 @@
 #include <winsock.h>
 #include <richedit.h>
 #include <assert.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 
 char str_empty[1];
 char* string_space;
@@ -36,17 +36,17 @@ char* top_string;
 BOOL string_compare(const char* ostr, const char* tstr)
 {
     if (ostr == NULL || tstr == NULL)
+    {
+        return FALSE;
+    }
+    for (; *ostr || *tstr; ostr++, tstr++)
+    {
+        if (LOWER(*ostr) != LOWER(*tstr))
+
         {
             return FALSE;
         }
-    for (; *ostr || *tstr; ostr++, tstr++)
-        {
-            if (LOWER(*ostr) != LOWER(*tstr))
-
-                {
-                    return FALSE;
-                }
-        }
+    }
     return TRUE;
 }
 
@@ -58,20 +58,20 @@ char* str_dup1(const char* str, char* file, int line)
     char* result;
 
     if (!str)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     result = (char*)nano_malloc(strlen(str) + 10, file, line);
 
     //result = malloc(strlen(str)+2);
     if (result == (char*)0)
-        {
-            GiveError("Invalid Strdup. Exiting.", 1);
-            free(result);
+    {
+        GiveError("Invalid Strdup. Exiting.", 1);
+        free(result);
 
-            return (char*)0;
-        }
+        return (char*)0;
+    }
     strcpy(result, str);
     return result;
 }
@@ -84,44 +84,44 @@ BOOL str_search(const char* str)
     BOOL efound = FALSE;
     BOOL mfound = FALSE;
     if (str == NULL)
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
     for (;; point++)
+    {
+        if (*point == '\033')
         {
-            if (*point == '\033')
-                {
-                    efound = TRUE;
-                }
-            if (*point == 'm')
-                {
-                    mfound = TRUE;
-                }
-            if (!*point)
-                {
-                    break;
-                }
+            efound = TRUE;
         }
+        if (*point == 'm')
+        {
+            mfound = TRUE;
+        }
+        if (!*point)
+        {
+            break;
+        }
+    }
     if (efound && !mfound)
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
     else
-        {
-            return TRUE;
-        }
+    {
+        return TRUE;
+    }
 }
 int str_ret(const char* str)
 {
     const char* point = str;
     int i;
     for (i = 0; *point; point++, i++)
+    {
+        if (*point == '\033')
         {
-            if (*point == '\033')
-                {
-                    return i;
-                }
+            return i;
         }
+    }
     return 0;
 }
 void strip_junk(char* str)
@@ -132,18 +132,18 @@ void strip_junk(char* str)
     buf = fleh;
 
     if (str == NULL)
-        {
-            return;
-        }
+    {
+        return;
+    }
     point = str;
     for (point = str; *point; point++)
+    {
+        if (*point != '\033')
         {
-            if (*point != '\033')
-                {
-                    *buf = *point;
-                    *++buf = '\0';
-                }
+            *buf = *point;
+            *++buf = '\0';
         }
+    }
     *++buf = '\0';
     str = buf;
     return;
@@ -152,20 +152,20 @@ void strip_junk(char* str)
 bool strprefix(const char* astr, const char* bstr)
 {
     if (astr == NULL)
-        {
-            return TRUE;
-        }
+    {
+        return TRUE;
+    }
     if (bstr == NULL)
+    {
+        return TRUE;
+    }
+    for (; (*astr || *bstr) && *astr != '\0'; astr++, bstr++)
+    {
+        if (LOWER(*astr) != LOWER(*bstr))
         {
             return TRUE;
         }
-    for (; (*astr || *bstr) && *astr != '\0'; astr++, bstr++)
-        {
-            if (LOWER(*astr) != LOWER(*bstr))
-                {
-                    return TRUE;
-                }
-        }
+    }
 
     return FALSE;
 }
@@ -175,33 +175,33 @@ char* one_argument(char* argument, char* arg_first)
     char cEnd;
 
     while (isspace(*argument))
-        {
-            argument++;
-        }
+    {
+        argument++;
+    }
 
     cEnd = ' ';
     if (*argument == '\'' || *argument == '"')
-        {
-            cEnd = *argument++;
-        }
+    {
+        cEnd = *argument++;
+    }
 
     while (*argument != '\0')
+    {
+        if (*argument == cEnd)
         {
-            if (*argument == cEnd)
-                {
-                    argument++;
-                    break;
-                }
-            *arg_first = LOWER(*argument);
-            arg_first++;
             argument++;
+            break;
         }
+        *arg_first = LOWER(*argument);
+        arg_first++;
+        argument++;
+    }
     *arg_first = '\0';
 
     while (isspace(*argument))
-        {
-            argument++;
-        }
+    {
+        argument++;
+    }
 
     return argument;
 }
@@ -210,38 +210,38 @@ char* script_strip(char* argument, char* arg_first)
     char cEnd;
 
     while (isspace(*argument))
-        {
-            argument++;
-        }
+    {
+        argument++;
+    }
 
     cEnd = '{';
     if (*argument == '{' || *argument == '}')
-        {
-            cEnd = *argument++;
-        }
+    {
+        cEnd = *argument++;
+    }
 
     while (*argument != '\0')
+    {
+        if (*argument == cEnd || *argument == '}')
         {
-            if (*argument == cEnd || *argument == '}')
-                {
-                    argument++;
-                    break;
-                }
-
-            *arg_first = *argument;
-            arg_first++;
             argument++;
+            break;
         }
+
+        *arg_first = *argument;
+        arg_first++;
+        argument++;
+    }
     *arg_first = '\0';
 
     while (isspace(*argument))
-        {
-            argument++;
-        }
+    {
+        argument++;
+    }
     while (*argument == '{' || *argument == '}')
-        {
-            argument++;
-        }
+    {
+        argument++;
+    }
 
     return argument;
 }
@@ -253,25 +253,25 @@ BOOL simple_str_match(char* input, char* pattern)
     char* wherePattern = pattern;
 
     for (; inputPtr != '\0'; inputPtr++)
+    {
+        whereInput = inputPtr;
+        wherePattern = pattern;
+
+        if (*whereInput == *wherePattern)
         {
-            whereInput = inputPtr;
-            wherePattern = pattern;
+            for (; wherePattern != '\0'; wherePattern++)
+            {
+                whereInput++;
 
-            if (*whereInput == *wherePattern)
+                if (*whereInput != *wherePattern)
                 {
-                    for (; wherePattern != '\0'; wherePattern++)
-                        {
-                            whereInput++;
-
-                            if (*whereInput != *wherePattern)
-                                {
-                                    break;
-                                }
-                        }
-
-                    return TRUE;
+                    break;
                 }
+            }
+
+            return TRUE;
         }
+    }
 
     return FALSE;
 }
@@ -295,101 +295,101 @@ char*  makeupper(char* str)
     buffer = buf2;
 
     if (!str)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     for (; *point; *point++)
+    {
+        *buffer = *point;
+        switch (*point)
         {
-            *buffer = *point;
-            switch (*point)
-                {
-                case 'a':
-                    strcat(buf3, "A");
-                    break;
-                case 'b':
-                    strcat(buf3, "B");
-                    break;
-                case 'c':
-                    strcat(buf3, "C");
-                    break;
-                case 'd':
-                    strcat(buf3, "D");
-                    break;
-                case 'e':
-                    strcat(buf3, "E");
-                    break;
-                case 'f':
-                    strcat(buf3, "F");
-                    break;
-                case 'g':
-                    strcat(buf3, "G");
-                    break;
-                case 'h':
-                    strcat(buf3, "H");
-                    break;
-                case 'i':
-                    strcat(buf3, "I");
-                    break;
-                case 'j':
-                    strcat(buf3, "J");
-                    break;
-                case 'k':
-                    strcat(buf3, "K");
-                    break;
-                case 'l':
-                    strcat(buf3, "L");
-                    break;
-                case 'm':
-                    strcat(buf3, "M");
-                    break;
-                case 'n':
-                    strcat(buf3, "N");
-                    break;
-                case 'o':
-                    strcat(buf3, "O");
-                    break;
-                case 'p':
-                    strcat(buf3, "P");
-                    break;
-                case 'q':
-                    strcat(buf3, "Q");
-                    break;
-                case 'r':
-                    strcat(buf3, "R");
-                    break;
-                case 's':
-                    strcat(buf3, "S");
-                    break;
-                case 't':
-                    strcat(buf3, "T");
-                    break;
-                case 'u':
-                    strcat(buf3, "U");
-                    break;
-                case 'v':
-                    strcat(buf3, "V");
-                    break;
-                case 'w':
-                    strcat(buf3, "W");
-                    break;
-                case 'x':
-                    strcat(buf3, "X");
-                    break;
-                case 'y':
-                    strcat(buf3, "Y");
-                    break;
-                case 'z':
-                    strcat(buf3, "Z");
-                    break;
-                default:
-                    strcat(buf3, buffer);
-                    break;
-                }
-
-            strcat(buf, buf3);
-            buf3[0] = '\0';
+        case 'a':
+            strcat(buf3, "A");
+            break;
+        case 'b':
+            strcat(buf3, "B");
+            break;
+        case 'c':
+            strcat(buf3, "C");
+            break;
+        case 'd':
+            strcat(buf3, "D");
+            break;
+        case 'e':
+            strcat(buf3, "E");
+            break;
+        case 'f':
+            strcat(buf3, "F");
+            break;
+        case 'g':
+            strcat(buf3, "G");
+            break;
+        case 'h':
+            strcat(buf3, "H");
+            break;
+        case 'i':
+            strcat(buf3, "I");
+            break;
+        case 'j':
+            strcat(buf3, "J");
+            break;
+        case 'k':
+            strcat(buf3, "K");
+            break;
+        case 'l':
+            strcat(buf3, "L");
+            break;
+        case 'm':
+            strcat(buf3, "M");
+            break;
+        case 'n':
+            strcat(buf3, "N");
+            break;
+        case 'o':
+            strcat(buf3, "O");
+            break;
+        case 'p':
+            strcat(buf3, "P");
+            break;
+        case 'q':
+            strcat(buf3, "Q");
+            break;
+        case 'r':
+            strcat(buf3, "R");
+            break;
+        case 's':
+            strcat(buf3, "S");
+            break;
+        case 't':
+            strcat(buf3, "T");
+            break;
+        case 'u':
+            strcat(buf3, "U");
+            break;
+        case 'v':
+            strcat(buf3, "V");
+            break;
+        case 'w':
+            strcat(buf3, "W");
+            break;
+        case 'x':
+            strcat(buf3, "X");
+            break;
+        case 'y':
+            strcat(buf3, "Y");
+            break;
+        case 'z':
+            strcat(buf3, "Z");
+            break;
+        default:
+            strcat(buf3, buffer);
+            break;
         }
+
+        strcat(buf, buf3);
+        buf3[0] = '\0';
+    }
 
     return (char*)to_ret;
 }
@@ -410,101 +410,101 @@ char*  makelower(char* str)
     to_ret = buf;
 
     if (!str)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     for (; *point; *point++)
+    {
+        *buffer = *point;
+        switch (*point)
         {
-            *buffer = *point;
-            switch (*point)
-                {
-                case 'A':
-                    strcat(buf3, "a");
-                    break;
-                case 'B':
-                    strcat(buf3, "b");
-                    break;
-                case 'C':
-                    strcat(buf3, "c");
-                    break;
-                case 'D':
-                    strcat(buf3, "d");
-                    break;
-                case 'E':
-                    strcat(buf3, "e");
-                    break;
-                case 'F':
-                    strcat(buf3, "f");
-                    break;
-                case 'G':
-                    strcat(buf3, "g");
-                    break;
-                case 'H':
-                    strcat(buf3, "h");
-                    break;
-                case 'I':
-                    strcat(buf3, "i");
-                    break;
-                case 'J':
-                    strcat(buf3, "j");
-                    break;
-                case 'K':
-                    strcat(buf3, "k");
-                    break;
-                case 'L':
-                    strcat(buf3, "l");
-                    break;
-                case 'M':
-                    strcat(buf3, "m");
-                    break;
-                case 'N':
-                    strcat(buf3, "n");
-                    break;
-                case 'O':
-                    strcat(buf3, "o");
-                    break;
-                case 'P':
-                    strcat(buf3, "p");
-                    break;
-                case 'Q':
-                    strcat(buf3, "q");
-                    break;
-                case 'R':
-                    strcat(buf3, "r");
-                    break;
-                case 'S':
-                    strcat(buf3, "s");
-                    break;
-                case 'T':
-                    strcat(buf3, "t");
-                    break;
-                case 'U':
-                    strcat(buf3, "u");
-                    break;
-                case 'V':
-                    strcat(buf3, "v");
-                    break;
-                case 'W':
-                    strcat(buf3, "w");
-                    break;
-                case 'X':
-                    strcat(buf3, "x");
-                    break;
-                case 'Y':
-                    strcat(buf3, "y");
-                    break;
-                case 'Z':
-                    strcat(buf3, "z");
-                    break;
-                default:
-                    strcat(buf3, buffer);
-                    break;
-                }
-
-            strcat(buf, buf3);
-            buf3[0] = '\0';
+        case 'A':
+            strcat(buf3, "a");
+            break;
+        case 'B':
+            strcat(buf3, "b");
+            break;
+        case 'C':
+            strcat(buf3, "c");
+            break;
+        case 'D':
+            strcat(buf3, "d");
+            break;
+        case 'E':
+            strcat(buf3, "e");
+            break;
+        case 'F':
+            strcat(buf3, "f");
+            break;
+        case 'G':
+            strcat(buf3, "g");
+            break;
+        case 'H':
+            strcat(buf3, "h");
+            break;
+        case 'I':
+            strcat(buf3, "i");
+            break;
+        case 'J':
+            strcat(buf3, "j");
+            break;
+        case 'K':
+            strcat(buf3, "k");
+            break;
+        case 'L':
+            strcat(buf3, "l");
+            break;
+        case 'M':
+            strcat(buf3, "m");
+            break;
+        case 'N':
+            strcat(buf3, "n");
+            break;
+        case 'O':
+            strcat(buf3, "o");
+            break;
+        case 'P':
+            strcat(buf3, "p");
+            break;
+        case 'Q':
+            strcat(buf3, "q");
+            break;
+        case 'R':
+            strcat(buf3, "r");
+            break;
+        case 'S':
+            strcat(buf3, "s");
+            break;
+        case 'T':
+            strcat(buf3, "t");
+            break;
+        case 'U':
+            strcat(buf3, "u");
+            break;
+        case 'V':
+            strcat(buf3, "v");
+            break;
+        case 'W':
+            strcat(buf3, "w");
+            break;
+        case 'X':
+            strcat(buf3, "x");
+            break;
+        case 'Y':
+            strcat(buf3, "y");
+            break;
+        case 'Z':
+            strcat(buf3, "z");
+            break;
+        default:
+            strcat(buf3, buffer);
+            break;
         }
+
+        strcat(buf, buf3);
+        buf3[0] = '\0';
+    }
 
     return to_ret;
 }
@@ -525,53 +525,53 @@ char* commaize(unsigned long long int x, char buf[])  // Turn a ULONG_INT into a
     to_ret = temp;
 
     if (x <= 999)
-        {
-            buf[0] = '\0';
-            sprintf(&buf[0], "%llu", x);
+    {
+        buf[0] = '\0';
+        sprintf(&buf[0], "%llu", x);
 
-            return &buf[0];
-        }
+        return &buf[0];
+    }
     else if (x > 999)
+    {
+        point += strlen(temp);
+
+        if (!*--point)
         {
-            point += strlen(temp);
-
-            if (!*--point)
-                {
-                    return to_ret;
-                }
-            i = strlen(temp) - 1;
-            c = i / 3; // How many commas. :)
-            i += c;
-            temp[i + c + 1] = '\0';
-
-            for (; *point; point--, i--)
-                {
-                    if (i < 0)
-                        {
-                            buf[0] = '\0';
-                            strcat(buf, temp);
-
-                            return to_ret;
-                        }
-                    if (f == 3)
-                        {
-                            f = 0;
-                            temp[i] = ',';
-                            *++point;
-
-                            continue;
-                        }
-
-                    temp[i] = *point;
-                    f++;
-                }
-
-            to_ret = temp;
-            buf[0] = '\0';
-            strcat(buf, temp);
-
-            return &buf[0];
+            return to_ret;
         }
+        i = strlen(temp) - 1;
+        c = i / 3; // How many commas. :)
+        i += c;
+        temp[i + c + 1] = '\0';
+
+        for (; *point; point--, i--)
+        {
+            if (i < 0)
+            {
+                buf[0] = '\0';
+                strcat(buf, temp);
+
+                return to_ret;
+            }
+            if (f == 3)
+            {
+                f = 0;
+                temp[i] = ',';
+                *++point;
+
+                continue;
+            }
+
+            temp[i] = *point;
+            f++;
+        }
+
+        to_ret = temp;
+        buf[0] = '\0';
+        strcat(buf, temp);
+
+        return &buf[0];
+    }
 
     return &buf[0];
 }
@@ -582,32 +582,32 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 
     ShowWindow(MudMain, SW_HIDE);
     switch (exceptionCode)
-        {
-        case EXCEPTION_ACCESS_VIOLATION:
-            GiveError("Nanomud has encountered an Access Violation Error. This is unrecoverable. Nanomud will now Exit.", TRUE);
-            break;
-        case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
-            GiveError("Nanomud has encountered an Array out of bounds error. This is unrecoverable. Nanomud will now exit.", TRUE);
-            break;
-        case EXCEPTION_STACK_OVERFLOW:
-            GiveError("Nanomud Has encountered a STack Overflow error. This is unrecoverable. Nanomud will now exit.", TRUE);
-            break;
-        default:
-            GiveError("An unknown error has occured. Nanomud cannot continue running at this time.", TRUE);
-            break;
-        }
+    {
+    case EXCEPTION_ACCESS_VIOLATION:
+        GiveError("BioMUD has encountered an Access Violation Error. This is unrecoverable. BioMUD will now Exit.", TRUE);
+        break;
+    case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
+        GiveError("BioMUD has encountered an Array out of bounds error. This is unrecoverable. BioMUD will now exit.", TRUE);
+        break;
+    case EXCEPTION_STACK_OVERFLOW:
+        GiveError("BioMUD Has encountered a STack Overflow error. This is unrecoverable. BioMUD will now exit.", TRUE);
+        break;
+    default:
+        GiveError("An unknown error has occured. BioMUD cannot continue running at this time.", TRUE);
+        break;
+    }
 
     if (exceptionCode == EXCEPTION_GUARD_PAGE)
-        {
-            /* Handle the situation somehow... */
-            /* ...and resume the exception from the place the exception was thrown. */
-            return EXCEPTION_CONTINUE_EXECUTION;
-        }
+    {
+        /* Handle the situation somehow... */
+        /* ...and resume the exception from the place the exception was thrown. */
+        return EXCEPTION_CONTINUE_EXECUTION;
+    }
     else
-        {
-            /* Unknown exception, let another exception filter worry about it. */
-            return EXCEPTION_CONTINUE_SEARCH;
-        }
+    {
+        /* Unknown exception, let another exception filter worry about it. */
+        return EXCEPTION_CONTINUE_SEARCH;
+    }
 }
 
 // strip_newline
@@ -620,27 +620,27 @@ void strip_newline(char* str)
     len = i = 0;
 
     if (!str)
-        {
-            return;    // No string, nothing to do.
-        }
+    {
+        return;    // No string, nothing to do.
+    }
     len = strlen(str);
 
     for (i = 0; i <= len; i++)
+    {
+        if (!str[i])
         {
-            if (!str[i])
-                {
-                    continue;
-                }
-
-            if (str[i] == '\0')
-                {
-                    break;    // Null? Break out.
-                }
-            if (str[i] == '\n')
-                {
-                    str[i] = ' ';    // Replace it with a space.
-                }
+            continue;
         }
+
+        if (str[i] == '\0')
+        {
+            break;    // Null? Break out.
+        }
+        if (str[i] == '\n')
+        {
+            str[i] = ' ';    // Replace it with a space.
+        }
+    }
 }
 
 /* Below is stuff for regex. First, we start with the (minimal) documentation.

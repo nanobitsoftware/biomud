@@ -21,7 +21,7 @@
 #include <windows.h>
 #include <winsock.h>
 #include <richedit.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 #include <assert.h>
 #include <excpt.h>
 #include <fcntl.h>
@@ -30,6 +30,14 @@
 #include <fcntl.h>
 
 #include "sqlite3\sqlite3.h" // We need this.
+
+/* All code in this file are for the BioMUD database portion of the
+program. I will make every attempt at keeping all data contained within
+this scope, especially considering I am pondering the idea of threading
+the sqlite3 code all together. One var IS deemed safe to read outside
+of this scope, and that is 'transcout' - which in and of itself is thread
+safe to peek at, since it's only ever changed inside this file's scope.
+*/
 
 typedef struct timed_buffer TIMED_BUF;
 
@@ -43,7 +51,8 @@ TIMED_BUF* last_tbuf;
 unsigned long int transcount;
 unsigned long int SQL_THROTTLE;
 
-char BioMUD_Config[] = "";
+char BioMUD_Config[2048] = "CREATE TABLE IF NOT EXISTS biomud_config (config TEXT PRIMARY KEY,"
+                           "data TEXT);";
 char BioMUD_Sessions[] = "";
 
 /* I am going to use my timed buffer teqnique I came up with for

@@ -14,7 +14,7 @@
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/*  NanoMudMain.c
+/*  BioMUDMain.c
 *  Contains all main code for the mudclient
 */
 
@@ -32,12 +32,12 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <process.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 #include <commctrl.h>
-#include "nanomud-script.h"
+#include "BioMUD-script.h"
 #include "NWC.h"
-#include "nanomud-plugin-api.h"
-#include "nanomud-plugins.h"
+#include "BioMUD-plugin-api.h"
+#include "BioMUD-plugins.h"
 
 #define COLOR_LTGRAY 0x00808080
 #define TESTLIST 4001
@@ -214,6 +214,11 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
     load_scripts();
     load_settings();
     initialize_windows();
+    if (!init_db()) // Init the DB
+    {
+        give_term_error("DB Failed to init.");
+    }
+
     //save_settings();
 
     sprintf(gtest, NANO_API_VER);
@@ -250,7 +255,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
                         this_session->max_buffer * sizeof(*this_session->termlist), this_session->max_buffer * sizeof(unsigned*));
         give_term_debug("Total MAX of command buffer history: %d", MAX_INPUT_HISTORY);
 
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
         if (this_session->beta_edit == TRUE) // beta editor.
         {
             initialize_editors();
@@ -283,6 +288,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
         TranslateMessage(&messages); // Main message loops.
         DispatchMessage(&messages);
     }
+
     return messages.wParam;
 }
 
@@ -454,7 +460,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
         GetClientRect(hwnd, &mudrect);
         GetClientRect(Terminal, &term);
 
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
         if (this_session->beta_edit == TRUE)
         {
             initialize_editors();
@@ -497,7 +503,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
     case WM_MOVE:
     {
         GetClientRect(MudMain, &mudwin);
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
         if (this_session->beta_edit == TRUE)
         {
             MoveWindow(input_bar->window, mudwin.left, mudwin.bottom - 20, mudwin.right, 20, TRUE);
@@ -567,7 +573,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 
         case ID_EDIT_SEND:
             break;
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
         case ID_EDIT_SALL:
             editor_selectall(input_bar);
 #endif
@@ -593,23 +599,24 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             clear_log();
             if (IS_IN_DEBUGGING_MODE == 1)
             {
-                sprintf(buf, "Thank you for using NanoMud v.%s.", Mud_client_Version);
+                sprintf(buf, "Thank you for using BioMUD v.%s.", Mud_client_Version);
             }
             else
             {
-                sprintf(buf, "Thank you for using NanoMud v.%s.", Mud_client_Version);
+                sprintf(buf, "Thank you for using BioMUD v.%s.", Mud_client_Version);
             }
 
-            //MessageBox(hwnd, buf, "NanoMud", MB_OK);
+            //MessageBox(hwnd, buf, "BioMUD", MB_OK);
 
             save_scripts();
 
             save_settings();
 
             FreeTerm();
+            close_db(); // Close the DB
 
             return_usage();
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
             destroy_editors();
 #endif
 
@@ -694,7 +701,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             break;
 
         case ID_SETTINGS_OPTIONS:
-            MessageBox(hwnd, "Options: StubFunction", "NanoMud", MB_OK);
+            MessageBox(hwnd, "Options: StubFunction", "BioMUD", MB_OK);
             break;
 
         case ID_HELP_HELP:
@@ -720,7 +727,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
         }
     case WM_KEYDOWN:
         //     case WM_SYSKEYDOWN:
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
     case WM_GETDLGCODE:
     case WM_CHAR:
 
@@ -1001,17 +1008,18 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
         clear_log(); // Clear the log buffers.
         if (IS_IN_DEBUGGING_MODE == 1)
         {
-            sprintf(buf, "Thank you for using NanoMud v.%s.", Mud_client_Version);
+            sprintf(buf, "Thank you for using BioMUD v.%s.", Mud_client_Version);
         }
         else
         {
-            sprintf(buf, "Thank you for using NanoMud v.%s.", Mud_client_Version);
+            sprintf(buf, "Thank you for using BioMUD v.%s.", Mud_client_Version);
         }
-        //MessageBox(hwnd, buf, "NanoMud", MB_OK);
+        //MessageBox(hwnd, buf, "BioMUD", MB_OK);
 
         save_scripts();
 
         save_settings();
+        close_db(); // Close the DB
 
         WSACleanup();
         PostQuitMessage(0);
@@ -1037,7 +1045,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
         {
         case ID_TIMER_BLINK:
         {
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
             editor_caretblink();
 #endif
             if (blinked == TRUE)
@@ -1063,7 +1071,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
     case WM_PAINT:
     {
         update_term();
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
         editor_paint(input_bar);
 #endif
         break;

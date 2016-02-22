@@ -116,19 +116,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\nanomud-plugin-api.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\nanomud-plugins.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\nanomud-script.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\NWC.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\nanomud.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\mud-client_private.h">
@@ -145,6 +133,18 @@
     </ClInclude>
     <ClInclude Include="..\src\sqlite3\sqlite3.h">
       <Filter>sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\biomud.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\biomud-plugin-api.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\biomud-plugins.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\biomud-script.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

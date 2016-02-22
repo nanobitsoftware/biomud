@@ -22,7 +22,7 @@
 #include <windows.h>
 #include <winsock.h>
 #include <richedit.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 #include <assert.h>
 #include <excpt.h>
 #include <fcntl.h>
@@ -45,21 +45,21 @@ char* encrypt_line(char* line)
     int i;
 
     if (!line)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     buffer = malloc(strlen(line) + 2);
 
     for (i = 0, point = line; *point; point++, i++)
+    {
+        if (*point == '\0' || *point == '\n')
         {
-            if (*point == '\0' || *point == '\n')
-                {
-                    break;
-                }
-
-            buffer[i] = (line[i] ^ KEY);
+            break;
         }
+
+        buffer[i] = (line[i] ^ KEY);
+    }
 
     return buffer;
 }
@@ -71,20 +71,20 @@ char* decrypt_line(char* line)
     int i;
 
     if (!line)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     buffer = malloc(strlen(line) + 2);
 
     for (i = 0, point = line; *point; point++, i++)
+    {
+        if (*point == '\0' || *point == '\n')
         {
-            if (*point == '\0' || *point == '\n')
-                {
-                    break;
-                }
-            buffer[i] = (line[i] ^ KEY);
+            break;
         }
+        buffer[i] = (line[i] ^ KEY);
+    }
     return buffer;
 }
 

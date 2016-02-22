@@ -21,9 +21,9 @@
 #include <windows.h>
 #include <winsock.h>
 #include <richedit.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 #include <assert.h>
-#include "nanomud-script.h"
+#include "BioMUD-script.h"
 
 char* do_import(char* ch1, char* ch2, char* ch3, char* ch4)
 {
@@ -41,31 +41,31 @@ int count_op(char* str)
     buffer = buf;
 
     for (; *point; ++point)
-        {
-            *buffer = *point;
+    {
+        *buffer = *point;
 
-            if (is_operator(buffer))
-                {
-                    point++;
-                    if (*buffer == '&' && *point == '&')
-                        {
-                            count++;
-                        }
-                    else if (*buffer == '|' && *point == '|')
-                        {
-                            count++;
-                        }
-                    else if (*buffer == '=' && *point == '=')
-                        {
-                            count++;
-                        }
-                    else
-                        {
-                            count++;
-                            point--;
-                        }
-                }
+        if (is_operator(buffer))
+        {
+            point++;
+            if (*buffer == '&' && *point == '&')
+            {
+                count++;
+            }
+            else if (*buffer == '|' && *point == '|')
+            {
+                count++;
+            }
+            else if (*buffer == '=' && *point == '=')
+            {
+                count++;
+            }
+            else
+            {
+                count++;
+                point--;
+            }
         }
+    }
     return count;
 }
 
@@ -79,38 +79,38 @@ int left_token(const char* str, int start, const char* token)
     int prev = len - 1;
 
     while (start > -1)
+    {
+        if (*(str + start) == '"' && start > 0 && *(str + start - 1) == '\\')
         {
-            if (*(str + start) == '"' && start > 0 && *(str + start - 1) == '\\')
-                {
-                    start -= 2;
-                    continue;
-                }
-
-            if (*(str + start) == '"')
-                {
-                    if (quote)
-                        {
-                            quote = FALSE;
-                        }
-                    else
-                        {
-                            quote = TRUE;
-                        }
-                    start--;
-                    continue;
-                }
-            if (quote)
-                {
-                    start--;
-                    continue;
-                }
-
-            if (start - prev > -1 && !memcmp(str + (start - prev), token, len))
-                {
-                    return (start + 1);
-                }
-            start--;
+            start -= 2;
+            continue;
         }
+
+        if (*(str + start) == '"')
+        {
+            if (quote)
+            {
+                quote = FALSE;
+            }
+            else
+            {
+                quote = TRUE;
+            }
+            start--;
+            continue;
+        }
+        if (quote)
+        {
+            start--;
+            continue;
+        }
+
+        if (start - prev > -1 && !memcmp(str + (start - prev), token, len))
+        {
+            return (start + 1);
+        }
+        start--;
+    }
     return 0;
 }
 
@@ -125,38 +125,38 @@ int right_token(const char* str, int start, const char* token)
     int prev = tlen - 1;
 
     while (start < len)
+    {
+        if (*(str + start) == '\\' && start + 1 < len && *(str + start + 1) == '"')
         {
-            if (*(str + start) == '\\' && start + 1 < len && *(str + start + 1) == '"')
-                {
-                    start = +2;
-                    continue;
-                }
-
-            if (*(str + start) == '"')
-                {
-                    if (quote)
-                        {
-                            quote = FALSE;
-                        }
-                    else
-                        {
-                            quote = TRUE;
-                        }
-                    start++;
-                    continue;
-                }
-
-            if (quote)
-                {
-                    start++;
-                    continue;
-                }
-            if (start + prev < len && !memcmp(str + start, token, tlen))
-                {
-                    return (start - 1);
-                }
-            start++;
+            start = +2;
+            continue;
         }
+
+        if (*(str + start) == '"')
+        {
+            if (quote)
+            {
+                quote = FALSE;
+            }
+            else
+            {
+                quote = TRUE;
+            }
+            start++;
+            continue;
+        }
+
+        if (quote)
+        {
+            start++;
+            continue;
+        }
+        if (start + prev < len && !memcmp(str + start, token, tlen))
+        {
+            return (start - 1);
+        }
+        start++;
+    }
     return (len - 1);
 }
 
@@ -167,9 +167,9 @@ int get_mid(char* str, char* to_str, int start, int to)
 
     memset(to_str, 0, sizeof(to_str));
     for (len = 0, c = start; c <= to && str[c] != '\0'; len++, c++)
-        {
-            to_str[len] = str[c];
-        }
+    {
+        to_str[len] = str[c];
+    }
     to_str[len + 1] = '\0';
     return len;
 }
@@ -181,19 +181,19 @@ char* do_char(char* ch1, char* ch2, char* ch3, char* ch4)
     char* to_ret = temp;
 
     if (ch1[0] == '\0')
-        {
-            return (char*)to_ret;
-        }
+    {
+        return (char*)to_ret;
+    }
 
     if (atoi(ch1) < 0)
-        {
-            return (char*)to_ret;
-        }
+    {
+        return (char*)to_ret;
+    }
 
     if (atoi(ch1) > 255)
-        {
-            return (char*)to_ret;
-        }
+    {
+        return (char*)to_ret;
+    }
 
     temp[0] = atoi(ch1);
     temp[1] = '\0';
@@ -248,24 +248,24 @@ char* do_if(char* ch1, BOOL ch2, char* ch3, char* ch4)
     // give_term_debug("Received: #if %s", ch1);
 
     while (idx < len)
+    {
+        if (!quote && ch1[idx + 1] == ')')
         {
-            if (!quote && ch1[idx + 1] == ')')
-                {
-                    ldx = left_token(ch1, idx, "(");
-                    if (ldx == 0)
-                        {
-                            give_term_error("Missing open paren.");
-                            free(buf);
-                            free(buf2);
-                            return NULL;
-                        }
+            ldx = left_token(ch1, idx, "(");
+            if (ldx == 0)
+            {
+                give_term_error("Missing open paren.");
+                free(buf);
+                free(buf2);
+                return NULL;
+            }
 
-                    get_mid(ch1, stack, ldx - 1, idx + 2);
+            get_mid(ch1, stack, ldx - 1, idx + 2);
 
-                    //       give_term_error(stack);
-                }
-            idx++;
+            //       give_term_error(stack);
         }
+        idx++;
+    }
 
     free(buf);
     free(buf2);
@@ -290,24 +290,24 @@ char* do_left(char* ch1, char* ch2, char* ch3, char* ch4)
     int i, len = 0;
     char* point = ch1;
     if (ch1[0] == '\0')
-        {
-            return ch1;
-        }
+    {
+        return ch1;
+    }
 
     temp = malloc(sizeof(char) * (strlen(ch1) + 10));
     ret = temp;
 
     if (atoi(ch2) >= strlen(ch1))
-        {
-            free(temp);
-            return ch1;
-        }
+    {
+        free(temp);
+        return ch1;
+    }
     if (atoi(ch2) <= 0)
-        {
-            temp[0] = '\0';
-            free(temp);
-            return ret;
-        }
+    {
+        temp[0] = '\0';
+        free(temp);
+        return ret;
+    }
 
     temp[0] = '\0';
 
@@ -315,16 +315,16 @@ char* do_left(char* ch1, char* ch2, char* ch3, char* ch4)
     len = strlen(ch1);
 
     for (; *point; point++)
+    {
+        if (i >= atoi(ch2))
         {
-            if (i >= atoi(ch2))
-                {
-                    break;
-                }
-
-            temp[i] = *point;
-
-            i++;
+            break;
         }
+
+        temp[i] = *point;
+
+        i++;
+    }
     temp[i] = '\0';
 
     free(temp);
@@ -339,22 +339,22 @@ char* do_leftback(char* ch1, char* ch2, char* ch3, char* ch4)
     int i, x = 0;
     char* point = ch1;
     if (ch1[0] == '\0')
-        {
-            return ch1;
-        }
+    {
+        return ch1;
+    }
     if (atoi(ch2) <= 0)
-        {
-            return ch1;
-        }
+    {
+        return ch1;
+    }
 
     temp = malloc(sizeof(char) * (strlen(ch1) + 10));
     to_ret = temp;
     if (atoi(ch2) >= strlen(ch1))
-        {
-            temp[0] = '\0';
-            free(temp);
-            return to_ret;
-        }
+    {
+        temp[0] = '\0';
+        free(temp);
+        return to_ret;
+    }
 
     temp[0] = '\0';
 
@@ -363,16 +363,16 @@ char* do_leftback(char* ch1, char* ch2, char* ch3, char* ch4)
     point += (strlen(ch1) - 1) - atoi(ch2);
 
     for (; *point; point--)
+    {
+        if (i <= 0)
         {
-            if (i <= 0)
-                {
-                    break;
-                }
-
-            temp[i - 1] = *point;
-
-            i--;
+            break;
         }
+
+        temp[i - 1] = *point;
+
+        i--;
+    }
     temp[x] = '\0';
 
     free(temp);
@@ -418,25 +418,25 @@ char* do_repeat(char* ch1, char* ch2, char* ch3, char* ch4)
     ch1 = one_argument(ch1, temp);
 
     if (temp[0] < '0' || temp[0] > '9')
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
     if (atoi(temp) <= 0)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     if (atoi(temp) > 32000)
-        {
-            give_term_error("Be real. Repeat over 32,000? Yeah..right.");
-            return NULL;
-        }
+    {
+        give_term_error("Be real. Repeat over 32,000? Yeah..right.");
+        return NULL;
+    }
     nasty = TRUE;
     for (i = 0; i < atoi(temp); i++)
-        {
-            handle_input(ch1);
-            do_peek(); // Run some other stuff, just in case of bad scripts.
-        }
+    {
+        handle_input(ch1);
+        do_peek(); // Run some other stuff, just in case of bad scripts.
+    }
     nasty = FALSE;
     update_term();
 
@@ -454,22 +454,22 @@ char* do_right(char* ch1, char* ch2, char* ch3, char* ch4)
     char* point = ch1;
 
     if (ch1[0] == '\0')
-        {
-            return ch1;
-        }
+    {
+        return ch1;
+    }
     if (atoi(ch2) <= 0)
-        {
-            return ch1;
-        }
+    {
+        return ch1;
+    }
 
     temp = malloc(sizeof(char) * (strlen(ch1) + 10));
     to_ret = temp;
     if (atoi(ch2) >= strlen(ch1))
-        {
-            temp[0] = '\0';
-            free(temp);
-            return to_ret;
-        }
+    {
+        temp[0] = '\0';
+        free(temp);
+        return to_ret;
+    }
 
     temp[0] = '\0';
 
@@ -478,16 +478,16 @@ char* do_right(char* ch1, char* ch2, char* ch3, char* ch4)
     point += atoi(ch2);
 
     for (; *point; point++)
+    {
+        if (i > len)
         {
-            if (i > len)
-                {
-                    break;
-                }
-
-            temp[i] = *point;
-
-            i++;
+            break;
         }
+
+        temp[i] = *point;
+
+        i++;
+    }
     temp[i] = '\0';
 
     free(temp);
@@ -506,20 +506,20 @@ char* do_rightback(char* ch1, char* ch2, char* ch3, char* ch4)
     to_ret = temp;
 
     if (ch1[0] == '\0')
-        {
-            return ch1;
-        }
+    {
+        return ch1;
+    }
     if (atoi(ch2) <= 0)
-        {
-            return ch1;
-        }
+    {
+        return ch1;
+    }
 
     if (atoi(ch2) >= strlen(ch1))
-        {
-            temp[0] = '\0';
-            free(temp);
-            return to_ret;
-        }
+    {
+        temp[0] = '\0';
+        free(temp);
+        return to_ret;
+    }
 
     temp[0] = '\0';
 
@@ -529,16 +529,16 @@ char* do_rightback(char* ch1, char* ch2, char* ch3, char* ch4)
     point += (strlen(ch1)) - atoi(ch2);
 
     for (; *point; point++)
+    {
+        if (i > atoi(ch2))
         {
-            if (i > atoi(ch2))
-                {
-                    break;
-                }
-
-            temp[i] = *point;
-
-            i++;
+            break;
         }
+
+        temp[i] = *point;
+
+        i++;
+    }
     temp[x] = '\0';
 
     free(temp);
@@ -562,140 +562,140 @@ char* interp_function(char* name, char* a1, char* a2, char* a3, char* a4)
     temp[0] = name[0];
 
     switch (temp[0])
-        {
-        case 'a':
-        case 'A':
-        {
-            break;
-        }
-        case 'b':
-        case 'B':
-        {
-            break;
-        }
-        case 'c':
-        case 'C':
-        {
-            break;
-        }
-        case 'd':
-        case 'D':
-        {
-            break;
-        }
-        case 'e':
-        case 'E':
-        {
-            break;
-        }
-        case 'f':
-        case 'F':
-        {
-            break;
-        }
-        case 'g':
-        case 'G':
-        {
-            break;
-        }
-        case 'h':
-        case 'H':
-        {
-            break;
-        }
-        case 'i':
-        case 'I':
-        {
-            break;
-        }
-        case 'j':
-        case 'J':
-        {
-            break;
-        }
-        case 'k':
-        case 'K':
-        {
-            break;
-        }
-        case 'l':
-        case 'L':
-        {
-            break;
-        }
-        case 'm':
-        case 'M':
-        {
-            break;
-        }
-        case 'n':
-        case 'N':
-        {
-            break;
-        }
-        case 'o':
-        case 'O':
-        {
-            break;
-        }
-        case 'p':
-        case 'P':
-        {
-            break;
-        }
-        case 'q':
-        case 'Q':
-        {
-            break;
-        }
-        case 'r':
-        case 'R':
-        {
-            break;
-        }
-        case 's':
-        case 'S':
-        {
-            break;
-        }
-        case 't':
-        case 'T':
-        {
-            break;
-        }
-        case 'u':
-        case 'U':
-        {
-            break;
-        }
-        case 'v':
-        case 'V':
-        {
-            break;
-        }
-        case 'w':
-        case 'W':
-        {
-            break;
-        }
-        case 'x':
-        case 'X':
-        {
-            break;
-        }
-        case 'y':
-        case 'Y':
-        {
-            break;
-        }
-        case 'z':
-        case 'Z':
-        {
-            break;
-        }
-        default:
-            break;
-        }
+    {
+    case 'a':
+    case 'A':
+    {
+        break;
+    }
+    case 'b':
+    case 'B':
+    {
+        break;
+    }
+    case 'c':
+    case 'C':
+    {
+        break;
+    }
+    case 'd':
+    case 'D':
+    {
+        break;
+    }
+    case 'e':
+    case 'E':
+    {
+        break;
+    }
+    case 'f':
+    case 'F':
+    {
+        break;
+    }
+    case 'g':
+    case 'G':
+    {
+        break;
+    }
+    case 'h':
+    case 'H':
+    {
+        break;
+    }
+    case 'i':
+    case 'I':
+    {
+        break;
+    }
+    case 'j':
+    case 'J':
+    {
+        break;
+    }
+    case 'k':
+    case 'K':
+    {
+        break;
+    }
+    case 'l':
+    case 'L':
+    {
+        break;
+    }
+    case 'm':
+    case 'M':
+    {
+        break;
+    }
+    case 'n':
+    case 'N':
+    {
+        break;
+    }
+    case 'o':
+    case 'O':
+    {
+        break;
+    }
+    case 'p':
+    case 'P':
+    {
+        break;
+    }
+    case 'q':
+    case 'Q':
+    {
+        break;
+    }
+    case 'r':
+    case 'R':
+    {
+        break;
+    }
+    case 's':
+    case 'S':
+    {
+        break;
+    }
+    case 't':
+    case 'T':
+    {
+        break;
+    }
+    case 'u':
+    case 'U':
+    {
+        break;
+    }
+    case 'v':
+    case 'V':
+    {
+        break;
+    }
+    case 'w':
+    case 'W':
+    {
+        break;
+    }
+    case 'x':
+    case 'X':
+    {
+        break;
+    }
+    case 'y':
+    case 'Y':
+    {
+        break;
+    }
+    case 'z':
+    case 'Z':
+    {
+        break;
+    }
+    default:
+        break;
+    }
     return NULL;
 }
 
@@ -706,139 +706,139 @@ BOOL is_function_internal(char* name)  // for speed.
     temp[0] = name[0];
 
     switch (temp[0])
-        {
-        case 'a':
-        case 'A':
-        {
-            break;
-        }
-        case 'b':
-        case 'B':
-        {
-            break;
-        }
-        case 'c':
-        case 'C':
-        {
-            break;
-        }
-        case 'd':
-        case 'D':
-        {
-            break;
-        }
-        case 'e':
-        case 'E':
-        {
-            break;
-        }
-        case 'f':
-        case 'F':
-        {
-            break;
-        }
-        case 'g':
-        case 'G':
-        {
-            break;
-        }
-        case 'h':
-        case 'H':
-        {
-            break;
-        }
-        case 'i':
-        case 'I':
-        {
-            break;
-        }
-        case 'j':
-        case 'J':
-        {
-            break;
-        }
-        case 'k':
-        case 'K':
-        {
-            break;
-        }
-        case 'l':
-        case 'L':
-        {
-            break;
-        }
-        case 'm':
-        case 'M':
-        {
-            break;
-        }
-        case 'n':
-        case 'N':
-        {
-            break;
-        }
-        case 'o':
-        case 'O':
-        {
-            break;
-        }
-        case 'p':
-        case 'P':
-        {
-            break;
-        }
-        case 'q':
-        case 'Q':
-        {
-            break;
-        }
-        case 'r':
-        case 'R':
-        {
-            break;
-        }
-        case 's':
-        case 'S':
-        {
-            break;
-        }
-        case 't':
-        case 'T':
-        {
-            break;
-        }
-        case 'u':
-        case 'U':
-        {
-            break;
-        }
-        case 'v':
-        case 'V':
-        {
-            break;
-        }
-        case 'w':
-        case 'W':
-        {
-            break;
-        }
-        case 'x':
-        case 'X':
-        {
-            break;
-        }
-        case 'y':
-        case 'Y':
-        {
-            break;
-        }
-        case 'z':
-        case 'Z':
-        {
-            break;
-        }
-        default:
-            break;
-        }
+    {
+    case 'a':
+    case 'A':
+    {
+        break;
+    }
+    case 'b':
+    case 'B':
+    {
+        break;
+    }
+    case 'c':
+    case 'C':
+    {
+        break;
+    }
+    case 'd':
+    case 'D':
+    {
+        break;
+    }
+    case 'e':
+    case 'E':
+    {
+        break;
+    }
+    case 'f':
+    case 'F':
+    {
+        break;
+    }
+    case 'g':
+    case 'G':
+    {
+        break;
+    }
+    case 'h':
+    case 'H':
+    {
+        break;
+    }
+    case 'i':
+    case 'I':
+    {
+        break;
+    }
+    case 'j':
+    case 'J':
+    {
+        break;
+    }
+    case 'k':
+    case 'K':
+    {
+        break;
+    }
+    case 'l':
+    case 'L':
+    {
+        break;
+    }
+    case 'm':
+    case 'M':
+    {
+        break;
+    }
+    case 'n':
+    case 'N':
+    {
+        break;
+    }
+    case 'o':
+    case 'O':
+    {
+        break;
+    }
+    case 'p':
+    case 'P':
+    {
+        break;
+    }
+    case 'q':
+    case 'Q':
+    {
+        break;
+    }
+    case 'r':
+    case 'R':
+    {
+        break;
+    }
+    case 's':
+    case 'S':
+    {
+        break;
+    }
+    case 't':
+    case 'T':
+    {
+        break;
+    }
+    case 'u':
+    case 'U':
+    {
+        break;
+    }
+    case 'v':
+    case 'V':
+    {
+        break;
+    }
+    case 'w':
+    case 'W':
+    {
+        break;
+    }
+    case 'x':
+    case 'X':
+    {
+        break;
+    }
+    case 'y':
+    case 'Y':
+    {
+        break;
+    }
+    case 'z':
+    case 'Z':
+    {
+        break;
+    }
+    default:
+        break;
+    }
     return FALSE;
 }

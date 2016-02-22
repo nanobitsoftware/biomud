@@ -25,10 +25,10 @@
 #include <assert.h>
 #include <malloc.h>
 #include <commctrl.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 #include "NWC.h"
 
-#define history_file "c:/nanobit/nanomud_history.dat"
+#define history_file "c:/nanobit/BioMUD_history.dat"
 
 #define ID_HISTORY        10001
 #define ID_HISTORY_LIST   10002

@@ -14,13 +14,13 @@
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/* Nanomud-plugins-pfunc.c (plugin functions) contains all the functions that will be exported, and public
+/* BioMUD-plugins-pfunc.c (plugin functions) contains all the functions that will be exported, and public
  * to all plugin writers. All functions here will be re-written, or wrapped, to internal functions within
  * the mudclient regular api. This is so that direct access to commands cannot be accessed and all sanitizing
  * must be done, to a strict standard, on all pfunc internal functions.
  *
  * All naming conventions for functions must use the PFUNC_<name> scheme of naming the functions. And all functions
- * must be properly documentated and any public functions must be exported and labeled in the nanomud-plugin-api.h file.
+ * must be properly documentated and any public functions must be exported and labeled in the BioMUD-plugin-api.h file.
  */
 
 #include <stdio.h>
@@ -36,11 +36,11 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <process.h>
-#include "NanoMud.h"
-#include "nanomud-script.h"
+#include "BioMUD.h"
+#include "BioMUD-script.h"
 #include "NWC.h"
-#include "nanomud-plugins.h"
-#include "nanomud-plugin-api.h"
+#include "BioMUD-plugins.h"
+#include "BioMUD-plugin-api.h"
 
 extern unsigned long int bufcount;
 
@@ -71,10 +71,10 @@ PFUNC_INT pfunc_write_terminal(PFUNC_CHAR* str)
     string_len = 0;
 
     if (!str)
-        {
-            LOG("Plugin attempted to send pfunc_write_terminal with a null string.");
-            return -1;
-        }
+    {
+        LOG("Plugin attempted to send pfunc_write_terminal with a null string.");
+        return -1;
+    }
 
     string_len = strlen(str); // Get the length of the str var.
 
@@ -82,16 +82,16 @@ PFUNC_INT pfunc_write_terminal(PFUNC_CHAR* str)
                                            * size to the MAXPSTRINGLEN
                                            * size to keep security to
                                            * a maximum. */
-        {
-            LOG("Plugin attempted to send a string (Len: %d) length greater than MPSL (%d). Truncating to %d bytes.", string_len, MAX_PSTRING_LENGTH, MAX_PSTRING_LENGTH);
-            memcpy(temp_str, str, MAX_PSTRING_LENGTH);
-            temp_str[MAX_PSTRING_LENGTH + 1] = '\0';    // Makre sure it is null terminated.
-        }
+    {
+        LOG("Plugin attempted to send a string (Len: %d) length greater than MPSL (%d). Truncating to %d bytes.", string_len, MAX_PSTRING_LENGTH, MAX_PSTRING_LENGTH);
+        memcpy(temp_str, str, MAX_PSTRING_LENGTH);
+        temp_str[MAX_PSTRING_LENGTH + 1] = '\0';    // Makre sure it is null terminated.
+    }
     else
-        {
-            memcpy(temp_str, str, string_len);
-            temp_str[string_len + 1] = '\0'; // Make sure it's null terminated.
-        }
+    {
+        memcpy(temp_str, str, string_len);
+        temp_str[string_len + 1] = '\0'; // Make sure it's null terminated.
+    }
 
     ParseLines((unsigned char*)temp_str);
     return 1;
@@ -121,33 +121,33 @@ PFUNC_INT pfunc_get_line_len(PFUNC_ULINT ln)
     ter = NULL;
 
     if (ln > bufcount)  // Requested line outside of the buffer range.
-        {
-            LOG("Plugin requested a line that is higher than the current bufcount (%d). Requested: %d", bufcount, ln);
-            return -1;
-        }
+    {
+        LOG("Plugin requested a line that is higher than the current bufcount (%d). Requested: %d", bufcount, ln);
+        return -1;
+    }
 
     if (ln < 0) // Bufcount is unsigned. Cannot call a negative number.
-        {
-            LOG("Plugin attempted to retreive a smaller-than-zero bufcount.");
-            return -1;
-        }
+    {
+        LOG("Plugin attempted to retreive a smaller-than-zero bufcount.");
+        return -1;
+    }
 
     ter = fetch_line(ln); // Get the line from the buffer.
 
     if (!ter) // Line was invalid unfortunately.
-        {
-            LOG("Plugin requested line %d, but line does not exist.", ln);
-            return -1;
-        }
+    {
+        LOG("Plugin requested line %d, but line does not exist.", ln);
+        return -1;
+    }
 
     if (ter->len < 0)
-        {
-            len = 0;
-        }
+    {
+        len = 0;
+    }
     else
-        {
-            len = ter->len;
-        }
+    {
+        len = ter->len;
+    }
 
     return len;
 }
@@ -173,24 +173,24 @@ PFUNC_ULINT* pfunc_get_line_masked(PFUNC_INT ln)
     to_ret = NULL;
 
     if (ln > bufcount)
-        {
-            LOG("Plugin attempted to request a line higher than current bufcount (%d). Requested %d", bufcount, ln);
-            return NULL;
-        }
+    {
+        LOG("Plugin attempted to request a line higher than current bufcount (%d). Requested %d", bufcount, ln);
+        return NULL;
+    }
 
     if (ln < 0) // Bufcount is unsigned. Cannot call a negative number.
-        {
-            LOG("Plugin attempted to retreive a smaller-than-zero bufcount.");
-            return NULL;
-        }
+    {
+        LOG("Plugin attempted to retreive a smaller-than-zero bufcount.");
+        return NULL;
+    }
 
     ter = fetch_line(ln); // Get the line from the buffer.
 
     if (!ter) // Line was invalid unfortunately.
-        {
-            LOG("Plugin requested line %d, but line does not exist.", ln);
-            return NULL;
-        }
+    {
+        LOG("Plugin requested line %d, but line does not exist.", ln);
+        return NULL;
+    }
 
     to_ret = (unsigned long int*)malloc((ter->len * sizeof(unsigned long int)) + 1);
     memcpy(to_ret, ter->line, ter->len);
@@ -222,24 +222,24 @@ PFUNC_CHAR* pfunc_get_line_text(PFUNC_INT ln)
     ter = NULL;
 
     if (ln > bufcount)
-        {
-            LOG("Plugin attempted to request a line higher than current bufcount (%d). Requested %d", bufcount, ln);
-            return NULL;
-        }
+    {
+        LOG("Plugin attempted to request a line higher than current bufcount (%d). Requested %d", bufcount, ln);
+        return NULL;
+    }
 
     if (ln < 0) // Bufcount is unsigned. Cannot call a negative number.
-        {
-            LOG("Plugin attempted to retreive a smaller-than-zero bufcount.");
-            return NULL;
-        }
+    {
+        LOG("Plugin attempted to retreive a smaller-than-zero bufcount.");
+        return NULL;
+    }
 
     ter = fetch_line(ln); // Get the line from the buffer.
 
     if (!ter) // Line was invalid unfortunately.
-        {
-            LOG("Plugin requested line %d, but line does not exist.", ln);
-            return NULL;
-        }
+    {
+        LOG("Plugin requested line %d, but line does not exist.", ln);
+        return NULL;
+    }
 
     to_ret = (char*)malloc(ter->len * (sizeof(char*) + 10));
 
@@ -252,20 +252,20 @@ PFUNC_VOID* pfunc_malloc(PFUNC_ULINT chunk)
 {
     /* pfunc_malloc acts just like a normal malloc
      * call, except that it allocates its memory
-     * inside the thread of nanomud. This is useful
-     * in a few cases where memory on nanomud's stack
+     * inside the thread of BioMUD. This is useful
+     * in a few cases where memory on BioMUD's stack
      * might need to be referenced.
      *
      * returns NULL when it fails, returns a pointer
      * to the allocated memory if it succeeds.
      *
-     * Uses nanomud_malloc interanlly.
+     * Uses BioMUD_malloc interanlly.
      */
 
     if (chunk < 0) // sanity checking.
-        {
-            chunk = 0;
-        }
+    {
+        chunk = 0;
+    }
 
     return malloc(chunk);
 }
@@ -283,7 +283,7 @@ PFUNC_INT pfunc_free(PFUNC_VOID* ptr)
      * pfunc_free(ptr).
      *
      * WARNING: MEMORY MUST BE ALLOCATED INTERNALLY
-     * FROM THE PLUGIN SYSTEM WITHIN NANOMUD AND
+     * FROM THE PLUGIN SYSTEM WITHIN BioMUD AND
      * NOT FROM YOUR PLUGIN. ATTEMPTING TO FREE
      * MEMORY ALLOCATED INTERNALLY FROM YOUR PLUGIN
      * CAN HAVE UNDEFINED RESULTS INCLUDING HEAP
@@ -293,10 +293,10 @@ PFUNC_INT pfunc_free(PFUNC_VOID* ptr)
      */
 
     if (!ptr)
-        {
-            LOG("Plugin function pfunc_free was passed a null pointer.");
-            return -1;
-        }
+    {
+        LOG("Plugin function pfunc_free was passed a null pointer.");
+        return -1;
+    }
 
     free(ptr); // Free the pointer via our nano_free function
 
@@ -346,9 +346,9 @@ PFUNC_BOOL  pfunc_get_api_version(PFUNC_CHAR str[])
      */
 
     if (!str) // Their string does not exist. So don't fill it.
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
 
     sprintf(str, "%s\0", NANO_API_VER); // Fill out the string.
     /* Hopefully they pass their string with the proper size.
@@ -378,16 +378,16 @@ PFUNC_TERM* pfunc_ret_line(PFUNC_INT ln)
      */
 
     if (ln < 0 || ln > bufcount)  // sanitize the variable to make sure all is well.
-        {
-            LOG("pfunc_ret_line: API attempted to grab a line that does not exist.");
-            return NULL;
-        }
+    {
+        LOG("pfunc_ret_line: API attempted to grab a line that does not exist.");
+        return NULL;
+    }
 
     if (fetch_line(ln) == NULL) // Error in fetchline. Do not return a line.
-        {
-            LOG("pfunc_ret_line: API attempted to fetch a non-existant line.");
-            return NULL;
-        }
+    {
+        LOG("pfunc_ret_line: API attempted to fetch a non-existant line.");
+        return NULL;
+    }
 
     return fetch_line(ln); // Return fetched line.
 }
@@ -427,30 +427,30 @@ PFUNC_VOID pfunc_give_error(PFUNC_CHAR* msg, PFUNC_BOOL killproc)
      */
 
     if (!msg) // If msg is null or empty, make sure we give a generic warning.
-        {
-            GiveError("An unknown error within the API system has occured.", FALSE);
-            return;
-        }
+    {
+        GiveError("An unknown error within the API system has occured.", FALSE);
+        return;
+    }
 
     if (msg[0] == '\0') // Generic warning again. But definitely let them know it's via api!
-        {
-            GiveError("An unknown error within the API system has occured.", FALSE);
-            return;
-        }
+    {
+        GiveError("An unknown error within the API system has occured.", FALSE);
+        return;
+    }
 
     if (strlen(msg) > 2048) // Truncate the message to 2048 bytes to ensure integrity.
-        {
-            msg[2049] = '\0';
-        }
+    {
+        msg[2049] = '\0';
+    }
 
     if (killproc > 1) // Sanitize the killproc var incase they tried to pass an odd value.
-        {
-            killproc = TRUE;
-        }
+    {
+        killproc = TRUE;
+    }
     if (killproc < 0)
-        {
-            killproc = FALSE;
-        }
+    {
+        killproc = FALSE;
+    }
 
     GiveError(msg, killproc);
 
@@ -480,21 +480,21 @@ PFUNC_BOOL pfunc_send_sock(PFUNC_CHAR* msg)
      */
 
     if (!msg) // No message? no send.
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
 
     if (msg[0] == '\0') // Message's first byte is null? No thanks.
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
 
     if (strlen(msg) > 2048) // Truncate the mssage if it is larger than 2048.
-        {
-            msg[2048] = '\0';
-        }
+    {
+        msg[2048] = '\0';
+    }
 
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
     handle_input(msg); // Pass it off to the internal input handler.
 #endif
     return TRUE;
@@ -530,9 +530,9 @@ PFUNC_API* pfunc_newapi(PFUNC_VOID)
     api = (PFUNC_API*)malloc(sizeof(*api)); // Create original struct.
 
     if (api == NULL || !api)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     api->author = (char*)malloc(STR_LEN);  // Allocate all strings in the struct.
     api->build = 0;
@@ -548,7 +548,7 @@ PFUNC_API* pfunc_newapi(PFUNC_VOID)
 
 PFUNC_INT pfunc_register(API_CLIENT* api)
 {
-    /* pfunc_register will register the plugin with nanomud's plugin
+    /* pfunc_register will register the plugin with BioMUD's plugin
      * system. All required information from the struct will be checked
      * and if found missing, will return an error number with the correct
      * error designation.
@@ -609,27 +609,27 @@ PFUNC_INT pfunc_register(API_CLIENT* api)
     t_api = NULL;
 
     if (!api || api == NULL)
-        {
-            return REGISTER_FAILED;
-        }
+    {
+        return REGISTER_FAILED;
+    }
 
     if (!api->author || !api->name || !api->used_api) // These cases mean the plugin was not made correctly.
-        {
-            return REGISTER_FAILED;
-        }
+    {
+        return REGISTER_FAILED;
+    }
 
     if (api->author[0] == '\0')
-        {
-            return REGISTER_MISSING_AUTHOR;
-        }
+    {
+        return REGISTER_MISSING_AUTHOR;
+    }
     if (api->name[0] == '\0')
-        {
-            return REGISTER_MISSING_NAME;
-        }
+    {
+        return REGISTER_MISSING_NAME;
+    }
     if (api->used_api[0] == '\0')
-        {
-            return REGISTER_MISSING_API;
-        }
+    {
+        return REGISTER_MISSING_API;
+    }
 
     /* Sanitize the inputs 'just in case' */
 
@@ -638,40 +638,40 @@ PFUNC_INT pfunc_register(API_CLIENT* api)
     api->name[STR_LEN] = '\0';
 
     if (api->company[0] != '\0')
-        {
-            api->company[STR_LEN] = '\0';
-        }
+    {
+        api->company[STR_LEN] = '\0';
+    }
     else
-        {
-            api->company[0] = '\0';
-        }
+    {
+        api->company[0] = '\0';
+    }
 
     if (api->notes[0] != '\0')
-        {
-            api->notes[STR_LEN] = '\0';
-        }
+    {
+        api->notes[STR_LEN] = '\0';
+    }
     else
-        {
-            api->notes[0] = '\0';
-        }
+    {
+        api->notes[0] = '\0';
+    }
 
     if (api->version[0] != '\0')
-        {
-            api->version[STR_LEN] = '\0';
-        }
+    {
+        api->version[STR_LEN] = '\0';
+    }
     else
-        {
-            api->version[0] = '\0';
-        }
+    {
+        api->version[0] = '\0';
+    }
 
     if (api->website[0] != '\0')
-        {
-            api->website[STR_LEN] = '\0';
-        }
+    {
+        api->website[STR_LEN] = '\0';
+    }
     else
-        {
-            api->website[0] = '\0';
-        }
+    {
+        api->website[0] = '\0';
+    }
 
     t_api = (PFUNC_API*)malloc(sizeof(*t_api)); // Allocate new struct.
 

@@ -22,7 +22,7 @@
 #include <windows.h>
 #include <winsock.h>
 #include <richedit.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 #include <assert.h>
 #include <excpt.h>
 #include <fcntl.h>

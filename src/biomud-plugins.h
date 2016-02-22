@@ -14,9 +14,9 @@
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/* Main header file for the nanomud plugin directive. Prototypes and global vars must be declared here
+/* Main header file for the BioMUD plugin directive. Prototypes and global vars must be declared here
  * that are used internally. All non-private (aka; public) function prototypes and variables must be
- * declared in the nanomud-plugin-api.h file.
+ * declared in the BioMUD-plugin-api.h file.
  *
  * Do not change the #define NANO_API_VER string unless explicitly told to, and only when a significant
  * change has been done!
@@ -72,7 +72,7 @@
 // done in the private side, changing the hook interface bits will not require
 // plug-in code to be changed. Win-win.
 
-#define HOOK_EXIT                A // Requests hooks when Nanomud is Exited.
+#define HOOK_EXIT                A // Requests hooks when BioMUD is Exited.
 #define HOOK_PLUGIN_EXIT         B // Requests hooks when any plugin is exited.
 #define HOOK_INPUT               C // Requests to receive hooks for ALL input (without doing all *_INPUT)
 #define HOOK_PRE_INPUT           D // (USER INPUT) Requests all input before it's processed

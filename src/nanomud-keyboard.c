@@ -14,7 +14,7 @@
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/*  nanomud-keyboard.c
+/*  BioMUD-keyboard.c
  *  Contains all the code for keyboard mapping and other general keyboard
  *  related code.
  */
@@ -27,7 +27,7 @@
 #include <windows.h>
 #include <winsock.h>
 #include <richedit.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 #include <assert.h>
 #include <excpt.h>
 #include <fcntl.h>

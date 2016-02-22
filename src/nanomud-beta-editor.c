@@ -24,10 +24,10 @@
 #include <assert.h>
 #include <time.h>
 #include <commctrl.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 #include "NWC.h"
 
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
 
 #define MAX_BUFFER_LEN 30000 // 30,000 chars
 

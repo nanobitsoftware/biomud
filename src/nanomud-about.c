@@ -21,7 +21,7 @@
 #include <winsock.h>
 #include <richedit.h>
 
-#include "NanoMud.h"
+#include "BioMUD.h"
 
 extern  HFONT hf;
 char Copy_Right[] =
@@ -35,7 +35,7 @@ char Copy_Right[] =
     "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
     "GNU General Public License for more details.\n";
 const char GNU_License_Char[] =
-    "A copy of the GNU public license should accompany this software. Please read that license for licensing details related to Nanomud.";
+    "A copy of the GNU public license should accompany this software. Please read that license for licensing details related to BioMUD.";
 
 /* Create out about box and stuff */
 void CreateAboutBox(void)
@@ -47,7 +47,7 @@ void CreateAboutBox(void)
         return;
     }
     GetWindowRect(MudMain, &main_window);
-    MudAbout = CreateWindowEx(WS_EX_TOPMOST | WS_EX_CONTROLPARENT, "About", "NanoMud About", DS_3DLOOK | WS_POPUP | WS_SYSMENU,
+    MudAbout = CreateWindowEx(WS_EX_TOPMOST | WS_EX_CONTROLPARENT, "About", "BioMUD About", DS_3DLOOK | WS_POPUP | WS_SYSMENU,
                               (main_window.right / 2) - 300, (main_window.bottom / 2) - 200, 600, 400, 0, 0, g_hInst, 0);
     //  AboutProc = (WNDPROC) SetWindowLong(MudAbout, GWL_WNDPROC, (LONG)AboutProcedure);
     AboutProc = (WNDPROC)SetWindowLongPtr(MudAbout, GWLP_WNDPROC, (LONG_PTR)AboutProcedure);

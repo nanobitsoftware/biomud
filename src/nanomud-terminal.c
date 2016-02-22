@@ -14,7 +14,7 @@
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/*  NanoMudWindow.c
+/*  BioMUDWindow.c
 *  Handles all mud-window functions
 */
 
@@ -27,7 +27,7 @@
 #include <richedit.h>
 #include <assert.h>
 #include <time.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 
 //TERMBUF *backlist;
 
@@ -172,18 +172,18 @@ char* ret_string(TERMBUF* ter, char str[])
 {
     int i;
     if (!ter)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
     if (!ter->line)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     for (i = 0; i <= ter->len; i++)
-        {
-            str[i] = (ter->line[i] & CH_MASK) >> CH_SHIFT;
-        }
+    {
+        str[i] = (ter->line[i] & CH_MASK) >> CH_SHIFT;
+    }
 
     str[i] = '\0';
     return str;
@@ -196,29 +196,29 @@ char* ret_string(TERMBUF* ter, char str[])
 BOOL is_same(unsigned long a, unsigned long b)
 {
     if (!(a & ATBOLD) && (b & ATBOLD))
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
     if (!(a & ATBLINK) && (b & ATBLINK))
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
     if (!(a & ATREVER) && (b & ATREVER))
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
     if (!(a & ATUNDER) && (b & ATUNDER))
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
     if (((a & FG_MASK) >> FG_SHIFT) != ((b & FG_MASK) >> FG_SHIFT))
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
     if (((a & BG_MASK) >> BG_SHIFT) != ((b & BG_MASK) >> BG_SHIFT))
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
     return TRUE;
 }
 
@@ -253,9 +253,9 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
     last_where = 0;
 
     if (!ter)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     /* If processed is true, then that means the term line has
     * already been throuugh parse_ansi. This is a good thing,
@@ -263,34 +263,34 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
     * have to send it through all the masks to retrieve the attribute
     * data then pass it off the flushbuffer. */
     if (ter->processed == TRUE)
+    {
+        /* This part of parse_ansi is now obsolete. It is now handled in the paint_line
+         * function. This place holder stays for legacy code to function properly.
+         */
+        if (PAUSE_UPDATING == TRUE)
         {
-            /* This part of parse_ansi is now obsolete. It is now handled in the paint_line
-             * function. This place holder stays for legacy code to function properly.
-             */
-            if (PAUSE_UPDATING == TRUE)
-                {
-                    return;
-                }
-
-            paint_line(ter);
-
-            if (ter->not_finished == FALSE)
-                {
-                    return;
-                }
             return;
         }
+
+        paint_line(ter);
+
+        if (ter->not_finished == FALSE)
+        {
+            return;
+        }
+        return;
+    }
     if (!ter->buffer) // No buffer? And not processed? Odd.
-        {
-            return;
-        }
+    {
+        return;
+    }
     else
-        {
-            point = ter->buffer;
-        } /* Point is our 'point in memory' pointer that I
-                         * use in just about all my parsing functions.
-                         * So set it to the beginning of the buffer to
-                         * parse. */
+    {
+        point = ter->buffer;
+    } /* Point is our 'point in memory' pointer that I
+                     * use in just about all my parsing functions.
+                     * So set it to the beginning of the buffer to
+                     * parse. */
     abuf[0] = '\0';
     point = ter->buffer;
 
@@ -302,259 +302,259 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
     * buffer. Makes things easier in the long run. Memory management, though,
     * is another thing. */
     for (; *point; point++)
+    {
+        if (*point == '\033') // Parse escape
         {
-            if (*point == '\033') // Parse escape
+            if (*point == '\033')
+            {
+                point++;
+            }
+            if (*point == '[') // Bracket
+            {
+                point++;
+            }
+            i = 0;
+            memset(abuf, 0, 48);
+
+            while ((*point != 'm' && *point != 'D') && *point) // Sequence ends with m. We find it.
+            {
+                *buffer = *point;
+                //strcat(abuf, buffer);
+                strcat_s(abuf, 48, buffer);
+                i++;
+                abuf[i] = '\0';
+                point++;
+            }
+
+            if (*point == 'D')
+            {
+                //GiveError("D", TRUE);
+                //ter->buffer[last_where-1] = '\0';
+                abuf[0] = '\0';
+                f = last_where;
+                ter->len = f;
+                ter->processed = TRUE;
+                //continue;
+            }
+            if (abuf[0] != '\0')
+            {
+                i = 0;
+                j = 0;
+
+                /* Itereate through the sequence buffer and do appropriate
+                * actions. */
+                while (abuf[i] != '\0')
                 {
-                    if (*point == '\033')
-                        {
-                            point++;
-                        }
-                    if (*point == '[') // Bracket
-                        {
-                            point++;
-                        }
-                    i = 0;
-                    memset(abuf, 0, 48);
-
-                    while ((*point != 'm' && *point != 'D') && *point) // Sequence ends with m. We find it.
-                        {
-                            *buffer = *point;
-                            //strcat(abuf, buffer);
-                            strcat_s(abuf, 48, buffer);
-                            i++;
-                            abuf[i] = '\0';
-                            point++;
-                        }
-
-                    if (*point == 'D')
-                        {
-                            //GiveError("D", TRUE);
-                            //ter->buffer[last_where-1] = '\0';
-                            abuf[0] = '\0';
-                            f = last_where;
-                            ter->len = f;
-                            ter->processed = TRUE;
-                            //continue;
-                        }
-                    if (abuf[0] != '\0')
-                        {
-                            i = 0;
-                            j = 0;
-
-                            /* Itereate through the sequence buffer and do appropriate
-                            * actions. */
-                            while (abuf[i] != '\0')
-                                {
-                                    sbuf[0] = '\0';
-                                    while (abuf[i] != ';' && abuf[i] != '\0')
-                                        {
-                                            sbuf[j] = abuf[i];
-                                            sbuf[j + 1] = '\0';
-                                            j++;
-                                            i++;
-                                        }
-
-                                    if (abuf[i] == '\0')
-                                        {
-                                            abuf[0] = '\0';
-                                        }
-
-                                    if (atoi(sbuf) >= 0)
-                                        {
-                                            c_attr = atoi(sbuf);
-                                            sbuf[0] = '\0';
-
-                                            switch (c_attr)
-                                                {
-                                                case 0:
-                                                {
-                                                    c_attr_f = def_attr;
-                                                    c_attr_f &= ~FG_MASK;
-                                                    color = GREY;
-                                                    c_attr_f |= (color - 30) << FG_SHIFT;
-                                                    memset(sbuf, 0, sizeof(sbuf));
-                                                    break;
-                                                }
-                                                case 1: // BOLD
-                                                {
-                                                    //c_attr_f = def_attr;
-                                                    c_attr_f |= ATBOLD;
-                                                    break;
-                                                }
-                                                case 4: // UNDERLINE
-                                                {
-                                                    c_attr_f |= ATUNDER;
-                                                    ter->has_underline = TRUE;
-                                                    break;
-                                                }
-                                                case 5: // BLINK
-                                                {
-                                                    c_attr_f |= AT_BLINK;
-                                                    ter->has_blink = TRUE;
-                                                    break;
-                                                }
-                                                case 7: // REVERSE VIDEO
-                                                {
-                                                    c_attr_f |= ATREVER;
-                                                    break;
-                                                }
-
-                                                case 30:
-                                                case 31:
-                                                case 32:
-                                                case 33: // All these are colors.
-                                                case 34:
-                                                case 35:
-                                                case 36:
-                                                case 37:
-                                                {
-                                                    /* If you don't understand this, then you shouldn't
-                                                    * even be looking. */
-                                                    c_attr_f &= ~FG_MASK;
-                                                    c_attr_f |= ((c_attr - 30) << FG_SHIFT);
-
-                                                    if ((c_attr_f & ATBOLD))
-                                                        {
-                                                            color = c_attr + 10;
-                                                        }
-                                                    else
-                                                        {
-                                                            color = c_attr;
-                                                        }
-
-                                                    break;
-                                                }
-                                                case 40:
-                                                case 41:
-                                                case 42:
-                                                case 43:    // All these are background colors.
-                                                case 44:
-                                                case 45:
-                                                case 46:
-                                                case 47:
-                                                {
-                                                    //
-                                                    if (c_attr_f & AT_BLINK)
-                                                        {
-                                                            had_blink = TRUE;
-                                                            c_attr_f &= ~AT_BLINK;
-                                                        }
-
-                                                    c_attr_f &= ~BG_MASK;
-                                                    c_attr_f |= ((c_attr - 10) << BG_SHIFT);
-
-                                                    if (had_blink == TRUE)
-                                                        {
-                                                            had_blink = FALSE;
-                                                            c_attr_f |= AT_BLINK;
-                                                            ////ter->has_blink = TRUE;
-                                                        }
-                                                    break;
-                                                }
-                                                default:
-                                                {
-                                                    c_attr_f &= ~FG_MASK;
-                                                    color = GREY;
-                                                    c_attr_f |= ((color - 30) << FG_SHIFT);
-                                                    c_attr_f &= ~AT_BLINK;
-                                                    break;
-                                                }
-                                                }
-                                        }
-                                    j = 0;
-                                    i++;
-                                }
-                            abuf[0] = '\0';
-                            continue;
-                        }
-                    abuf[0] = '\0';
                     sbuf[0] = '\0';
-                    continue;
-                }
-            /* Done parsing the ansi escape sequences, now we look for the other
-            * escape sequences. (return, newline, tab, etc etc) */
+                    while (abuf[i] != ';' && abuf[i] != '\0')
+                    {
+                        sbuf[j] = abuf[i];
+                        sbuf[j + 1] = '\0';
+                        j++;
+                        i++;
+                    }
 
-            switch (*point)
-                {
-                case '\t': // TAB
-                {
-                    int bl = 0;
-                    bl = 8 - (where % 8);
-                    //LOG("TAB SPACE: %d",bl);
-                    for (ts = 0; ts < bl; ts++)
+                    if (abuf[i] == '\0')
+                    {
+                        abuf[0] = '\0';
+                    }
+
+                    if (atoi(sbuf) >= 0)
+                    {
+                        c_attr = atoi(sbuf);
+                        sbuf[0] = '\0';
+
+                        switch (c_attr)
                         {
-                            c_attr_f &= ~CH_MASK;
-                            c_attr_f |= (' ') << CH_SHIFT;
-                            ter->line[f] = c_attr_f | ATTAB;
-                            f++;
-                            where++;
+                        case 0:
+                        {
+                            c_attr_f = def_attr;
+                            c_attr_f &= ~FG_MASK;
+                            color = GREY;
+                            c_attr_f |= (color - 30) << FG_SHIFT;
+                            memset(sbuf, 0, sizeof(sbuf));
+                            break;
                         }
-                    //strcat(buf, stab);
-                    //stab[0] = '\0';
-                    continue;
+                        case 1: // BOLD
+                        {
+                            //c_attr_f = def_attr;
+                            c_attr_f |= ATBOLD;
+                            break;
+                        }
+                        case 4: // UNDERLINE
+                        {
+                            c_attr_f |= ATUNDER;
+                            ter->has_underline = TRUE;
+                            break;
+                        }
+                        case 5: // BLINK
+                        {
+                            c_attr_f |= AT_BLINK;
+                            ter->has_blink = TRUE;
+                            break;
+                        }
+                        case 7: // REVERSE VIDEO
+                        {
+                            c_attr_f |= ATREVER;
+                            break;
+                        }
+
+                        case 30:
+                        case 31:
+                        case 32:
+                        case 33: // All these are colors.
+                        case 34:
+                        case 35:
+                        case 36:
+                        case 37:
+                        {
+                            /* If you don't understand this, then you shouldn't
+                            * even be looking. */
+                            c_attr_f &= ~FG_MASK;
+                            c_attr_f |= ((c_attr - 30) << FG_SHIFT);
+
+                            if ((c_attr_f & ATBOLD))
+                            {
+                                color = c_attr + 10;
+                            }
+                            else
+                            {
+                                color = c_attr;
+                            }
+
+                            break;
+                        }
+                        case 40:
+                        case 41:
+                        case 42:
+                        case 43:    // All these are background colors.
+                        case 44:
+                        case 45:
+                        case 46:
+                        case 47:
+                        {
+                            //
+                            if (c_attr_f & AT_BLINK)
+                            {
+                                had_blink = TRUE;
+                                c_attr_f &= ~AT_BLINK;
+                            }
+
+                            c_attr_f &= ~BG_MASK;
+                            c_attr_f |= ((c_attr - 10) << BG_SHIFT);
+
+                            if (had_blink == TRUE)
+                            {
+                                had_blink = FALSE;
+                                c_attr_f |= AT_BLINK;
+                                ////ter->has_blink = TRUE;
+                            }
+                            break;
+                        }
+                        default:
+                        {
+                            c_attr_f &= ~FG_MASK;
+                            color = GREY;
+                            c_attr_f |= ((color - 30) << FG_SHIFT);
+                            c_attr_f &= ~AT_BLINK;
+                            break;
+                        }
+                        }
+                    }
+                    j = 0;
+                    i++;
                 }
-
-                case '\r': // RETURN
-                    tbuf->x_end = 0;
-                    continue;
-                case '\b': // BACKSPACE
-                    continue;
-                case '\a': // BELL (beep)
-                    terminal_beep();
-                    continue;
-                case '\n': // NEWLINE
-                    buffer[0] = '\0';
-                    tbuf->x_end = 0;
-
-                    continue;
-                case '\0': // NULL
-                    continue;
-                    break;
-
-                default:
-                    break;
-                }
-
-            /* If, for some reason, we made it through all the state machines
-             * and to here without any type of parsing or bit manipulations,
-             * then we need to set the default bit mask so that everything will
-             * still show uniformly.
-             */
-            if (c_attr_f == 0UL)
-                {
-                    c_attr_f &= ~FG_MASK;
-
-                    color = GREY;
-                    c_attr_f |= ((color - 30) << FG_SHIFT);
-                    c_attr_f &= ~AT_BLINK;
-                }
-
-            /* And now we do the text masks */
-            *buffer = *point;
-            buffer[1] = '\0';
-            c_attr_f &= ~CH_MASK;
-            c_attr_f |= (buffer[0]) << CH_SHIFT;
-
-            /* Make sure it has a FG_MASK attr. This is essential.
-             */
-            if (!(c_attr_f & FG_MASK))
-                {
-                    c_attr_f &= ~FG_MASK;
-                    c_attr_f |= 0 << FG_SHIFT;
-                }
-
-            if (!(c_attr_f & BG_MASK))
-                {
-                    c_attr_f &= ~BG_MASK;
-                    c_attr_f |= (0 << BG_SHIFT);
-                }
-
-            ter->line[f] = c_attr_f;
-            ter->len = f;
-            last_where = f;
-            f++;
-            where++;
+                abuf[0] = '\0';
+                continue;
+            }
+            abuf[0] = '\0';
+            sbuf[0] = '\0';
+            continue;
         }
+        /* Done parsing the ansi escape sequences, now we look for the other
+        * escape sequences. (return, newline, tab, etc etc) */
+
+        switch (*point)
+        {
+        case '\t': // TAB
+        {
+            int bl = 0;
+            bl = 8 - (where % 8);
+            //LOG("TAB SPACE: %d",bl);
+            for (ts = 0; ts < bl; ts++)
+            {
+                c_attr_f &= ~CH_MASK;
+                c_attr_f |= (' ') << CH_SHIFT;
+                ter->line[f] = c_attr_f | ATTAB;
+                f++;
+                where++;
+            }
+            //strcat(buf, stab);
+            //stab[0] = '\0';
+            continue;
+        }
+
+        case '\r': // RETURN
+            tbuf->x_end = 0;
+            continue;
+        case '\b': // BACKSPACE
+            continue;
+        case '\a': // BELL (beep)
+            terminal_beep();
+            continue;
+        case '\n': // NEWLINE
+            buffer[0] = '\0';
+            tbuf->x_end = 0;
+
+            continue;
+        case '\0': // NULL
+            continue;
+            break;
+
+        default:
+            break;
+        }
+
+        /* If, for some reason, we made it through all the state machines
+         * and to here without any type of parsing or bit manipulations,
+         * then we need to set the default bit mask so that everything will
+         * still show uniformly.
+         */
+        if (c_attr_f == 0UL)
+        {
+            c_attr_f &= ~FG_MASK;
+
+            color = GREY;
+            c_attr_f |= ((color - 30) << FG_SHIFT);
+            c_attr_f &= ~AT_BLINK;
+        }
+
+        /* And now we do the text masks */
+        *buffer = *point;
+        buffer[1] = '\0';
+        c_attr_f &= ~CH_MASK;
+        c_attr_f |= (buffer[0]) << CH_SHIFT;
+
+        /* Make sure it has a FG_MASK attr. This is essential.
+         */
+        if (!(c_attr_f & FG_MASK))
+        {
+            c_attr_f &= ~FG_MASK;
+            c_attr_f |= 0 << FG_SHIFT;
+        }
+
+        if (!(c_attr_f & BG_MASK))
+        {
+            c_attr_f &= ~BG_MASK;
+            c_attr_f |= (0 << BG_SHIFT);
+        }
+
+        ter->line[f] = c_attr_f;
+        ter->len = f;
+        last_where = f;
+        f++;
+        where++;
+    }
 
     ter->line[f] = 0;
     buffer[0] = '\0';
@@ -589,20 +589,20 @@ void find_unused_buffers(void)
     int i;
 
     for (i = 0; i < bufcount; i++)
+    {
+        if (!this_session->termlist[i])
         {
-            if (!this_session->termlist[i])
-                {
-                    continue;
-                }
-            if (this_session->termlist[i]->buffer != NULL)
-                {
-                    LOG("Buffer index  %d still has a valid buffer pointer, but has been processed. It's finished status: %s", i, this_session->termlist[i]->not_finished == TRUE ? "Not finished." : "Finished");
-                }
-            else
-                {
-                    LOG("Buffer %d is ok!", i);
-                }
+            continue;
         }
+        if (this_session->termlist[i]->buffer != NULL)
+        {
+            LOG("Buffer index  %d still has a valid buffer pointer, but has been processed. It's finished status: %s", i, this_session->termlist[i]->not_finished == TRUE ? "Not finished." : "Finished");
+        }
+        else
+        {
+            LOG("Buffer %d is ok!", i);
+        }
+    }
 }
 
 void paint_line(TERMBUF* ter)
@@ -623,23 +623,23 @@ void paint_line(TERMBUF* ter)
     underlined = FALSE;
 
     if (!ter->line)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     if (PAUSE_UPDATING == TRUE)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     buf[0] = '\0';
     /* FIXME: Time stamps do not work well with painting. */
     if (this_session->ShowTimeStamps)
-        {
-            sprintf(buf, "-%lu- ", ter->ln);
-            FlushBuffer(buf, WHITE, TRUE_BLACK, FALSE);
-            buf[0] = '\0';
-        }
+    {
+        sprintf(buf, "-%lu- ", ter->ln);
+        FlushBuffer(buf, WHITE, TRUE_BLACK, FALSE);
+        buf[0] = '\0';
+    }
     /* This for statement (which should be unrollable, will
      * chew through the buffer, unmasking and setting
      * proper atrributes for the resulting text. It then
@@ -648,67 +648,67 @@ void paint_line(TERMBUF* ter)
      */
 
     for (i = 0; i <= ter->len; i++)
+    {
+        c_color = GREY;
+        c_attr_f = ter->line[i];
+        if (ter->line[i] & ATUNDER)
+        {
+            underlined = TRUE;
+        }
+
+        buffer[0] = (c_attr_f & CH_MASK) >> CH_SHIFT;
+        buffer[1] = '\0';
+        //strcat(buf, buffer);
+        strcat_s(buf, 10244, buffer);
+        c_color = ((c_attr_f & FG_MASK) >> FG_SHIFT);
+
+        if ((c_attr_f & ATBOLD))
+        {
+            c_color += 10;
+        }
+
+        if (c_color == 8)
         {
             c_color = GREY;
-            c_attr_f = ter->line[i];
-            if (ter->line[i] & ATUNDER)
-                {
-                    underlined = TRUE;
-                }
-
-            buffer[0] = (c_attr_f & CH_MASK) >> CH_SHIFT;
-            buffer[1] = '\0';
-            //strcat(buf, buffer);
-            strcat_s(buf, 10244, buffer);
-            c_color = ((c_attr_f & FG_MASK) >> FG_SHIFT);
-
-            if ((c_attr_f & ATBOLD))
-                {
-                    c_color += 10;
-                }
-
-            if (c_color == 8)
-                {
-                    c_color = GREY;
-                }
-            else if (c_color == 9)
-                {
-                    c_color = TRUE_BLACK;
-                }
-
-            if (c_color != GREY)
-                {
-                    c_color += 30;
-                }
-
-            if (c_attr_f & ATREVER)
-                {
-                    bKcolor = c_color;
-                    c_color = TRUE_BLACK;
-                }
-            else if (c_attr_f & BG_MASK)
-                {
-                    bKcolor = ((c_attr_f & BG_MASK) >> BG_SHIFT);
-                }
-            else
-                {
-                    bKcolor = TRUE_BLACK;
-                }
-
-            if (is_same(ter->line[i], ter->line[i + 1]))
-                {
-                    continue;
-                }
-
-            FlushBuffer(buf, c_color, bKcolor, underlined);
-            underlined = FALSE;
-            buf[0] = '\0';
-            buf2[0] = '\0';
         }
-    if (buf[0] != '\0')
+        else if (c_color == 9)
         {
-            FlushBuffer(buf, c_color, bKcolor, underlined);
+            c_color = TRUE_BLACK;
         }
+
+        if (c_color != GREY)
+        {
+            c_color += 30;
+        }
+
+        if (c_attr_f & ATREVER)
+        {
+            bKcolor = c_color;
+            c_color = TRUE_BLACK;
+        }
+        else if (c_attr_f & BG_MASK)
+        {
+            bKcolor = ((c_attr_f & BG_MASK) >> BG_SHIFT);
+        }
+        else
+        {
+            bKcolor = TRUE_BLACK;
+        }
+
+        if (is_same(ter->line[i], ter->line[i + 1]))
+        {
+            continue;
+        }
+
+        FlushBuffer(buf, c_color, bKcolor, underlined);
+        underlined = FALSE;
+        buf[0] = '\0';
+        buf2[0] = '\0';
+    }
+    if (buf[0] != '\0')
+    {
+        FlushBuffer(buf, c_color, bKcolor, underlined);
+    }
 
     /* These few little if-else statements are VERY essential.
     * They make sure that we don't have 'droppings' everywhere
@@ -718,22 +718,22 @@ void paint_line(TERMBUF* ter)
     * point. */
 
     if (i < cols)
-        {
-            //char pad[2001]="";
-            pad = malloc(sizeof(char*) * (cols - i));
-            memset(pad, ' ', (cols - i));
-            pad[(cols - i)] = '\0';
-            FlushBuffer(pad, TRUE_BLACK, TRUE_BLACK, FALSE);
-            free(pad);
-        }
+    {
+        //char pad[2001]="";
+        pad = malloc(sizeof(char*) * ((cols - i) + 5));
+        memset(pad, ' ', ((cols - i) + 5));
+        pad[(cols - i) + 2] = '\0';
+        FlushBuffer(pad, TRUE_BLACK, TRUE_BLACK, FALSE);
+        free(pad);
+    }
     else if (i == 0)
-        {
-            pad = malloc(sizeof(char*) * cols);
-            memset(pad, ' ', cols);
-            pad[cols] = '\0';
-            FlushBuffer(pad, TRUE_BLACK, TRUE_BLACK, FALSE);
-            free(pad);
-        }
+    {
+        pad = malloc(sizeof(char*) * cols);
+        memset(pad, ' ', cols);
+        pad[cols] = '\0';
+        FlushBuffer(pad, TRUE_BLACK, TRUE_BLACK, FALSE);
+        free(pad);
+    }
 }
 
 COLORREF  get_char_color(unsigned long int c)
@@ -750,25 +750,25 @@ COLORREF  get_char_color(unsigned long int c)
     fg_color = (c & FG_MASK) >> FG_SHIFT;
 
     if ((c & ATBOLD))
-        {
-            fg_color += 10;
-        }
+    {
+        fg_color += 10;
+    }
     if (fg_color == 8)
-        {
-            fg_color = GREY;
-        }
+    {
+        fg_color = GREY;
+    }
     if (fg_color != GREY)
-        {
-            fg_color += 30;
-        }
+    {
+        fg_color += 30;
+    }
 
     for (i = 0; c_table[i].type != -1; i++)
+    {
+        if (c_table[i].type == fg_color)
         {
-            if (c_table[i].type == fg_color)
-                {
-                    return c_table[i].color;
-                }
+            return c_table[i].color;
         }
+    }
     return 0;
 }
 
@@ -794,91 +794,91 @@ void blink_term(void)
     unsigned long cf = 0;
 
     if (PAUSE_UPDATING == TRUE)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     if (this_session->EnableBlinkies == FALSE)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     i = bufcount - rows;
 
     if (i < rows)
-        {
-            i = 0;
-        }
+    {
+        i = 0;
+    }
 
     found_blink = FALSE;
 
     /* FIXME: Re-write this. It's sloppy. Poorly coded and ugly as hell. */
     /* Done and done */
     if (curdis < 0) // Scrollback.
+    {
+        viewing = bufcount - -curdis; // Scrollback maths.
+
+        for (i = viewing - rows, l = 0; l <= rows; l++, i++)
         {
-            viewing = bufcount - -curdis; // Scrollback maths.
+            temp = fetch_line(i);     // We're viewing scroll back, so get me the line we need
+            if (temp == NULL)
+            {
+                continue;
+            }
+            if (temp->has_blink == FALSE)   // No blinks? Then no dice. Performance change.
+            {
+                continue;
+            }
+            scount = temp->len; // Strlen is too damn expensive.
 
-            for (i = viewing - rows, l = 0; l <= rows; l++, i++)
+            /*This line DOES have a blink SOMEWHERE in it. Let's find it. */
+
+            for (bar = 0; bar <= scount; bar++) // Let's start parsing the line for the blink code.
+            {
+                if (((temp->line[bar] & CH_MASK) >> CH_SHIFT) && (temp->line[bar] & AT_BLINK)) // Found it.
                 {
-                    temp = fetch_line(i);     // We're viewing scroll back, so get me the line we need
-                    if (temp == NULL)
-                        {
-                            continue;
-                        }
-                    if (temp->has_blink == FALSE)   // No blinks? Then no dice. Performance change.
-                        {
-                            continue;
-                        }
-                    scount = temp->len; // Strlen is too damn expensive.
-
-                    /*This line DOES have a blink SOMEWHERE in it. Let's find it. */
-
-                    for (bar = 0; bar <= scount; bar++) // Let's start parsing the line for the blink code.
-                        {
-                            if (((temp->line[bar] & CH_MASK) >> CH_SHIFT) && (temp->line[bar] & AT_BLINK)) // Found it.
-                                {
-                                    tbuf->y_end = (l * 13);
-                                    tbuf->x_end = bar * 8;
-                                    str[0] = (temp->line[bar] & CH_MASK) >> CH_SHIFT;
-                                    str[1] = '\0';
-                                    do_blinked(temp, bar, str);
-                                    str[0] = '\0';
-                                }
-                        }
+                    tbuf->y_end = (l * 13);
+                    tbuf->x_end = bar * 8;
+                    str[0] = (temp->line[bar] & CH_MASK) >> CH_SHIFT;
+                    str[1] = '\0';
+                    do_blinked(temp, bar, str);
+                    str[0] = '\0';
                 }
-            return;
+            }
         }
+        return;
+    }
 
     /* non-scroll back stuff */
     for (runner = 0, i = (bufcount <= rows) ? 1 : ((bufcount - rows)); runner <= rows; i++, runner++)
+    {
+        temp = fetch_line(i);
+
+        if (temp == NULL)
         {
-            temp = fetch_line(i);
-
-            if (temp == NULL)
-                {
-                    continue;
-                }
-            if (temp->has_blink == FALSE)   // non-blink performance increase
-                {
-                    continue;
-                }
-
-            scount = temp->len;
-
-            /*This line DOES have a blink SOMEWHERE in it. Let's find it. */
-            for (bar = 0; bar <= scount; bar++)
-                {
-                    if (((temp->line[bar] & CH_MASK) >> CH_SHIFT) && (temp->line[bar] & AT_BLINK))
-                        {
-                            tbuf->y_end = (runner * 13);
-                            tbuf->x_end = bar * 8;
-                            str[0] = (temp->line[bar] & CH_MASK) >> CH_SHIFT;
-                            str[1] = '\0';
-                            do_blinked(temp, bar, str);
-                            str[0] = '\0';
-                        }
-                }
+            continue;
         }
+        if (temp->has_blink == FALSE)   // non-blink performance increase
+        {
+            continue;
+        }
+
+        scount = temp->len;
+
+        /*This line DOES have a blink SOMEWHERE in it. Let's find it. */
+        for (bar = 0; bar <= scount; bar++)
+        {
+            if (((temp->line[bar] & CH_MASK) >> CH_SHIFT) && (temp->line[bar] & AT_BLINK))
+            {
+                tbuf->y_end = (runner * 13);
+                tbuf->x_end = bar * 8;
+                str[0] = (temp->line[bar] & CH_MASK) >> CH_SHIFT;
+                str[1] = '\0';
+                do_blinked(temp, bar, str);
+                str[0] = '\0';
+            }
+        }
+    }
 }
 
 /* Does the actual drawing of the blinks. This was taken out of the
@@ -901,128 +901,128 @@ void do_blinked(TERMBUF* temp, int idx, char str[])
     //str[1] = '\0';
 
     if (PAUSE_UPDATING == TRUE)   // HACK HACK HACK to stop blinks from happening while a pause-update has been issued
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     if (blinked == FALSE) /* text is 'vis' */
+    {
+        cf = temp->line[bar];
+
+        if (cf & ATUNDER)
         {
-            cf = temp->line[bar];
-
-            if (cf & ATUNDER)
-                {
-                    underlined = TRUE;
-                }
-
-            if (cf == def_attr)
-                {
-                    ccolor = GREY;
-                }
-            else
-                {
-                    ccolor = ((cf & FG_MASK) >> FG_SHIFT);
-                }
-
-            if (ccolor == 0)
-                {
-                    ccolor = GREY;
-                }
-
-            if ((cf & ATBOLD))
-                {
-                    ccolor += 10;
-                }
-
-            if (ccolor == 8)
-                {
-                    ccolor = GREY;
-                }
-            else if (ccolor == 9)
-                {
-                    ccolor = TRUE_BLACK;
-                }
-
-            if (ccolor != GREY)
-                {
-                    ccolor += 30;
-                }
-
-            if ((cf & ATREVER))
-                {
-                    bkcolor = ccolor;
-                    ccolor = ccolor;
-                }
-            else if (cf & BG_MASK)
-                {
-                    bkcolor = ((cf & BG_MASK) >> BG_SHIFT);
-                    ccolor = bkcolor;//TRUE_BLACK;
-                }
-            else
-                {
-                    bkcolor = TRUE_BLACK;
-                    ccolor = TRUE_BLACK;
-                }
-
-            FlushBuffer(str, ccolor, bkcolor, underlined);
-            underlined = FALSE;
+            underlined = TRUE;
         }
+
+        if (cf == def_attr)
+        {
+            ccolor = GREY;
+        }
+        else
+        {
+            ccolor = ((cf & FG_MASK) >> FG_SHIFT);
+        }
+
+        if (ccolor == 0)
+        {
+            ccolor = GREY;
+        }
+
+        if ((cf & ATBOLD))
+        {
+            ccolor += 10;
+        }
+
+        if (ccolor == 8)
+        {
+            ccolor = GREY;
+        }
+        else if (ccolor == 9)
+        {
+            ccolor = TRUE_BLACK;
+        }
+
+        if (ccolor != GREY)
+        {
+            ccolor += 30;
+        }
+
+        if ((cf & ATREVER))
+        {
+            bkcolor = ccolor;
+            ccolor = ccolor;
+        }
+        else if (cf & BG_MASK)
+        {
+            bkcolor = ((cf & BG_MASK) >> BG_SHIFT);
+            ccolor = bkcolor;//TRUE_BLACK;
+        }
+        else
+        {
+            bkcolor = TRUE_BLACK;
+            ccolor = TRUE_BLACK;
+        }
+
+        FlushBuffer(str, ccolor, bkcolor, underlined);
+        underlined = FALSE;
+    }
     else
+    {
+        cf = temp->line[bar];
+
+        if (cf & ATUNDER)
         {
-            cf = temp->line[bar];
-
-            if (cf & ATUNDER)
-                {
-                    underlined = TRUE;
-                }
-            if (cf == def_attr)
-                {
-                    ccolor = GREY;
-                }
-            else
-                {
-                    ccolor = ((cf & FG_MASK) >> FG_SHIFT);
-                }
-
-            if (ccolor == 0)
-                {
-                    ccolor = GREY;
-                }
-
-            if ((cf & ATBOLD))
-                {
-                    ccolor += 10;
-                }
-
-            if (ccolor == 8)
-                {
-                    ccolor = GREY;
-                }
-            else if (ccolor == 9)
-                {
-                    ccolor = TRUE_BLACK;
-                }
-
-            if (ccolor != GREY)
-                {
-                    ccolor += 30;
-                }
-
-            if (cf & ATREVER)
-                {
-                    bkcolor = ccolor;
-                    ccolor = TRUE_BLACK;
-                }
-            else if (cf & BG_MASK)
-                {
-                    bkcolor = ((cf & BG_MASK) >> BG_SHIFT);
-                }
-            else
-                {
-                    bkcolor = TRUE_BLACK;
-                }
-            FlushBuffer(str, ccolor, bkcolor, underlined);
-            underlined = FALSE;
+            underlined = TRUE;
         }
+        if (cf == def_attr)
+        {
+            ccolor = GREY;
+        }
+        else
+        {
+            ccolor = ((cf & FG_MASK) >> FG_SHIFT);
+        }
+
+        if (ccolor == 0)
+        {
+            ccolor = GREY;
+        }
+
+        if ((cf & ATBOLD))
+        {
+            ccolor += 10;
+        }
+
+        if (ccolor == 8)
+        {
+            ccolor = GREY;
+        }
+        else if (ccolor == 9)
+        {
+            ccolor = TRUE_BLACK;
+        }
+
+        if (ccolor != GREY)
+        {
+            ccolor += 30;
+        }
+
+        if (cf & ATREVER)
+        {
+            bkcolor = ccolor;
+            ccolor = TRUE_BLACK;
+        }
+        else if (cf & BG_MASK)
+        {
+            bkcolor = ((cf & BG_MASK) >> BG_SHIFT);
+        }
+        else
+        {
+            bkcolor = TRUE_BLACK;
+        }
+        FlushBuffer(str, ccolor, bkcolor, underlined);
+        underlined = FALSE;
+    }
 }
 
 /* ParseLines: We call this function when we've got a chunk of data that we've
@@ -1046,9 +1046,9 @@ void ParseLines(unsigned char* readbuff)
     int buf_size;
 
     if (buf)
-        {
-            free(buf);
-        }
+    {
+        free(buf);
+    }
 
     buf = malloc(sizeof(unsigned char*) * (strlen(readbuff) + 10));
     memset(buf, '\0', sizeof(unsigned char*) * (strlen(readbuff) + 10));
@@ -1059,115 +1059,115 @@ void ParseLines(unsigned char* readbuff)
     buf_len = 0;
 
     if (readbuff == NULL || readbuff[0] == '\0')
-        {
-            buf[0] = '\0';
-            readbuff[0] = '\0';
-            buffer[0] = '\0';
-            buffer_hold[0] = '\0';
-            point = NULL;
-            free(buf);
-            buf = NULL;
+    {
+        buf[0] = '\0';
+        readbuff[0] = '\0';
+        buffer[0] = '\0';
+        buffer_hold[0] = '\0';
+        point = NULL;
+        free(buf);
+        buf = NULL;
 
-            return;
-        }
+        return;
+    }
     for (; *point; point++)
+    {
+        if (*point == '\n')
         {
-            if (*point == '\n')
+            /* Do not delete this commented out section of code.
+             * was a previous bug fix but seemed to introduce another
+             * bug. commented out, and left, incase it is needed at
+             * another date.
+             */
+            if (buf[0] == '\0')
+            {
+                continue;
+            }
+
+            temp = fetch_line(bufcount);
+
+            if (temp != NULL && temp->not_finished == TRUE && temp->buffer != NULL)
+            {
+                if (temp->buffer == NULL)
                 {
-                    /* Do not delete this commented out section of code.
-                     * was a previous bug fix but seemed to introduce another
-                     * bug. commented out, and left, incase it is needed at
-                     * another date.
-                     */
-                    if (buf[0] == '\0')
-                        {
-                            continue;
-                        }
-
-                    temp = fetch_line(bufcount);
-
-                    if (temp != NULL && temp->not_finished == TRUE && temp->buffer != NULL)
-                        {
-                            if (temp->buffer == NULL)
-                                {
-                                    temp->buffer = (char*)malloc(sizeof(char*) * (strlen(buf) + 10));
-                                }
-                            buf_len = strlen(buf);
-                            buffer_len = strlen(temp->buffer);
-
-                            temp->processed = FALSE;
-                            temp->not_finished = FALSE;
-
-                            temp_buffer = (char*)malloc(((buffer_len + buf_len) * sizeof(char*)) + 5);
-                            temp->len = buffer_len;
-
-                            memcpy(temp_buffer, temp->buffer, buffer_len);
-                            //strcat(temp_buffer, buf);
-                            strcat_s(temp_buffer, (buffer_len + buf_len) + 5, buf);
-                            free(temp->buffer);
-                            temp->buffer = temp_buffer;
-
-                            temp_line = (unsigned long*)malloc((((temp->len * sizeof(unsigned int)) + (sizeof(unsigned int) * buf_len)) + 5));
-                            free(temp->line);
-                            temp->line = temp_line;
-                            temp->processed = FALSE;
-                            parse_ansi(temp, 0);
-
-                            buf[0] = '\0';
-                            continue;
-                        }
-                    //READ_AHEAD = 4;
-                    realize_lines(buf);
-                    if (temp != NULL)
-                        {
-                            temp->not_finished = FALSE;
-                        }
-
-                    buf[0] = '\0';
-                    continue;
+                    temp->buffer = (char*)malloc(sizeof(char*) * (strlen(buf) + 10));
                 }
-            *buffer = *point;
-            buffer[1] = '\0';
-            //strcat(buf,buffer);
+                buf_len = strlen(buf);
+                buffer_len = strlen(temp->buffer);
 
-            strcat_s(buf, buf_size, buffer);
+                temp->processed = FALSE;
+                temp->not_finished = FALSE;
+
+                temp_buffer = (char*)malloc(((buffer_len + buf_len) * sizeof(char*)) + 5);
+                temp->len = buffer_len;
+
+                memcpy(temp_buffer, temp->buffer, buffer_len);
+                //strcat(temp_buffer, buf);
+                strcat_s(temp_buffer, (buffer_len + buf_len) + 5, buf);
+                free(temp->buffer);
+                temp->buffer = temp_buffer;
+
+                temp_line = (unsigned long*)malloc((((temp->len * sizeof(unsigned int)) + (sizeof(unsigned int) * buf_len)) + 5));
+                free(temp->line);
+                temp->line = temp_line;
+                temp->processed = FALSE;
+                parse_ansi(temp, 0);
+
+                buf[0] = '\0';
+                continue;
+            }
+            //READ_AHEAD = 4;
+            realize_lines(buf);
+            if (temp != NULL)
+            {
+                temp->not_finished = FALSE;
+            }
+
+            buf[0] = '\0';
+            continue;
         }
+        *buffer = *point;
+        buffer[1] = '\0';
+        //strcat(buf,buffer);
+
+        strcat_s(buf, buf_size, buffer);
+    }
 
     if (buf[0] != '\0')
+    {
+        temp = fetch_line(bufcount);
+        if (temp != NULL && temp->not_finished == TRUE && temp->buffer != NULL)
         {
-            temp = fetch_line(bufcount);
-            if (temp != NULL && temp->not_finished == TRUE && temp->buffer != NULL)
-                {
-                    buf_len = strlen(buf);
-                    buffer_len = strlen(temp->buffer);
-                    temp->processed = FALSE;
+            buf_len = strlen(buf);
+            buffer_len = strlen(temp->buffer);
+            temp->processed = FALSE;
 
-                    temp_buffer = (char*)malloc(((temp->len + buf_len + buffer_len) * sizeof(char*)) + 10);
-                    memcpy(temp_buffer, temp->buffer, buffer_len);
-                    //strcat(temp_buffer, buf);
-                    strcat_s(temp_buffer, (temp->len + buf_len + buffer_len) + 10, buf);
-                    free(temp->buffer);
-                    temp->buffer = temp_buffer;
+            temp_buffer = (char*)malloc(((temp->len + buf_len + buffer_len) * sizeof(char*)) + 10);
+            memcpy(temp_buffer, temp->buffer, buffer_len);
+            //strcat(temp_buffer, buf);
+            strcat_s(temp_buffer, (temp->len + buf_len + buffer_len) + 10, buf);
+            free(temp->buffer);
+            temp->buffer = temp_buffer;
 
-                    temp_line = (unsigned long*)malloc((((temp->len * sizeof(unsigned int)) + (sizeof(unsigned int) * buf_len)) + 10));
-                    free(temp->line);
-                    temp->line = temp_line;
+            temp_line = (unsigned long*)malloc((((temp->len * sizeof(unsigned int)) + (sizeof(unsigned int) * buf_len)) + 10));
+            free(temp->line);
+            temp->line = temp_line;
 
-                    parse_ansi(temp, 0);
-                    buf[0] = '\0';
-                }
-            else
-                {
-                    //READ_AHEAD = 4;
-                    realize_lines(buf);
-                    temp = fetch_line(bufcount);
-
-                    if (temp != NULL)
-                        {
-                            temp->not_finished = TRUE;
-                        }
-                }
+            parse_ansi(temp, 0);
+            buf[0] = '\0';
         }
+        else
+        {
+            //READ_AHEAD = 4;
+            realize_lines(buf);
+            temp = fetch_line(bufcount);
+
+            if (temp != NULL)
+            {
+                temp->not_finished = TRUE;
+            }
+        }
+    }
 
     buf[0] = '\0';
     readbuff[0] = '\0';
@@ -1199,74 +1199,74 @@ TERMBUF* replace_line(unsigned long int line, TERMBUF* tbuf)
     if (READ_AHEAD >= 2) /* Readahead is used for import functions such as the log import.
                           * It allows the code to remove more than one line at a time instead
                           * of doing it one at a time. This is for speed. */
+    {
+        if (READ_AHEAD >= (bufcount / 2))
         {
-            if (READ_AHEAD >= (bufcount / 2))
-                {
-                    READ_AHEAD = bufcount / 4;
-                }
-
-            for (i = 0; i < ((READ_AHEAD) > 1 ? (READ_AHEAD) : 1); i++)
-                {
-                    rem = this_session->termlist[i];
-                    if (!rem)
-                        {
-                            continue;
-                        }
-                    if (rem->canary != TERMCANARY)
-                        {
-                            LOG("Canary missing from Line %d!", i);
-                        }
-
-                    if (rem != NULL)
-                        {
-                            //free(rem);
-                            free_line(rem);
-                            rem = NULL;
-                        }
-                    else
-                        {
-                            LOG("Unknown line failure within replaceline function. I: %d, Bufcount: %d, ReadAhead: %d",
-                                i, bufcount, READ_AHEAD);
-                        }
-                }
-            x = READ_AHEAD;
-            tbuf_mv = bufcount - x;
-
-            if (tbuf_mv < 0)
-                {
-                    tbuf_mv = -tbuf_mv; // Flip it postive, just in case math goes weird.
-                }
-            else
-                {
-                    tbuf_mv = tbuf_mv;
-                }
-
-            memcpy(&this_session->termlist[0], &this_session->termlist[x], tbuf_mv * sizeof(TERMBUF*));
-            bufcount -= READ_AHEAD;
-            for (x = (bufcount); x <= TERM_MAX; x++)
-                {
-                    this_session->termlist[x] = NULL;
-                }
-
-            rem = NULL;
-            PAUSE_UPDATING = FALSE;
-            return NULL;
+            READ_AHEAD = bufcount / 4;
         }
-    else
+
+        for (i = 0; i < ((READ_AHEAD) > 1 ? (READ_AHEAD) : 1); i++)
         {
+            rem = this_session->termlist[i];
+            if (!rem)
+            {
+                continue;
+            }
+            if (rem->canary != TERMCANARY)
+            {
+                LOG("Canary missing from Line %d!", i);
+            }
+
             if (rem != NULL)
-                {
-                    free_line(rem);
-                    rem = NULL;
-                }
+            {
+                //free(rem);
+                free_line(rem);
+                rem = NULL;
+            }
             else
-                {
-                    LOG("Line failed stage 2");
-                }
-
-            memcpy(&this_session->termlist[0], &this_session->termlist[1], (bufcount)* sizeof(TERMBUF*));
-            this_session->termlist[bufcount + 1] = NULL;
+            {
+                LOG("Unknown line failure within replaceline function. I: %d, Bufcount: %d, ReadAhead: %d",
+                    i, bufcount, READ_AHEAD);
+            }
         }
+        x = READ_AHEAD;
+        tbuf_mv = bufcount - x;
+
+        if (tbuf_mv < 0)
+        {
+            tbuf_mv = -tbuf_mv; // Flip it postive, just in case math goes weird.
+        }
+        else
+        {
+            tbuf_mv = tbuf_mv;
+        }
+
+        memcpy(&this_session->termlist[0], &this_session->termlist[x], tbuf_mv * sizeof(TERMBUF*));
+        bufcount -= READ_AHEAD;
+        for (x = (bufcount); x <= TERM_MAX; x++)
+        {
+            this_session->termlist[x] = NULL;
+        }
+
+        rem = NULL;
+        PAUSE_UPDATING = FALSE;
+        return NULL;
+    }
+    else
+    {
+        if (rem != NULL)
+        {
+            free_line(rem);
+            rem = NULL;
+        }
+        else
+        {
+            LOG("Line failed stage 2");
+        }
+
+        memcpy(&this_session->termlist[0], &this_session->termlist[1], (bufcount)* sizeof(TERMBUF*));
+        this_session->termlist[bufcount + 1] = NULL;
+    }
     PAUSE_UPDATING = FALSE;
     return NULL;
 }
@@ -1277,36 +1277,36 @@ TERMBUF* replace_line(unsigned long int line, TERMBUF* tbuf)
 TERMBUF* fetch_line(unsigned long int idx)
 {
     if (!this_session)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     if (idx > bufcount)
+    {
+        return NULL;
+    }
+    else
+    {
+        if (this_session->termlist[idx] == NULL)
         {
+            LOG("Error! Fetchline tried to grab an invalid line of %d with a max count of %d", idx, bufcount);
+
             return NULL;
         }
-    else
+        else
         {
-            if (this_session->termlist[idx] == NULL)
-                {
-                    LOG("Error! Fetchline tried to grab an invalid line of %d with a max count of %d", idx, bufcount);
+            if (this_session->termlist[idx] != NULL)
+            {
+                this_session->termlist[idx]->ln = idx;
+            }
 
-                    return NULL;
-                }
-            else
-                {
-                    if (this_session->termlist[idx] != NULL)
-                        {
-                            this_session->termlist[idx]->ln = idx;
-                        }
-
-                    return this_session->termlist[idx];
-                }
+            return this_session->termlist[idx];
         }
+    }
     return NULL;
 }
 
-/* chop_line: Nanomud's version of line wrap. Unfortunetly, it doesn't work as
+/* chop_line: BioMUD's version of line wrap. Unfortunetly, it doesn't work as
 * well as it should at the moment and isn't 'nice' with the buffers since it
 * won't wrap a line from the nearest word, but instead, it'll wrap at the last
 * char. FIXME: fix that. */
@@ -1334,9 +1334,9 @@ void chop_line(TERMBUF* ter)
     last_space = 0;
 
     if (!ter)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     attr_f = def_attr;
     attr_f &= ~FG_MASK;
@@ -1345,50 +1345,50 @@ void chop_line(TERMBUF* ter)
     attr_f |= (' ') << CH_SHIFT;
 
     if (ter->processed == TRUE)
+    {
+        //if (ter->buffer != NULL)
+        //  {
+        //      return;
+        //  }
+        if (ter->len > this_session->char_wrap)
         {
-            //if (ter->buffer != NULL)
-            //  {
-            //      return;
-            //  }
-            if (ter->len > this_session->char_wrap)
-                {
-                    last_space = -1;
-                    last_space = term_wrap_last_space(ter);
+            last_space = -1;
+            last_space = term_wrap_last_space(ter);
 
-                    if (last_space == -1)
-                        {
-                            return; // Get out of here. Something is wrong.
-                        }
+            if (last_space == -1)
+            {
+                return; // Get out of here. Something is wrong.
+            }
 
-                    temp = new_line(__LINE__, __FILE__);
-                    temp->len = ter->len - last_space;//this_session->char_wrap;
+            temp = new_line(__LINE__, __FILE__);
+            temp->len = ter->len - last_space;//this_session->char_wrap;
 
-                    if (temp->buffer != NULL)
-                        {
-                            free(temp->buffer);
-                        }
+            if (temp->buffer != NULL)
+            {
+                free(temp->buffer);
+            }
 
-                    temp->buffer = NULL;
-                    temp->processed = TRUE;
-                    temp->not_finished = FALSE;
-                    temp->len = (ter->len - /*this_session->char_wrap*/ last_space + 1) + TAB_SIZE;
-                    temp->line = malloc((temp->len + 2) * sizeof(unsigned long));
+            temp->buffer = NULL;
+            temp->processed = TRUE;
+            temp->not_finished = FALSE;
+            temp->len = (ter->len - /*this_session->char_wrap*/ last_space + 1) + TAB_SIZE;
+            temp->line = malloc((temp->len + 2) * sizeof(unsigned long));
 
-                    for (i = 0; i < TAB_SIZE; i++)
-                        {
-                            temp->line[i] = attr_f | ATTAB;
-                        }
+            for (i = 0; i < TAB_SIZE; i++)
+            {
+                temp->line[i] = attr_f | ATTAB;
+            }
 
-                    memcpy(&temp->line[i], &ter->line[/*this_session->char_wrap*/last_space], ((ter->len - (/*this_session->char_wrap*/last_space)) + 1/*-1*/) * sizeof(unsigned long));
-                    line = malloc((/*this_session->char_wrap*/last_space + 1) * sizeof(unsigned long));
-                    memcpy(line, ter->line, (/*this_session->char_wrap*/ last_space)* sizeof(unsigned long));
-                    free(ter->line);
-                    ter->line = line;
-                    ter->len = last_space; //this_session->char_wrap;
-                    //ret_string(ter, b);
-                    chop_line(temp);     // Recursive to chop down lines that are too long for even one wrap.
-                }
+            memcpy(&temp->line[i], &ter->line[/*this_session->char_wrap*/last_space], ((ter->len - (/*this_session->char_wrap*/last_space)) + 1/*-1*/) * sizeof(unsigned long));
+            line = malloc((/*this_session->char_wrap*/last_space + 1) * sizeof(unsigned long));
+            memcpy(line, ter->line, (/*this_session->char_wrap*/ last_space)* sizeof(unsigned long));
+            free(ter->line);
+            ter->line = line;
+            ter->len = last_space; //this_session->char_wrap;
+            //ret_string(ter, b);
+            chop_line(temp);     // Recursive to chop down lines that are too long for even one wrap.
         }
+    }
     return;
 }
 
@@ -1401,39 +1401,39 @@ int term_wrap_last_space(TERMBUF* ter)
     last_space = 0; // 0 means no spaces were found;
 
     if (!ter)
-        {
-            return -1;
-        }
+    {
+        return -1;
+    }
 
     if (!ter->line)
-        {
-            return -1;
-        }
+    {
+        return -1;
+    }
 
     for (i = 0; i < this_session->char_wrap; i++)
+    {
+        if (!ter->line[i])
         {
-            if (!ter->line[i])
-                {
-                    continue;
-                }
+            continue;
+        }
 
-            if (ter->line[i] & ATTAB)  // Let's skip over tabs since this is normally in a recursive call.
-                {
-                    continue;
-                }
-            if (((ter->line[i] & CH_MASK) >> CH_SHIFT) == ' ')
-                {
-                    last_space = i;
-                }
+        if (ter->line[i] & ATTAB)  // Let's skip over tabs since this is normally in a recursive call.
+        {
+            continue;
         }
+        if (((ter->line[i] & CH_MASK) >> CH_SHIFT) == ' ')
+        {
+            last_space = i;
+        }
+    }
     if (last_space == 0)
-        {
-            return this_session->char_wrap - 6;
-        }
+    {
+        return this_session->char_wrap - 6;
+    }
     else
-        {
-            return last_space + 1;
-        }
+    {
+        return last_space + 1;
+    }
 }
 
 /* Get_x: This little function will return the current logical line number from
@@ -1447,16 +1447,16 @@ unsigned long int get_x(int x)
     int viewing;
 
     if (curdis < 0)  // Viewing scroll back
-        {
-            curpos = curdis;
-            viewing = bufcount - -curdis;
-            return (viewing - rows) + x;
-        }
+    {
+        curpos = curdis;
+        viewing = bufcount - -curdis;
+        return (viewing - rows) + x;
+    }
     else // Not scrollback.
-        {
-            curpos = curdis;
-            return ((bufcount <= rows ? 1 : (bufcount - rows)) + x);
-        }
+    {
+        curpos = curdis;
+        return ((bufcount <= rows ? 1 : (bufcount - rows)) + x);
+    }
 }
 
 /* do_update_paint: yes, this whole function is ugly. It's ineffeiciant and it's
@@ -1473,40 +1473,40 @@ void do_update_paint(HDC hdc, int left, int top, int right, int bottom)
     top -= 3;
     bottom += 3;
     if (top < 0)
-        {
-            top = 0;
-        }
+    {
+        top = 0;
+    }
     if (bottom > rows)
-        {
-            bottom = rows;
-        }
+    {
+        bottom = rows;
+    }
     if (right > cols)
-        {
-            right = cols;
-        }
+    {
+        right = cols;
+    }
     if (left < 0)
-        {
-            left = 0;
-        }
+    {
+        left = 0;
+    }
 
     if (PAUSE_UPDATING == TRUE)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     if (INIT_TERM == 0)
-        {
-            terminal_initialize();
-            return;
-        }
+    {
+        terminal_initialize();
+        return;
+    }
     if (!selection)
-        {
-            terminal_initialize();
-        }
+    {
+        terminal_initialize();
+    }
     if (!selection)
-        {
-            GiveError("Terminal has initialized improperly.", 1);
-        }
+    {
+        GiveError("Terminal has initialized improperly.", 1);
+    }
 
     start = selection->lstart;
     stop = selection->lstop;
@@ -1517,71 +1517,71 @@ void do_update_paint(HDC hdc, int left, int top, int right, int bottom)
 
     j = (bufcount <= rows) ? 1 : (bufcount - rows);
     if (curdis < 0) // Scrollback.
+    {
+        viewing = bufcount - -curdis;
+        for (i = viewing - rows + top, k = 0, x = top; i <= viewing - rows + bottom; i++, k++, x++)
         {
-            viewing = bufcount - -curdis;
-            for (i = viewing - rows + top, k = 0, x = top; i <= viewing - rows + bottom; i++, k++, x++)
-                {
-                    tbuf->y_end = x * 13;
-                    tbuf->x_end = 0;
-                    if (i == bufcount)
-                        {
-                            update_scroll();
-                            get_scroll_pos();
-                            return;
-                        }
+            tbuf->y_end = x * 13;
+            tbuf->x_end = 0;
+            if (i == bufcount)
+            {
+                update_scroll();
+                get_scroll_pos();
+                return;
+            }
 
-                    t[0] = '\0';
-                    if (stop < start)
-                        {
-                            start = selection->lstop;
-                            stop = selection->lstart;
-                            cstart = selection->cstop;
-                            cstop = selection->cstart;
-                        }
-                    /* selection code */
-                    if ((i >= start && i <= stop) && selection->selected)
-                        {
-                            paint_selection(start, stop, cstart, cstop, i);
-                        }
+            t[0] = '\0';
+            if (stop < start)
+            {
+                start = selection->lstop;
+                stop = selection->lstart;
+                cstart = selection->cstop;
+                cstop = selection->cstart;
+            }
+            /* selection code */
+            if ((i >= start && i <= stop) && selection->selected)
+            {
+                paint_selection(start, stop, cstart, cstop, i);
+            }
 
-                    else
-                        {
-                            parse_ansi(fetch_line(i), TRUE);
-                        }
-                }
+            else
+            {
+                parse_ansi(fetch_line(i), TRUE);
+            }
         }
+    }
     else
+    {
+        for (i = top + j, x = top; i <= (bufcount <= rows ? bottom : bottom + j); i++, x++)
         {
-            for (i = top + j, x = top; i <= (bufcount <= rows ? bottom : bottom + j); i++, x++)
-                {
-                    tbuf->y_end = x * 13;
-                    tbuf->x_end = 0;
-                    if (i > bufcount)
-                        {
-                            update_scroll();
-                            get_scroll_pos();
-                            return;
-                        }
-                    t[0] = '\0';
-                    if (stop < start)
-                        {
-                            start = selection->lstop;
-                            stop = selection->lstart;
-                            cstart = selection->cstop;
-                            cstop = selection->cstart;
-                        }
-                    /* Selection Code */
-                    if ((i >= start && i <= stop) && selection->selected)
-                        {
-                            paint_selection(start, stop, cstart, cstop, i);
-                        }
-                    else
-                        {
-                            parse_ansi(fetch_line(i), FALSE);
-                            //paint_underline(fetch_line(i));
-                        }
-                }
+            tbuf->y_end = x * 13;
+            tbuf->x_end = 0;
+            if (i > bufcount)
+            {
+                update_scroll();
+                get_scroll_pos();
+                return;
+            }
+            t[0] = '\0';
+            if (stop < start)
+            {
+                start = selection->lstop;
+                stop = selection->lstart;
+                cstart = selection->cstop;
+                cstop = selection->cstart;
+            }
+            /* Selection Code */
+            if ((i >= start && i <= stop) && selection->selected)
+            {
+                paint_selection(start, stop, cstart, cstop, i);
+            }
+            else
+            {
+                parse_ansi(fetch_line(i), FALSE);
+                //paint_underline(fetch_line(i));
+            }
         }
+    }
 
     update_scroll();
     get_scroll_pos();
@@ -1598,100 +1598,100 @@ void paint_selection(int start, int stop, int cstart, int cstop, int i /* line n
     char t[10000];
 
     if (PAUSE_UPDATING == TRUE)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     if ((i >= start && i <= stop) && selection->selected)
+    {
+        p[0] = '\0';
+        if (start == stop)
         {
-            p[0] = '\0';
-            if (start == stop)
-                {
-                    tt = fetch_line(i);
-                    if (tt == NULL)
-                        {
-                            return;
-                        }
+            tt = fetch_line(i);
+            if (tt == NULL)
+            {
+                return;
+            }
 
-                    parse_ansi(tt, 0);
-                    ret_string(tt, t);
-                    tbuf->x_end = (cstart + 1) * 8;
-                    t[cstop + 1] = '\0';
-                    FlushBuffer(&t[cstart + 1], TRUE_BLACK, SELECTED, FALSE);
-                    ii = tt->len;
-                    tbuf->x_end = (ii + 1) * 8;
-                }
-            else if (i == start)
-                {
-                    memset(t, '\0', 1000);
-
-                    tt = fetch_line(i);
-                    if (tt == NULL)
-                        {
-                            return;
-                        }
-
-                    parse_ansi(tt, 0);
-                    ret_string(tt, t);
-                    tbuf->x_end = (cstart + 1) * 8;
-                    FlushBuffer(&t[cstart + 1], TRUE_BLACK, SELECTED, FALSE);
-                    ii = tt->len;
-                    tbuf->x_end = (ii + 1) * 8;
-                }
-            else if (i == stop)
-                {
-                    tt = fetch_line(i);
-                    if (tt == NULL)
-                        {
-                            return;
-                        }
-
-                    parse_ansi(tt, 0);
-                    ret_string(tt, t);
-                    tbuf->x_end = 0;
-                    t[cstop + 1] = '\0';
-                    FlushBuffer(t, TRUE_BLACK, SELECTED, FALSE);
-                    ii = tt->len;
-                    tbuf->x_end = (ii + 1) * 8;
-                }
-            else
-                {
-                    tt = fetch_line(i);
-                    if (tt == NULL)
-                        {
-                            return;
-                        }
-
-                    ret_string(tt, t);
-                    tbuf->x_end = 0;
-                    FlushBuffer(t, TRUE_BLACK, SELECTED, FALSE);
-                    ii = tt->len;
-                    tbuf->x_end = ((ii + 1) * 8);
-                }
-
-            if (ii < cols)
-                {
-                    char pad[2000] = "";
-
-                    for (jj = 0; jj < ((cols - ii)); jj++)
-                        {
-                            pad[jj] = ' ';
-                        }
-
-                    pad[jj] = '\0';
-                    FlushBuffer(pad, TRUE_BLACK, TRUE_BLACK, FALSE);
-                }
-            else if (ii == 0)
-                {
-                    for (jj = 0; jj < cols; jj++)
-                        {
-                            pad[jj] = '!';
-                        }
-
-                    pad[(cols - 1) < 0 ? 0 : (cols - 1) > 1023 ? 1023 : (cols - 1)] = '\0';
-                    FlushBuffer(pad, TRUE_BLACK, RED, FALSE);
-                }
+            parse_ansi(tt, 0);
+            ret_string(tt, t);
+            tbuf->x_end = (cstart + 1) * 8;
+            t[cstop + 1] = '\0';
+            FlushBuffer(&t[cstart + 1], TRUE_BLACK, SELECTED, FALSE);
+            ii = tt->len;
+            tbuf->x_end = (ii + 1) * 8;
         }
+        else if (i == start)
+        {
+            memset(t, '\0', 1000);
+
+            tt = fetch_line(i);
+            if (tt == NULL)
+            {
+                return;
+            }
+
+            parse_ansi(tt, 0);
+            ret_string(tt, t);
+            tbuf->x_end = (cstart + 1) * 8;
+            FlushBuffer(&t[cstart + 1], TRUE_BLACK, SELECTED, FALSE);
+            ii = tt->len;
+            tbuf->x_end = (ii + 1) * 8;
+        }
+        else if (i == stop)
+        {
+            tt = fetch_line(i);
+            if (tt == NULL)
+            {
+                return;
+            }
+
+            parse_ansi(tt, 0);
+            ret_string(tt, t);
+            tbuf->x_end = 0;
+            t[cstop + 1] = '\0';
+            FlushBuffer(t, TRUE_BLACK, SELECTED, FALSE);
+            ii = tt->len;
+            tbuf->x_end = (ii + 1) * 8;
+        }
+        else
+        {
+            tt = fetch_line(i);
+            if (tt == NULL)
+            {
+                return;
+            }
+
+            ret_string(tt, t);
+            tbuf->x_end = 0;
+            FlushBuffer(t, TRUE_BLACK, SELECTED, FALSE);
+            ii = tt->len;
+            tbuf->x_end = ((ii + 1) * 8);
+        }
+
+        if (ii < cols)
+        {
+            char pad[2000] = "";
+
+            for (jj = 0; jj < ((cols - ii)); jj++)
+            {
+                pad[jj] = ' ';
+            }
+
+            pad[jj] = '\0';
+            FlushBuffer(pad, TRUE_BLACK, SELECTED, FALSE);
+        }
+        else if (ii == 0)
+        {
+            for (jj = 0; jj < cols; jj++)
+            {
+                pad[jj] = ' ';
+            }
+
+            pad[(cols - 1) < 0 ? 0 : (cols - 1) > 1023 ? 1023 : (cols - 1)] = '\0';
+            FlushBuffer(pad, TRUE_BLACK, RED, FALSE);
+        }
+    }
 }
 
 /* update_term: This function is called periodically throughout the client's
@@ -1714,9 +1714,9 @@ void update_term(void)
     tbuf->x_start = 0;
 
     if (PAUSE_UPDATING == TRUE)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     curpos = curdis;
 
@@ -1743,20 +1743,20 @@ int add_term(TERMBUF* term, char* line, int lline, char* file)
     TERMBUF* term_back;
 
     if (!line)
-        {
-            return 0;
-        }
+    {
+        return 0;
+    }
     if (line[0] == '\0' || strlen(line) < 1)
-        {
-            return 0;
-        }
+    {
+        return 0;
+    }
 
     term_back = new_line(lline, file);
 
     if (term_back == NULL)
-        {
-            GiveError("...", FALSE);
-        }
+    {
+        GiveError("...", FALSE);
+    }
 
     term_back->buffer = str_dup(line);
 
@@ -1786,9 +1786,9 @@ void realize_lines_internal(char* lline, int line, char* file)
 {
     //LOG("(%d:%s)RL received \"%s\"",line,file, lline);
     if (!lline)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     add_term(NULL, lline, line, file);
     //LOG("Returning");
@@ -1805,9 +1805,9 @@ TERMBUF* new_line(int line, char* file)
     templine = malloc(sizeof(*templine));
 
     if (templine == NULL)
-        {
-            GiveError("Wow..something went wrong there! Place: TERMBUF * new_line(void) module: nanomud-terminal.c", TRUE);
-        }
+    {
+        GiveError("Wow..something went wrong there! Place: TERMBUF * new_line(void) module: BioMUD-terminal.c", TRUE);
+    }
 
     bufcount += 1;
     templine->buffer = NULL;
@@ -1822,11 +1822,11 @@ TERMBUF* new_line(int line, char* file)
     /* FIXME: Be sure to make this dynamic eventually. */
     /* I think it is dynamic now. */
     if (bufcount > TERM_MAX)
-        {
-            //GiveError("MAX", TRUE);
-            bufcount = TERM_MAX;
-            replace_line(1, NULL);
-        }
+    {
+        //GiveError("MAX", TRUE);
+        bufcount = TERM_MAX;
+        replace_line(1, NULL);
+    }
 
     this_session->termlist[bufcount] = templine;
     templine->processed = FALSE;
@@ -1841,33 +1841,33 @@ void free_line(TERMBUF* rem)
     test[0] = '\0';
     PAUSE_UPDATING = TRUE;
     if (!rem)
-        {
-            LOG("Free_Line passed an invalid REM line.");
-            return;
-        }
+    {
+        LOG("Free_Line passed an invalid REM line.");
+        return;
+    }
     if (rem != NULL)
+    {
+        if (rem->buffer != NULL)
         {
-            if (rem->buffer != NULL)
-                {
-                    //  LOG("Freeing buffer");
-                    if (rem->buffer)
-                        {
-                            free(rem->buffer);
-                        }
-                }
-            if (rem->line)
-                {
-                    //LOG("Freeing line");
-                    free(rem->line);
-                    rem->line = NULL;
-                }
-            if (rem)
-                {
-                    //LOG("Freeing line pointer");
-                    free(rem);
-                    rem = NULL;
-                }
+            //  LOG("Freeing buffer");
+            if (rem->buffer)
+            {
+                free(rem->buffer);
+            }
         }
+        if (rem->line)
+        {
+            //LOG("Freeing line");
+            free(rem->line);
+            rem->line = NULL;
+        }
+        if (rem)
+        {
+            //LOG("Freeing line pointer");
+            free(rem);
+            rem = NULL;
+        }
+    }
     PAUSE_UPDATING = FALSE;
     return;
 }
@@ -1883,20 +1883,20 @@ void FreeTerm(void)
     PAUSE_UPDATING = TRUE;
 
     for (i = 0/*this_session->max_buffer*/; i <= bufcount; i++)
+    {
+        rem = this_session->termlist[i];
+        if (!rem)
         {
-            rem = this_session->termlist[i];
-            if (!rem)
-                {
-                    LOG("Improper REM");
-                    continue;
-                }
+            LOG("Improper REM");
+            continue;
+        }
 
-            free_line(rem);
-        }
+        free_line(rem);
+    }
     for (i = 0; i <= this_session->max_buffer; i++)
-        {
-            this_session->termlist[i] = NULL;
-        }
+    {
+        this_session->termlist[i] = NULL;
+    }
 
     bufcount = 0;
     free(this_session->termlist);
@@ -1923,55 +1923,55 @@ void FlushBuffer(char* buffer, int color2, int bKcolor2, BOOL underlined)
     xx_end = yy_end = 0;
 
     if (buffer[0] == '\0')
-        {
-            return;
-        }
+    {
+        return;
+    }
     if (nasty == TRUE)
-        {
-            return;
-        }
+    {
+        return;
+    }
     if (PAUSE_UPDATING == TRUE)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     GetClientRect(MudMain, &mudrect);
     hdc = tbuf->hdc;
     SelectObject(hdc, hf);
 
     if (this_session->color == FALSE)
-        {
-            SetTextColor(hdc, RGB(192, 192, 192));
-            SetBkColor(hdc, RGB(0, 0, 0));
-        }
+    {
+        SetTextColor(hdc, RGB(192, 192, 192));
+        SetBkColor(hdc, RGB(0, 0, 0));
+    }
     else
+    {
+        for (i = 0; c_table[i].type != -1; i++)
         {
-            for (i = 0; c_table[i].type != -1; i++)
-                {
-                    if (c_table[i].type == bKcolor2)
-                        {
-                            SetBkColor(hdc, c_table[i].color);
-                        }
-                    if (c_table[i].type == color2)
-                        {
-                            SetTextColor(hdc, c_table[i].color);
-                            cf = c_table[i].color;
-                        }
-                }
+            if (c_table[i].type == bKcolor2)
+            {
+                SetBkColor(hdc, c_table[i].color);
+            }
+            if (c_table[i].type == color2)
+            {
+                SetTextColor(hdc, c_table[i].color);
+                cf = c_table[i].color;
+            }
         }
+    }
     ExtTextOut(hdc, tbuf->x_end, tbuf->y_end, ETO_CLIPPED, 0, buffer, strlen(buffer), NULL);
     if (underlined == TRUE)
-        {
-            xx_end = tbuf->x_end;
-            yy_end = (tbuf->y_end) + 12;
-            //LOG("Text underlined: %s", buffer);
-            pen = SelectObject(hdc, CreatePen(PS_SOLID, 0, cf));
-            MoveToEx(hdc, xx_end, yy_end, NULL);
-            LineTo(hdc, xx_end + (strlen(buffer) * 8), yy_end);
-            pen = SelectObject(hdc, pen);
-            DeleteObject(pen);
-            cf = 0;
-        }
+    {
+        xx_end = tbuf->x_end;
+        yy_end = (tbuf->y_end) + 12;
+        //LOG("Text underlined: %s", buffer);
+        pen = SelectObject(hdc, CreatePen(PS_SOLID, 0, cf));
+        MoveToEx(hdc, xx_end, yy_end, NULL);
+        LineTo(hdc, xx_end + (strlen(buffer) * 8), yy_end);
+        pen = SelectObject(hdc, pen);
+        DeleteObject(pen);
+        cf = 0;
+    }
 
     tbuf->x_end += (strlen(buffer) > 1 ? strlen(buffer) * 8 : 8);
     buffer[0] = '\0';
@@ -1990,18 +1990,18 @@ void scroll_term(long int pos, long int to)
     curdis = (pos < 0 ? 0 : pos > 0 ? x : curdis) + to;
 
     if (curdis < x)
-        {
-            curdis = x;
-        }
+    {
+        curdis = x;
+    }
     if (curdis > 0)
-        {
-            curdis = 0;
-        }
+    {
+        curdis = 0;
+    }
 
     if (curdis == 0 && curpos == 0)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     update_scroll();
     update_term();
@@ -2049,37 +2049,37 @@ void terminal_resize()
     screen_heigth -= INPUT_HEIGHT; // For input bar. We don't want to paint over the bar with terminal data.
 
     if ((screen_width % 13) == 0)
-        {
-            screen_width = (screen_width - (screen_width % 13)) / 13;
-        }
+    {
+        screen_width = (screen_width - (screen_width % 13)) / 13;
+    }
     else
-        {
-            screen_width = (screen_width / 8);
-        }
+    {
+        screen_width = (screen_width / 8);
+    }
 
     if ((screen_heigth % 13) == 0)
-        {
-            screen_heigth = (screen_heigth - (screen_heigth % 13)) / 13;
-        }
+    {
+        screen_heigth = (screen_heigth - (screen_heigth % 13)) / 13;
+    }
     else
-        {
-            screen_heigth = (screen_heigth / 13);
-        }
+    {
+        screen_heigth = (screen_heigth / 13);
+    }
 
     if (screen_heigth != rows)
-        {
-            rows = screen_heigth;
-            invalid = TRUE;
-        }
+    {
+        rows = screen_heigth;
+        invalid = TRUE;
+    }
     if (screen_width != cols)
-        {
-            cols = screen_width;
-            invalid = TRUE;
-        }
+    {
+        cols = screen_width;
+        invalid = TRUE;
+    }
     if (invalid)
-        {
-            InvalidateRect(MudMain, &r, FALSE);
-        }
+    {
+        InvalidateRect(MudMain, &r, FALSE);
+    }
 
     rows -= 1;
     tbuf->y_end = tbuf->y_start = tbuf->x_end = tbuf->x_start = 0;
@@ -2113,22 +2113,22 @@ void terminal_initialize()
     init_cmd_history(); // Set up the command history.
 
     if ((screen_width % 13) == 0)
-        {
-            cols = (screen_width - (screen_width % 13)) / 13;
-        }
+    {
+        cols = (screen_width - (screen_width % 13)) / 13;
+    }
     else
-        {
-            cols = (screen_width / 8);
-        }
+    {
+        cols = (screen_width / 8);
+    }
 
     if ((screen_heigth % 13) == 0)
-        {
-            rows = (screen_heigth - (screen_heigth % 13)) / 13;
-        }
+    {
+        rows = (screen_heigth - (screen_heigth % 13)) / 13;
+    }
     else
-        {
-            rows = (screen_heigth / 13);
-        }
+    {
+        rows = (screen_heigth / 13);
+    }
 
     def_attr = 0UL;
     //LOG("Def attr: %lu", def_attr);
@@ -2136,9 +2136,9 @@ void terminal_initialize()
     selection = malloc(sizeof(selection));
 
     if (!selection)
-        {
-            GiveError("FATAL ERROR: Selection structure could not be created.", TRUE);
-        }
+    {
+        GiveError("FATAL ERROR: Selection structure could not be created.", TRUE);
+    }
 
     backcurr = term_back;
     curdis = 0;
@@ -2157,72 +2157,72 @@ void terminal_initialize()
     find_string_last = NULL;
 
     for (i = 0; c_table[i].type != -1; i++)
+    {
+        switch (c_table[i].type)
         {
-            switch (c_table[i].type)
-                {
-                case RED:
-                    c_table[i].color = RGB(255, 0, 0);
-                    break;
-                case BLUE:
-                    c_table[i].color = RGB(0, 0, 255);
-                    break;
-                case GREEN:
-                    c_table[i].color = RGB(0, 255, 0);
-                    break;
-                case BLACK:
-                    c_table[i].color = RGB(35, 35, 35);
-                    break;
-                case YELLOW:
-                    c_table[i].color = RGB(255, 255, 0);
-                    break;
-                case MAGENTA:
-                    c_table[i].color = RGB(255, 0, 255);
-                    break;
-                case CYAN:
-                    c_table[i].color = RGB(0, 255, 255);
-                    break;
-                case WHITE:
-                    c_table[i].color = RGB(255, 255, 255);
-                    break;
-                case C_RED:
-                    c_table[i].color = RGB(128, 0, 0);
-                    break;
-                case C_BLUE:
-                    c_table[i].color = RGB(0, 0, 128);
-                    break;
-                case C_GREEN:
-                    c_table[i].color = RGB(0, 192, 0);
-                    break;
-                case C_BLACK:
-                    c_table[i].color = RGB(128, 128, 128);
-                    break;
-                case C_YELLOW:
-                    c_table[i].color = RGB(128, 128, 0);
-                    break;
-                case C_MAGENTA:
-                    c_table[i].color = RGB(128, 0, 128);
-                    break;
-                case C_CYAN:
-                    c_table[i].color = RGB(0, 127, 128);
-                    break;
-                case C_WHITE:
-                    c_table[i].color = RGB(128, 128, 128);
-                    break;
-                case GREY:
-                    c_table[i].color = RGB(211, 211, 211);
-                    break;
-                case TRUE_BLACK:
-                    c_table[i].color = RGB(0, 0, 0);
-                    break;
-                case SELECTED:
-                    c_table[i].color = RGB(0, 192, 255);
-                    /*RGB(32, 48, 64);*/
-                    break;
-                default:
-                    c_table[i].color = RGB(211, 211, 211);
-                    break;
-                }
+        case RED:
+            c_table[i].color = RGB(255, 0, 0);
+            break;
+        case BLUE:
+            c_table[i].color = RGB(0, 0, 255);
+            break;
+        case GREEN:
+            c_table[i].color = RGB(0, 255, 0);
+            break;
+        case BLACK:
+            c_table[i].color = RGB(35, 35, 35);
+            break;
+        case YELLOW:
+            c_table[i].color = RGB(255, 255, 0);
+            break;
+        case MAGENTA:
+            c_table[i].color = RGB(255, 0, 255);
+            break;
+        case CYAN:
+            c_table[i].color = RGB(0, 255, 255);
+            break;
+        case WHITE:
+            c_table[i].color = RGB(255, 255, 255);
+            break;
+        case C_RED:
+            c_table[i].color = RGB(128, 0, 0);
+            break;
+        case C_BLUE:
+            c_table[i].color = RGB(0, 0, 128);
+            break;
+        case C_GREEN:
+            c_table[i].color = RGB(0, 192, 0);
+            break;
+        case C_BLACK:
+            c_table[i].color = RGB(128, 128, 128);
+            break;
+        case C_YELLOW:
+            c_table[i].color = RGB(128, 128, 0);
+            break;
+        case C_MAGENTA:
+            c_table[i].color = RGB(128, 0, 128);
+            break;
+        case C_CYAN:
+            c_table[i].color = RGB(0, 127, 128);
+            break;
+        case C_WHITE:
+            c_table[i].color = RGB(128, 128, 128);
+            break;
+        case GREY:
+            c_table[i].color = RGB(211, 211, 211);
+            break;
+        case TRUE_BLACK:
+            c_table[i].color = RGB(0, 0, 0);
+            break;
+        case SELECTED:
+            c_table[i].color = RGB(0, 192, 255);
+            /*RGB(32, 48, 64);*/
+            break;
+        default:
+            c_table[i].color = RGB(211, 211, 211);
+            break;
         }
+    }
     return;
 }
 
@@ -2240,13 +2240,13 @@ int GetWindowWrap(HWND hwnd/*, int font_width*/)
     screen_width = srect.right;
 
     if ((screen_width % font_width) == 0)
-        {
-            remainder = (screen_width - (screen_width % 8)) / font_width;
-        }
+    {
+        remainder = (screen_width - (screen_width % 8)) / font_width;
+    }
     else
-        {
-            remainder = (screen_width / 8);
-        }
+    {
+        remainder = (screen_width / 8);
+    }
     return remainder;
 }
 
@@ -2270,49 +2270,49 @@ char* strip_ansi(const char* str)
     buffer = buff;
 
     if (str == NULL)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     len = 0;
     for (; *point; point++)
+    {
+        if (*point == '\033')
         {
-            if (*point == '\033')
-                {
-                    found = TRUE;
-                    continue;
-                }
-            if (found == TRUE && *point != 'm')
-                {
-                    continue;
-                }
-            if (found == TRUE && *point == 'm')
-                {
-                    found = FALSE;
-                    continue;
-                }
-            if (*point == '\r')
-                {
-                    continue;
-                }
-            if (*point == '\t')
-                {
-                    /*bl = 8-(len %8);
-                    for (ts=0;ts < bl;ts++)
-                    {
-                        strcat(temp," ");
-                        len++;
-                    }*/
-                    len += 4;
-                    continue;
-                }
-
-            *buffer = *point;
-            buffer[1] = '\0';
-            //strcat (temp, buffer);
-            strcat_s(temp, 50000, buffer);
-            len++;
+            found = TRUE;
+            continue;
         }
+        if (found == TRUE && *point != 'm')
+        {
+            continue;
+        }
+        if (found == TRUE && *point == 'm')
+        {
+            found = FALSE;
+            continue;
+        }
+        if (*point == '\r')
+        {
+            continue;
+        }
+        if (*point == '\t')
+        {
+            /*bl = 8-(len %8);
+            for (ts=0;ts < bl;ts++)
+            {
+                strcat(temp," ");
+                len++;
+            }*/
+            len += 4;
+            continue;
+        }
+
+        *buffer = *point;
+        buffer[1] = '\0';
+        //strcat (temp, buffer);
+        strcat_s(temp, 50000, buffer);
+        len++;
+    }
     str2[len] = '\0';
     buffer[0] = '\0';
     buff[0] = '\0';
@@ -2332,49 +2332,49 @@ int  strip_ansi_len(const char* str)
     bool found = FALSE;
 
     if (str == NULL)
-        {
-            return 0;
-        }
+    {
+        return 0;
+    }
 
     len = 0;
 
     for (; *point; point++)
+    {
+        if (*point == '\033' || *point == '\x01B')
         {
-            if (*point == '\033' || *point == '\x01B')
-                {
-                    found = TRUE;
-                    continue;
-                }
-            if (found == TRUE && *point == 'D')
-                {
-                    found = FALSE;
-                    continue;
-                }
-            if (found == TRUE && *point != 'm')
-                {
-                    continue;
-                }
-            if (found == TRUE && *point == 'm')
-                {
-                    found = FALSE;
-                    continue;
-                }
-            if (*point == '\r')
-                {
-                    continue;
-                }
-            if (*point == '\0')
-                {
-                    break;
-                }
-            if (*point == '\t')
-                {
-                    // LOG("TAB SPACE!");
-                    len += 4;
-                }
-
-            len++;
+            found = TRUE;
+            continue;
         }
+        if (found == TRUE && *point == 'D')
+        {
+            found = FALSE;
+            continue;
+        }
+        if (found == TRUE && *point != 'm')
+        {
+            continue;
+        }
+        if (found == TRUE && *point == 'm')
+        {
+            found = FALSE;
+            continue;
+        }
+        if (*point == '\r')
+        {
+            continue;
+        }
+        if (*point == '\0')
+        {
+            break;
+        }
+        if (*point == '\t')
+        {
+            // LOG("TAB SPACE!");
+            len += 4;
+        }
+
+        len++;
+    }
     return len;
 }
 
@@ -2389,10 +2389,10 @@ void terminal_beep(void)
     int timeout = 500; // 500 MS or 0.5 seconds.
 
     if (GetTickCount() - last_bell < timeout)
-        {
-            // Do not beep as we have not reached our timeout threshold yet.
-            return;
-        }
+    {
+        // Do not beep as we have not reached our timeout threshold yet.
+        return;
+    }
 
     last_bell = GetTickCount(); // Set last bell so we don't play beeps too often.
     PlaySound(TEXT("Sart"), NULL, SND_ALIAS | SND_ASYNC);   // Play the system 'asteric' sound.

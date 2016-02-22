@@ -25,7 +25,7 @@
 #include <stdarg.h>
 #include <Mmsystem.h>
 #include <errno.h>
-#include "NanoMud.h"
+#include "BioMUD.h"
 
 extern unsigned int bufcount;
 extern BOOL CAN_WRITE;
@@ -46,22 +46,22 @@ void write_buffer(const char* str)
     char buffer[1024];
 
     if (str == NULL)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     sprintf(buffer, "%s-%s.txt", DEBUG_FILE, get_date());
 
     if ((fp = fopen(buffer, "a")) == NULL)
+    {
+        GiveError("Unable to open debug file. Please restart with debugging support off.", FALSE);
+        if ((fp = fopen(buffer, "w")) == NULL)
         {
-            GiveError("Unable to open debug file. Please restart with debugging support off.", FALSE);
-            if ((fp = fopen(buffer, "w")) == NULL)
-                {
-                    GiveError("Unable to create debug file. Exiting program.", TRUE);
-                    exit(1);
-                }
-            return;
+            GiveError("Unable to create debug file. Exiting program.", TRUE);
+            exit(1);
         }
+        return;
+    }
 
     fprintf(fp, "%s %s: %s\n", get_logical_date(), get_time(), str);
     fclose(fp);
@@ -88,39 +88,39 @@ int read_string(char buf[], FILE* fp, unsigned int slen)
     int len = 0;
     int f;
     if (fp == NULL)
-        {
-            return -1;
-        }
+    {
+        return -1;
+    }
     len = 0;
     f = 0;
     while (!feof(fp))
+    {
+        f++;
+
+        c = getc(fp);
+
+        buf[len++] = c;
+        if (len >= slen)
         {
-            f++;
-
-            c = getc(fp);
-
-            buf[len++] = c;
-            if (len >= slen)
-                {
-                    return len;
-                }
-            if (c == '\0')
-                {
-                    return len;
-                }
-            if (c == '\n')
-                {
-                    return len;
-                }
-
-            if (c == '\r')
-                {
-                    return len;
-                }
-            //
-            //if (f >= 100)
-            //return len;
+            return len;
         }
+        if (c == '\0')
+        {
+            return len;
+        }
+        if (c == '\n')
+        {
+            return len;
+        }
+
+        if (c == '\r')
+        {
+            return len;
+        }
+        //
+        //if (f >= 100)
+        //return len;
+    }
     return EOF;
 }
 
@@ -181,37 +181,37 @@ void export_text_log(char* file)
     buf[0] = '\0';
     i = x = 0;
     if (file == NULL)
-        {
-            return;
-        }
+    {
+        return;
+    }
     //p_file[0] = '\0';
 
     if ((fp = fopen(file, "w")) == NULL)
-        {
-            GiveError("Unable to open text file for writing.", FALSE);
-            return;
-        }
+    {
+        GiveError("Unable to open text file for writing.", FALSE);
+        return;
+    }
 
     for (i = 0; i <= bufcount; i++)
+    {
+        line = fetch_line(i);
+        if (!line)
         {
-            line = fetch_line(i);
-            if (!line)
-                {
-                    continue;
-                }
-
-            if (line->debug_include == TRUE)
-                {
-                    continue;
-                }
-
-            for (x = 0; x <= line->len; x++)
-                {
-                    buf[x] = (line->line[x] & CH_MASK) >> CH_SHIFT;
-                }
-            buf[x] = '\0';
-            fprintf(fp, "%s\n", buf);
+            continue;
         }
+
+        if (line->debug_include == TRUE)
+        {
+            continue;
+        }
+
+        for (x = 0; x <= line->len; x++)
+        {
+            buf[x] = (line->line[x] & CH_MASK) >> CH_SHIFT;
+        }
+        buf[x] = '\0';
+        fprintf(fp, "%s\n", buf);
+    }
     fclose(fp);
     give_term_echo("Wrote %s as text log.", file);
     update_term();
@@ -231,9 +231,9 @@ char* ret_ansi(unsigned long int c)
     char temp[100];
 
     if (!c)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     str[0] = '\0';
 
@@ -241,31 +241,31 @@ char* ret_ansi(unsigned long int c)
     bgcolor = TRUE_BLACK;
 
     if (c & ATBOLD)
-        {
-            bold = TRUE;
-        }
+    {
+        bold = TRUE;
+    }
     if (fgcolor == 8)
-        {
-            fgcolor = GREY;
-        }
+    {
+        fgcolor = GREY;
+    }
     if (fgcolor != GREY)
-        {
-            fgcolor += 30;
-        }
+    {
+        fgcolor += 30;
+    }
 
     if (c & ATBLINK)
-        {
-            blink = TRUE;
-        }
+    {
+        blink = TRUE;
+    }
     if (c & ATREVER)
-        {
-            reverse = TRUE;
-            bgcolor = ((c & BG_MASK) >> BG_SHIFT) - 10;
-        }
+    {
+        reverse = TRUE;
+        bgcolor = ((c & BG_MASK) >> BG_SHIFT) - 10;
+    }
     if (c & ATUNDER)
-        {
-            under = TRUE;
-        }
+    {
+        under = TRUE;
+    }
 
     // \033X[X;X;Xm
 
@@ -273,20 +273,20 @@ char* ret_ansi(unsigned long int c)
     //strcat(str, temp);
 
     if (blink)
-        {
-            sprintf(temp, "\033[5m");
-            strcat(str, temp);
-        }
+    {
+        sprintf(temp, "\033[5m");
+        strcat(str, temp);
+    }
     if (under)
-        {
-            sprintf(temp, "\033[4m");
-            strcat(str, temp);
-        }
+    {
+        sprintf(temp, "\033[4m");
+        strcat(str, temp);
+    }
     if (reverse)
-        {
-            sprintf(temp, "\033[7m");
-            strcat(str, temp);
-        }
+    {
+        sprintf(temp, "\033[7m");
+        strcat(str, temp);
+    }
 
     /*
     if (bold)
@@ -319,70 +319,70 @@ void export_ansi(char* file)
     i = x = 0;
     temp = NULL;
     if (file == NULL)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     if ((fp = fopen(file, "w")) == NULL)
-        {
-            GiveError("Unable to open text file for writing.", FALSE);
-            return;
-        }
+    {
+        GiveError("Unable to open text file for writing.", FALSE);
+        return;
+    }
     status_window = create_status_window(MudMain, NULL, 1, 18);
     for (i = 0; i <= bufcount; i++)
+    {
+        percent = (100 * i) / bufcount;
+        line = fetch_line(i);
+        if (tt == percent)
         {
-            percent = (100 * i) / bufcount;
-            line = fetch_line(i);
-            if (tt == percent)
-                {
-                    sprintf(pbuf, "Exporting buffer to ANSI, %d%s done. LINE: %d of %d", (int)percent, "%", i, bufcount);
-                    //SendMessage(MudMain, WM_SETTEXT, /*strlen(buf)-2*/0,(LPARAM)(LPCSTR) pbuf);
-                    output_status_window(pbuf, (HWND*)status_window);
-                    pmin = percent + 1;
-                    tt = percent + 1;
-                    pbuf[0] = '\0';
-                    do_peek();
-                }
+            sprintf(pbuf, "Exporting buffer to ANSI, %d%s done. LINE: %d of %d", (int)percent, "%", i, bufcount);
+            //SendMessage(MudMain, WM_SETTEXT, /*strlen(buf)-2*/0,(LPARAM)(LPCSTR) pbuf);
+            output_status_window(pbuf, (HWND*)status_window);
+            pmin = percent + 1;
+            tt = percent + 1;
+            pbuf[0] = '\0';
+            do_peek();
+        }
 
-            if (!line)
-                {
-                    continue;
-                }
+        if (!line)
+        {
+            continue;
+        }
 
-            if (line->debug_include == TRUE)
-                {
-                    continue;
-                }
-            z = 0;
-            buf[0] = '\0';
+        if (line->debug_include == TRUE)
+        {
+            continue;
+        }
+        z = 0;
+        buf[0] = '\0';
 
-            for (x = 0; x <= line->len; x++)
-                {
-                    //temp = ret_ansi(line->line[x]);
-                    //sprintf(temp, "%s", ret_ansi(line->line[x]));
-                    /*if (string_compare(temp, last_ansi))
-                    {
-                        strcat(buf, temp);
-                        sprintf(last_ansi, "%s", temp);
-                        z += strlen(temp) ;
-                    }*/
+        for (x = 0; x <= line->len; x++)
+        {
+            //temp = ret_ansi(line->line[x]);
+            //sprintf(temp, "%s", ret_ansi(line->line[x]));
+            /*if (string_compare(temp, last_ansi))
+            {
+                strcat(buf, temp);
+                sprintf(last_ansi, "%s", temp);
+                z += strlen(temp) ;
+            }*/
 
-                    temp = NULL;
-                    buf[z] = (line->line[x] & CH_MASK) >> CH_SHIFT;
-                    z++;
-                    buf[z] = '\0';
-
-                    //buf[x] = (line->line[x] & CH_MASK) >> CH_SHIFT;
-                }
+            temp = NULL;
+            buf[z] = (line->line[x] & CH_MASK) >> CH_SHIFT;
+            z++;
             buf[z] = '\0';
 
-            fprintf(fp, "%s\n", buf);
+            //buf[x] = (line->line[x] & CH_MASK) >> CH_SHIFT;
         }
+        buf[z] = '\0';
+
+        fprintf(fp, "%s\n", buf);
+    }
     destroy_status_window((HWND*)status_window);
     if (fp)
-        {
-            fclose(fp);
-        }
+    {
+        fclose(fp);
+    }
 }
 
 char* load_file(void)
@@ -406,9 +406,9 @@ char* load_file(void)
     update_term();
 
     if ((GetOpenFileName(&filename)) == 0)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     return str;
 }
@@ -433,9 +433,9 @@ char* save_file(char* filter)
     update_term();
 
     if ((GetSaveFileName(&filename)) == 0)
-        {
-            return NULL;
-        }
+    {
+        return NULL;
+    }
 
     return str;
 }
@@ -544,9 +544,9 @@ void give_term_error(char* to_echo, ...)
     add_log(LOG_ERROR, to_echo); // Add the log to the logbuf.
 
     if (CAN_WRITE == FALSE)
-        {
-            return;
-        }
+    {
+        return;
+    }
     temp = (char*)malloc(sizeof(char*) * (strlen(to_echo) + 45));
 
     sprintf(temp, "\033[0mERROR: \033[1;31m%s\033[0m\n", to_echo);
@@ -577,18 +577,18 @@ void give_term_debug(char* to_echo, ...)
     add_log(LOG_DEBUG, to_echo); // Add the log to the logbuf.
 
     if (CAN_WRITE == FALSE)
-        {
-            return;
-        }
+    {
+        return;
+    }
     if (this_session->show_debug == FALSE)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     if (SHOW_DEBUG_INFO == FALSE && this_session->show_debug == FALSE)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     temp = (char*)malloc(sizeof(char*) * (strlen(to_echo) + 45));
 
@@ -600,9 +600,9 @@ void give_term_debug(char* to_echo, ...)
     free(temp);
     tbuf = fetch_line(bufcount);
     if (tbuf)
-        {
-            tbuf->debug_include = TRUE;
-        }
+    {
+        tbuf->debug_include = TRUE;
+    }
 
     //   update_term();
 }
@@ -628,7 +628,7 @@ void give_term_info(char* to_echo, ...)
 
     temp = (char*)malloc(sizeof(char*) * (strlen(to_echo) + 45));
 
-    sprintf(temp, "\033[1;37mNanomud Information: \033[0;36m%s\033[0m\n", to_echo);
+    sprintf(temp, "\033[1;37mBioMUD Information: \033[0;36m%s\033[0m\n", to_echo);
 
     realize_lines(temp);
 
@@ -662,22 +662,22 @@ void export_to_html(char* file)
     buffer = buf2;
 
     if (file == NULL)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     //percent = bufcount / 100;
     b_count = 0;
     if ((fp = fopen(file, "w")) == NULL)
-        {
-            LOG("Unable to open html logfile.");
-            return;
-        }
+    {
+        LOG("Unable to open html logfile.");
+        return;
+    }
     status_window = create_status_window(MudMain, NULL, 1, 18);
     log_html("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >", -1, fp);
-    log_html("<html><head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n<meta name=\"GENERATOR\" content=\"Nanomud\">", -1, fp);
-    log_html("<meta name=\"Author\" content=\"Nanomud\"><title>Nanomud exported log</title>\n", -1, fp);
-    //log_html("<META NAME=author CONTENT=\"Nanomud\">\n",-1,fp);
+    log_html("<html><head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n<meta name=\"GENERATOR\" content=\"BioMUD\">", -1, fp);
+    log_html("<meta name=\"Author\" content=\"BioMUD\"><title>BioMUD exported log</title>\n", -1, fp);
+    //log_html("<META NAME=author CONTENT=\"BioMUD\">\n",-1,fp);
     log_html("<STYLE TYPE=\"text/css\">\n", -1, fp);
     log_html(".c_r {font-family:\"Courier New\";  color: #FF0000}\n", -1, fp);
     log_html(".c_b {font-family:\"Courier New\";  color: #0000FF}\n", -1, fp);
@@ -700,114 +700,114 @@ void export_to_html(char* file)
     log_html("\n<body bgcolor=\"black\"><font face=\"Courier New\" color=#c0c0c0><pre>\n\n", -1, fp);
 
     for (k = 1; k <= bufcount; k++)
+    {
+        percent = (100 * k) / bufcount;
+        temp = fetch_line(k);
+
+        if (k % 2048 == 0)
         {
-            percent = (100 * k) / bufcount;
-            temp = fetch_line(k);
-
-            if (k % 2048 == 0)
-                {
-                    sprintf(pbuf, "Exporting buffer to html, %d%s done. LINE: %d", (int)percent, "%", k);
-                    //SendMessage(MudMain, WM_SETTEXT, /*strlen(buf)-2*/0,(LPARAM)(LPCSTR) pbuf);
-                    output_status_window(pbuf, (HWND*)status_window);
-                    pmin = percent + 1;
-                    pbuf[0] = '\0';
-                    //do_peek();
-                }
-
-            if (temp->line == NULL)
-                {
-                    continue;
-                }
-            if (temp->debug_include == TRUE)
-                {
-                    continue;
-                }
-            //strcat(buf, "\n");
-            strcat_s(buf, 5000, "\n");
-
-            log_html("", -1, fp);
-            j = temp->len;
-
-            for (i = 0; i <= j; i++)
-                {
-                    attr_f = temp->line[i];
-                    *buffer = (attr_f & CH_MASK) >> CH_SHIFT;
-                    buffer[1] = '\0';
-
-                    switch (buffer[0])
-                        {
-                        case '<':
-                            strcat(buf, "&lt;");
-                            break;
-                        case '>':
-                            strcat(buf, "&gt;");
-                            break;
-                        default:
-                            strcat(buf, buffer);
-                            break;
-                        }
-                    //            attr_f = temp->attrib[i];
-                    if (attr_f == def_attr)
-                        {
-                            color = GREY;
-                        }
-                    else
-                        {
-                            color = ((attr_f & FG_MASK) >> FG_SHIFT);
-                        }
-                    if (color == 0)
-                        {
-                            color = GREY;
-                        }
-                    if ((attr_f & ATBOLD))
-                        {
-                            color += 10;
-                        }
-
-                    if (color == 8)
-                        {
-                            color = GREY;
-                        }
-                    else if (color == 9)
-                        {
-                            color = TRUE_BLACK;
-                        }
-                    if (color != GREY)
-                        {
-                            color += 30;
-                        }
-
-                    if (!temp->line)
-                        {
-                            continue;
-                        }
-                    if (!temp->line[i])
-                        {
-                            continue;
-                        }
-                    if (temp->line[i] == '\0')
-                        {
-                            continue;
-                        }
-
-                    //if (!temp->line || !temp->line[i] || temp->line[i] == '\0')
-                    //  continue;
-
-                    if ((((attr_f & FG_MASK) >> FG_SHIFT) == ((temp->line[i + 1] & FG_MASK) >> FG_SHIFT)) && b_count < 1024)
-                        {
-                            b_count++;
-                            continue;
-                        }
-                    else
-                        {
-                            log_html(buf, color, fp);
-                            buf[0] = '\0';
-                            buf2[0] = '\0';
-                            b_count = 0;
-                        }
-                }
+            sprintf(pbuf, "Exporting buffer to html, %d%s done. LINE: %d", (int)percent, "%", k);
+            //SendMessage(MudMain, WM_SETTEXT, /*strlen(buf)-2*/0,(LPARAM)(LPCSTR) pbuf);
+            output_status_window(pbuf, (HWND*)status_window);
+            pmin = percent + 1;
+            pbuf[0] = '\0';
+            //do_peek();
         }
-    log_html("\n</pre>\n\n<b>Exported with Nanomud! <a href=\"http://www.nanobit.net\" target=_new>www.nanobit.net</a></b></font></font></body>", GREEN, fp);
+
+        if (temp->line == NULL)
+        {
+            continue;
+        }
+        if (temp->debug_include == TRUE)
+        {
+            continue;
+        }
+        //strcat(buf, "\n");
+        strcat_s(buf, 5000, "\n");
+
+        log_html("", -1, fp);
+        j = temp->len;
+
+        for (i = 0; i <= j; i++)
+        {
+            attr_f = temp->line[i];
+            *buffer = (attr_f & CH_MASK) >> CH_SHIFT;
+            buffer[1] = '\0';
+
+            switch (buffer[0])
+            {
+            case '<':
+                strcat(buf, "&lt;");
+                break;
+            case '>':
+                strcat(buf, "&gt;");
+                break;
+            default:
+                strcat(buf, buffer);
+                break;
+            }
+            //            attr_f = temp->attrib[i];
+            if (attr_f == def_attr)
+            {
+                color = GREY;
+            }
+            else
+            {
+                color = ((attr_f & FG_MASK) >> FG_SHIFT);
+            }
+            if (color == 0)
+            {
+                color = GREY;
+            }
+            if ((attr_f & ATBOLD))
+            {
+                color += 10;
+            }
+
+            if (color == 8)
+            {
+                color = GREY;
+            }
+            else if (color == 9)
+            {
+                color = TRUE_BLACK;
+            }
+            if (color != GREY)
+            {
+                color += 30;
+            }
+
+            if (!temp->line)
+            {
+                continue;
+            }
+            if (!temp->line[i])
+            {
+                continue;
+            }
+            if (temp->line[i] == '\0')
+            {
+                continue;
+            }
+
+            //if (!temp->line || !temp->line[i] || temp->line[i] == '\0')
+            //  continue;
+
+            if ((((attr_f & FG_MASK) >> FG_SHIFT) == ((temp->line[i + 1] & FG_MASK) >> FG_SHIFT)) && b_count < 1024)
+            {
+                b_count++;
+                continue;
+            }
+            else
+            {
+                log_html(buf, color, fp);
+                buf[0] = '\0';
+                buf2[0] = '\0';
+                b_count = 0;
+            }
+        }
+    }
+    log_html("\n</pre>\n\n<b>Exported with BioMUD! <a href=\"http://www.nanobit.net\" target=_new>www.nanobit.net</a></b></font></font></body>", GREEN, fp);
     fclose(fp);
     destroy_status_window((HWND*)status_window);
 }
@@ -835,117 +835,117 @@ void log_html(const char* str, int color, FILE* fp)
     //    }
 
     if (co != oco)
+    {
+        switch (co)
         {
-            switch (co)
-                {
-                case RED:
-                    //code = str_dup("c_r");
-                    sprintf(code, "c_r");
-                    break;
-                case BLUE:
-                    //code = str_dup("c_b");
-                    sprintf(code, "c_b");
-                    break;
-                case GREEN:
-                    //code = str_dup("c_g");
-                    sprintf(code, "c_g");
-                    break;
-                case BLACK:
-                    //code = str_dup("c_bl");
-                    sprintf(code, "c_bl");
-                    break;
-                case YELLOW:
-                    //code = str_dup("c_y");
-                    sprintf(code, "c_y");
-                    break;
-                case MAGENTA:
-                    //code = str_dup("c_m");
-                    sprintf(code, "c_m");
-                    break;
-                case CYAN:
-                    //code = str_dup("c_c");
-                    sprintf(code, "c_c");
-                    break;
-                case WHITE:
-                    //code = str_dup("c_w");
-                    sprintf(code, "c_w");
-                    break;
-                case C_RED:
-                    //code = str_dup("c_cr");
-                    sprintf(code, "c_cr");
-                    break;
-                case C_BLUE:
-                    //code = str_dup("c_cb");
-                    sprintf(code, "c_cb");
-                    break;
-                case C_GREEN:
-                    //code = str_dup("c_cg");
-                    sprintf(code, "c_cg");
-                    break;
-                case C_BLACK:
-                    //code = str_dup("c_cbl");
-                    sprintf(code, "c_cbl");
-                    break;
-                case C_YELLOW:
-                    //code = str_dup("c_cy");
-                    sprintf(code, "c_cy");
-                    break;
-                case C_MAGENTA:
-                    //code = str_dup("c_cm");
-                    sprintf(code, "c_cm");
-                    break;
-                case C_CYAN:
-                    //code = str_dup("c_cc");
-                    sprintf(code, "c_cc");
-                    break;
-                case C_WHITE:
-                    //code = str_dup("c_cw");
-                    sprintf(code, "c_cw");
-                    break;
-                case GREY:
-                    //code = str_dup("c_gr");
-                    sprintf(code, "c_gr");
-                    break;
-                case -1:
-                    //code = str_dup("");
-                    sprintf(code, "");
-                    break;
-                default:
-                    //code = str_dup("c_gr");
-                    sprintf(code, "c_gr");
-                    break;
-                }
+        case RED:
+            //code = str_dup("c_r");
+            sprintf(code, "c_r");
+            break;
+        case BLUE:
+            //code = str_dup("c_b");
+            sprintf(code, "c_b");
+            break;
+        case GREEN:
+            //code = str_dup("c_g");
+            sprintf(code, "c_g");
+            break;
+        case BLACK:
+            //code = str_dup("c_bl");
+            sprintf(code, "c_bl");
+            break;
+        case YELLOW:
+            //code = str_dup("c_y");
+            sprintf(code, "c_y");
+            break;
+        case MAGENTA:
+            //code = str_dup("c_m");
+            sprintf(code, "c_m");
+            break;
+        case CYAN:
+            //code = str_dup("c_c");
+            sprintf(code, "c_c");
+            break;
+        case WHITE:
+            //code = str_dup("c_w");
+            sprintf(code, "c_w");
+            break;
+        case C_RED:
+            //code = str_dup("c_cr");
+            sprintf(code, "c_cr");
+            break;
+        case C_BLUE:
+            //code = str_dup("c_cb");
+            sprintf(code, "c_cb");
+            break;
+        case C_GREEN:
+            //code = str_dup("c_cg");
+            sprintf(code, "c_cg");
+            break;
+        case C_BLACK:
+            //code = str_dup("c_cbl");
+            sprintf(code, "c_cbl");
+            break;
+        case C_YELLOW:
+            //code = str_dup("c_cy");
+            sprintf(code, "c_cy");
+            break;
+        case C_MAGENTA:
+            //code = str_dup("c_cm");
+            sprintf(code, "c_cm");
+            break;
+        case C_CYAN:
+            //code = str_dup("c_cc");
+            sprintf(code, "c_cc");
+            break;
+        case C_WHITE:
+            //code = str_dup("c_cw");
+            sprintf(code, "c_cw");
+            break;
+        case GREY:
+            //code = str_dup("c_gr");
+            sprintf(code, "c_gr");
+            break;
+        case -1:
+            //code = str_dup("");
+            sprintf(code, "");
+            break;
+        default:
+            //code = str_dup("c_gr");
+            sprintf(code, "c_gr");
+            break;
         }
+    }
 
     if (co == GREY && !cleared && color != -1)
-        {
-            fprintf(fp, "</span>%s", str);
-            cleared = TRUE;
-        }
+    {
+        fprintf(fp, "</span>%s", str);
+        cleared = TRUE;
+    }
     else if (oco == GREY && cleared && color != -1 && code[0] != '\0')
-        {
-            fprintf(fp, "<span class=%s>%s", code, str);
-            cleared = FALSE;
-        }
+    {
+        fprintf(fp, "<span class=%s>%s", code, str);
+        cleared = FALSE;
+    }
     else if (code[0] == '\0')
-        {
-            fprintf(fp, "%s", str);
-        }
+    {
+        fprintf(fp, "%s", str);
+    }
 
     else if (co == oco && color != -1)
-        {
-            fprintf(fp, "%s", str);
-        }
+    {
+        fprintf(fp, "%s", str);
+    }
 
     else if (color != -1)
-        {
-            fprintf(fp, "</span><span class=%s>%s", code, str);
-            cleared = FALSE;
-        }
+    {
+        fprintf(fp, "</span><span class=%s>%s", code, str);
+        cleared = FALSE;
+    }
     else
-        {
-            fprintf(fp, "%s", str);
-        }
+    {
+        fprintf(fp, "%s", str);
+    }
 
     memcpy(c_code, code, strlen(code));
     c_code[strlen(code)] = '\0';
@@ -953,9 +953,9 @@ void log_html(const char* str, int color, FILE* fp)
     code[0] = '\0';
 
     if (color != -1)
-        {
-            oco = co;
-        }
+    {
+        oco = co;
+    }
     //  fclose(fp);
 }
 
@@ -988,20 +988,20 @@ void import_file(char* file)
     //GiveError(file,0);
 
     if (file == NULL)
-        {
-            return;
-        }
+    {
+        return;
+    }
     start = GetTickCount();
     precache = precache_file(file); //return number of lines for percentage.
     end = GetTickCount();
     preload_time = (int)(end - start);
 
     if ((fp = fopen(file, "r")) == NULL)
-        {
-            sprintf(title, "Unable to import file: %s - File posibl does not exist, or unable to be read at this time.", file);
-            GiveError(title, FALSE);
-            return;
-        }
+    {
+        sprintf(title, "Unable to import file: %s - File posibl does not exist, or unable to be read at this time.", file);
+        GiveError(title, FALSE);
+        return;
+    }
 
     start = GetTickCount();
     nasty = TRUE;
@@ -1010,42 +1010,42 @@ void import_file(char* file)
     total_sent = 0;
 
     while ((ret = read_string(buf, fp, 1024)) > -1)
+    {
+        buf[ret] = '\0';
+        buf[ret - 1] = '\n';
+        pmin++;
+        percent = (pmin * 100) / precache;
+        if (tt == percent)
         {
-            buf[ret] = '\0';
-            buf[ret - 1] = '\n';
-            pmin++;
-            percent = (pmin * 100) / precache;
-            if (tt == percent)
-                {
-                    commaize(total_alloc, c_buf);
-                    sprintf(title, "Importing file, %d%s done. (line: %lu of %lu) Total buffer: %d (%s bytes)", (int)percent > 100 ? 100 : (int)percent, "%", pmin, precache, bufcount, c_buf);
-                    SendMessage(MudMain, WM_SETTEXT, /*strlen(buf)-2*/0, (LPARAM)(LPCSTR)title);
+            commaize(total_alloc, c_buf);
+            sprintf(title, "Importing file, %d%s done. (line: %lu of %lu) Total buffer: %d (%s bytes)", (int)percent > 100 ? 100 : (int)percent, "%", pmin, precache, bufcount, c_buf);
+            SendMessage(MudMain, WM_SETTEXT, /*strlen(buf)-2*/0, (LPARAM)(LPCSTR)title);
 
-                    output_status_window(title, (HWND*)testing_window);
-                    PAUSE_UPDATING = TRUE;
-                    do_peek();
+            output_status_window(title, (HWND*)testing_window);
+            PAUSE_UPDATING = TRUE;
+            do_peek();
 
-                    tt = percent + 1;
-                }
-            if (percent == pupdate)
-                {
-                    pupdate += REFRESH_AMT; // Update every 10%
-                    nasty = FALSE;
-                    PAUSE_UPDATING = FALSE;
-                    update_term();
-                    nasty = TRUE;
-                    PAUSE_UPDATING = TRUE;
-                }
-            totals += ret;//strlen(buf);
-            total_sent++;
-            READ_AHEAD = (precache - total_sent) / 2; // Lines remaning?
-            //   LOG("READ_AHEAD: %ld\n", READ_AHEAD);
-            realize_lines(buf); // pass it off to the line-adder-thingie.
-
-            //ParseLines(buf);
-            meh++;
-            buf[0] = '\0';
+            tt = percent + 1;
         }
+        if (percent == pupdate)
+        {
+            pupdate += REFRESH_AMT; // Update every 10%
+            nasty = FALSE;
+            PAUSE_UPDATING = FALSE;
+            update_term();
+            nasty = TRUE;
+            PAUSE_UPDATING = TRUE;
+        }
+        totals += ret;//strlen(buf);
+        total_sent++;
+        READ_AHEAD = (precache - total_sent) / 2; // Lines remaning?
+        //   LOG("READ_AHEAD: %ld\n", READ_AHEAD);
+        realize_lines(buf); // pass it off to the line-adder-thingie.
+
+        //ParseLines(buf);
+        meh++;
+        buf[0] = '\0';
+    }
 
     nasty = FALSE;
     end = GetTickCount();
@@ -1072,19 +1072,19 @@ unsigned long int precache_file(char* str)
 
     char buf[1024];
     if (str == NULL)
-        {
-            return 0;
-        }
+    {
+        return 0;
+    }
 
     if ((fp = fopen(str, "r")) == NULL)
-        {
-            return 0;
-        }
+    {
+        return 0;
+    }
 
     while (fgets(buf, 1024, fp))
-        {
-            fcount++;
-        }
+    {
+        fcount++;
+    }
 
     fclose(fp);
     return fcount;
@@ -1109,30 +1109,30 @@ void terminal_benchmark(void)
     up = 0;
 
     for (i = 0; i < iter; i++)
+    {
+        for (x = 0; x < 30; x++)
         {
-            for (x = 0; x < 30; x++)
-                {
-                    sprintf(buf2, "\033[1;%lum@\033[1;%lum@\033[1;%lum@\033[1;%lum@",
-                            low + rand() * (high - low + 1) / RAND_MAX, low + rand() * (high - low + 1) / RAND_MAX,
-                            low + rand() * (high - low + 1) / RAND_MAX, low + rand() * (high - low + 1) / RAND_MAX);
-                    strcat(buf, buf2);
-                }
-
-            strcat(buf, "\n");
-            do_peek();
-            realize_lines(buf);
-            //LOG(buf);
-            buf[0] = '\0';
-            buf2[0] = '\0';
-            x = 0;
-
-            percent = (100 * i) / iter;
-            if (up == percent)
-                {
-                    update_term();
-                    up = percent + 20;
-                }
+            sprintf(buf2, "\033[1;%lum@\033[1;%lum@\033[1;%lum@\033[1;%lum@",
+                    low + rand() * (high - low + 1) / RAND_MAX, low + rand() * (high - low + 1) / RAND_MAX,
+                    low + rand() * (high - low + 1) / RAND_MAX, low + rand() * (high - low + 1) / RAND_MAX);
+            strcat(buf, buf2);
         }
+
+        strcat(buf, "\n");
+        do_peek();
+        realize_lines(buf);
+        //LOG(buf);
+        buf[0] = '\0';
+        buf2[0] = '\0';
+        x = 0;
+
+        percent = (100 * i) / iter;
+        if (up == percent)
+        {
+            update_term();
+            up = percent + 20;
+        }
+    }
 
     give_term_info("Benchmark: Total lines created: %lu, Total Characters: %lu", i, i * 34);
     update_term();
@@ -1150,14 +1150,14 @@ void check_output(void)
 
     this_session->ping_sent = GetTickCount(); // For ping code.
     if (send_buff[0]->buffer == '\0')
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     if (send_buff[0] == NULL)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     err = send(sock, send_buff[0]->buffer, strlen(send_buff[0]->buffer), 0);
     TOTAL_SENT++;
@@ -1165,14 +1165,14 @@ void check_output(void)
 
     for (sent = 0; sent <= 100; sent++)
         if (send_buff[sent]->buffer == '\0')
-            {
-                break;
-            }
+        {
+            break;
+        }
 
     for (runner = 1; runner <= 100; runner++)
-        {
-            send_buff[runner - 1]->buffer = send_buff[runner]->buffer;    /* move everything down a notch */
-        }
+    {
+        send_buff[runner - 1]->buffer = send_buff[runner]->buffer;    /* move everything down a notch */
+    }
 
     return;
 }
@@ -1196,23 +1196,23 @@ void prepare_copy(void)
     strcat(delim, "\r\n");
 
     if (selection->selected == FALSE)
-        {
-            return;    // no. We shouldn't be here.
-        }
+    {
+        return;    // no. We shouldn't be here.
+    }
     number = 0;
 
     /* First, iterate through the selection. Count how much we need to malloc,
     * then get to mallocing.
     */
     for (i = selection->lstart; i <= selection->lstop; i++)
+    {
+        term = fetch_line(i);
+        if (!term)
         {
-            term = fetch_line(i);
-            if (!term)
-                {
-                    continue;
-                }
-            number += (term->len + 10);
+            continue;
         }
+        number += (term->len + 10);
+    }
 
     /* Allocate it*/
     buffer = (char*)malloc(number);
@@ -1220,33 +1220,33 @@ void prepare_copy(void)
     /* Now set 'em! */
 
     for (i = selection->lstart; i <= selection->lstop; i++)
+    {
+        term = fetch_line(i);
+        if (!term)
         {
-            term = fetch_line(i);
-            if (!term)
-                {
-                    continue;
-                }
-
-            ret_string(term, temp);
-            if (temp[term->len] == '\0')
-                {
-                    memcpy(&buffer[len], temp, term->len);
-                    len += (term->len);
-                }
-            else
-                {
-                    memcpy(&buffer[len], temp, term->len + 1);
-                    len += (term->len + 1);
-                }
-            memcpy(&buffer[len], "\r\n", 2);
-            len += 2;
-
-            temp[0] = '\0';
+            continue;
         }
+
+        ret_string(term, temp);
+        if (temp[term->len] == '\0')
+        {
+            memcpy(&buffer[len], temp, term->len);
+            len += (term->len);
+        }
+        else
+        {
+            memcpy(&buffer[len], temp, term->len + 1);
+            len += (term->len + 1);
+        }
+        memcpy(&buffer[len], "\r\n", 2);
+        len += 2;
+
+        temp[0] = '\0';
+    }
     if (buffer[0] == '\0')
-        {
-            return;
-        }
+    {
+        return;
+    }
     do_copy_clip(buffer);
     free(buffer);
 }
@@ -1261,9 +1261,9 @@ BOOL do_copy_clip(char* text) // We don't do anything but text copies.
     char* buffer;
 
     if (strlen(text) == 0 || text[0] == '\0')
-        {
-            return FALSE;
-        }
+    {
+        return FALSE;
+    }
 
     OpenClipboard(hwnd);
     EmptyClipboard();

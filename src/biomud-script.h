@@ -14,7 +14,7 @@
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/*  NanoMudScript.h
+/*  BioMUDScript.h
 *  Contains all Scripting code and the fun stuff for the client.
 */
 
@@ -148,7 +148,7 @@ enum
     TOK_ALARM,
     TOK_ALIAS,
     TOK_ANSI,
-    TOK_API, //Nanomud specific
+    TOK_API, //BioMUD specific
     TOK_ARRAY,
     TOK_ARRGET,
     TOK_ARRHIGH,
@@ -170,7 +170,7 @@ enum
     TOK_CHARCOMMENT,
     TOK_CHARNOTES,
     TOK_CLASS,
-    TOK_CLEARBACKBUF, //Nanomud specific
+    TOK_CLEARBACKBUF, //BioMUD specific
     TOK_CLIP,
     TOK_CLOSE,
     TOK_COLOR,
@@ -180,7 +180,7 @@ enum
     TOK_COPY,
     TOK_COUNT,
     TOK_COUNTLIST,
-    TOK_CPUINFO, //Nanomud specific
+    TOK_CPUINFO, //BioMUD specific
     TOK_CRTONL,
     TOK_CW,
     TOK_DB,
@@ -200,14 +200,14 @@ enum
     TOK_DICEMAX,
     TOK_DICEMIN,
     TOK_DIR,
-    TOK_DISABLEHTMLLOG, //Nanomud specific
+    TOK_DISABLEHTMLLOG, //BioMUD specific
     TOK_DUPS,
     TOK_EDITOR,
-    TOK_ENABLEDEBUG, //Nanomud specific
-    TOK_ENABLEHTMLLOG, //Nanomud specific
-    TOK_ENABLEINTERNALALIAS, //Nanomud specific
-    TOK_ENABLEINTERNALMACRO, //Nanomud specific
-    TOK_ENABLEINTERNALTRIGGER, //Nanomud specific
+    TOK_ENABLEDEBUG, //BioMUD specific
+    TOK_ENABLEHTMLLOG, //BioMUD specific
+    TOK_ENABLEINTERNALALIAS, //BioMUD specific
+    TOK_ENABLEINTERNALMACRO, //BioMUD specific
+    TOK_ENABLEINTERNALTRIGGER, //BioMUD specific
     TOK_ENDS,
     TOK_ERASE,
     TOK_EVAL,
@@ -228,7 +228,7 @@ enum
     TOK_GALIAS,
     TOK_GAUGE,
     TOK_GETGLOBAL,
-    TOK_GETSTATISTICS, //Nanomud specific
+    TOK_GETSTATISTICS, //BioMUD specific
     TOK_GREP,
     TOK_GSL,
     TOK_GVARIABLE,
@@ -245,7 +245,7 @@ enum
     TOK_ITEM,
     TOK_KEY,
     TOK_KILLALL,
-    TOK_KILLCLIENT, //Nanomud specific
+    TOK_KILLCLIENT, //BioMUD specific
     TOK_LEFT,
     TOK_LEFTBACK,
     TOK_LEN,
@@ -264,7 +264,7 @@ enum
     TOK_MOD,
     TOK_MSS,
     TOK_MXPTRIG,
-    TOK_NCONFIG, //Nanomud specific
+    TOK_NCONFIG, //BioMUD specific
     TOK_NLTOCR,
     TOK_NORM,
     TOK_NULL,
@@ -307,7 +307,7 @@ enum
     TOK_SET,
     TOK_SETGLOBAL,
     TOK_SETPROMPT,
-    TOK_SETSCROLL, //Nanomud specific
+    TOK_SETSCROLL, //BioMUD specific
     TOK_SORT,
     TOK_SQRT,
     TOK_STATE,

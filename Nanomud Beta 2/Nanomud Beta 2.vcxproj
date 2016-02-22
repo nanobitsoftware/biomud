@@ -62,10 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\mud-client_private.h" />
-    <ClInclude Include="..\src\nanomud-plugin-api.h" />
-    <ClInclude Include="..\src\nanomud-plugins.h" />
-    <ClInclude Include="..\src\nanomud-script.h" />
-    <ClInclude Include="..\src\nanomud.h" />
+    <ClInclude Include="..\src\biomud-plugin-api.h" />
+    <ClInclude Include="..\src\biomud-plugins.h" />
+    <ClInclude Include="..\src\biomud-script.h" />
+    <ClInclude Include="..\src\biomud.h" />
     <ClInclude Include="..\src\NWC.h" />
     <ClInclude Include="..\src\regex9\regexp9.h" />
     <ClInclude Include="..\src\sqlite3\sqlite3.h" />

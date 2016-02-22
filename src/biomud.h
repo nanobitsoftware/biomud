@@ -14,9 +14,9 @@
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/*  NanoMud.h
+/*  BioMUD.h
  *  Handles all declarations, defines, macros, etc
- *  For the NanoMud
+ *  For the BioMUD
  */
 
 //#define BG_MASK 0x000CC000UL
@@ -33,7 +33,7 @@
 #define CH_MASK 0x3FE00000UL
 #define FG_MASK 0x000001FFUL
 
-//#define NANOMUD_NANO 1
+//#define BioMUD_NANO 1
 
 //#define GWL_WNDPROC (-4)
 
@@ -173,9 +173,9 @@
 #define MSL 4096
 /* End of gui defines and whatnot */
 
-#define DEBUG_FILE "c:\\nanobit\\nanomud_debug"
-#define SETTINGS_FILE "c:\\nanobit\\nanomud_settings.nmd"
-#define DB_FILE      "c:\\nanobit\biomud.sqlite.db" // DB file
+#define DEBUG_FILE "c:\\nanobit\\BioMUD_debug"
+#define SETTINGS_FILE "c:\\nanobit\\BioMUD_settings.nmd"
+#define DB_FILE      "c:\\nanobit\\biomud.sqlite.db" // DB file
 
 #define LOWER(c)        ((c) >= 'A' && (c) <= 'Z' ? (c)+'a'-'A' : (c))
 #define UPPER(c)        ((c) >= 'a' && (c) <= 'z' ? (c)+'A'-'a' : (c))
@@ -234,7 +234,7 @@
 #define ANSI_RED       "\033[0;31m"
 #define ANSI_WHITE     "\033[0;37m"
 #define ANSI_YELLOW    "\033[0;33m"
-#define html_log "c:/nanomud/mudlog.html"
+#define html_log "c:/BioMUD/mudlog.html"
 #define NCOLORS 24
 #define INPUT_HEIGHT 60 // input bar height; 60px
 /* Typedefs*/
@@ -641,7 +641,7 @@ typedef struct tagECHOREPLY
 //void InitTerminal(HINSTANCE hInst);
 //LRESULT CALLBACK TerminalProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //LRESULT PaintTerm(TerminalControl *ccp, WPARAM wParam, LPARAM lParam);
-#ifndef NANOMUD_NANO
+#ifndef BioMUD_NANO
 void initialize_editors(void);
 void destroy_editors(void);
 void free_editor(EDITOR* edit);
@@ -844,3 +844,5 @@ void clear_log(void);
 void create_logwindow(void);
 LRESULT APIENTRY logwin_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 void GiveNotify(char* wrong);
+bool init_db(void);
+void close_db(void);

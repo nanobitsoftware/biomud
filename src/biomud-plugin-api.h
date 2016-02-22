@@ -14,9 +14,9 @@
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-/* nanomud-plugin-api.h will contain all the prototypes and 'global vars' that are accesable
+/* BioMUD-plugin-api.h will contain all the prototypes and 'global vars' that are accesable
  * to the api frame work that people will use to write plugins. All functions that are public
- * are to be written in the nanomud-plugins-pfunc.c file and follow the strict standard
+ * are to be written in the BioMUD-plugins-pfunc.c file and follow the strict standard
  * set forth by that file.
  *
  * please remember to comment as well as possible on every public function on what it does
@@ -131,14 +131,14 @@ PFUNC_ULINT* pfunc_get_line_masked(PFUNC_INT ln);
 
 /* pfunc_malloc acts just like a normal malloc
  * call, except that it allocates its memory
- * inside the thread of nanomud. This is useful
- * in a few cases where memory on nanomud's stack
+ * inside the thread of BioMUD. This is useful
+ * in a few cases where memory on BioMUD's stack
  * might need to be referenced.
  *
  * returns NULL when it fails, returns a pointer
  * to the allocated memory if it succeeds.
  *
- * Uses nanomud_malloc interanlly.
+ * Uses BioMUD_malloc interanlly.
  */
 PFUNC_VOID* pfunc_malloc(PFUNC_ULINT chunk);
 
@@ -153,7 +153,7 @@ PFUNC_VOID* pfunc_malloc(PFUNC_ULINT chunk);
  * pfunc_free(ptr).
  *
  * WARNING: MEMORY MUST BE ALLOCATED INTERNALLY
- * FROM THE PLUGIN SYSTEM WITHIN NANOMUD AND
+ * FROM THE PLUGIN SYSTEM WITHIN BioMUD AND
  * NOT FROM YOUR PLUGIN. ATTEMPTING TO FREE
  * MEMORY ALLOCATED INTERNALLY FROM YOUR PLUGIN
  * CAN HAVE UNDEFINED RESULTS INCLUDING HEAP
@@ -299,7 +299,7 @@ PFUNC_BOOL pfunc_send_sock(PFUNC_CHAR* msg);
  */
 PFUNC_API* pfunc_newapi(PFUNC_VOID);
 
-/* pfunc_register will register the plugin with nanomud's plugin
+/* pfunc_register will register the plugin with BioMUD's plugin
  * system. All required information from the struct will be checked
  * and if found missing, will return an error number with the correct
  * error designation.

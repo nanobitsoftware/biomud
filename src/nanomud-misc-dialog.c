@@ -25,7 +25,7 @@
 #include <assert.h>
 #include <malloc.h>
 
-#include "NanoMud.h"
+#include "BioMUD.h"
 
 HWND te;
 int orig_x;
@@ -59,25 +59,25 @@ void output_status_window(char* msg, HWND* status_window)
 
     buf[0] = '\0';
     if (!status_window)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     if (msg[0] == '\0')
-        {
-            return;
-        }
+    {
+        return;
+    }
     len = strlen(msg);
 
     GetClientRect((HWND)status_window, &r);
 
     if (len > ((r.right - r.left) / 8))
-        {
-            InvalidateRect((HWND)status_window, NULL, TRUE);
-            ShowWindow((HWND)status_window, SW_HIDE);
-            MoveWindow((HWND)status_window, orig_x - (((len)* 8) / 2), orig_y, ((len + 1) * 8), orig_z, TRUE);
-            ShowWindow((HWND)status_window, SW_SHOW);
-        }
+    {
+        InvalidateRect((HWND)status_window, NULL, TRUE);
+        ShowWindow((HWND)status_window, SW_HIDE);
+        MoveWindow((HWND)status_window, orig_x - (((len)* 8) / 2), orig_y, ((len + 1) * 8), orig_z, TRUE);
+        ShowWindow((HWND)status_window, SW_SHOW);
+    }
     hdc = GetDC((HWND)status_window);
     SelectObject(hdc, hf);
     SetTextColor(hdc, RGB(3, 192, 192));
@@ -90,9 +90,9 @@ void output_status_window(char* msg, HWND* status_window)
 void destroy_status_window(HWND* status_window)
 {
     if (!status_window)
-        {
-            return;
-        }
+    {
+        return;
+    }
 
     DestroyWindow((HWND)status_window);
 }

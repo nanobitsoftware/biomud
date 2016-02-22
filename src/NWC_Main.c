@@ -25,7 +25,7 @@
 #include <time.h>
 #include <commctrl.h>
 
-#include "nanomud.h"
+#include "BioMUD.h"
 #include "NWC.h"
 
 int IDX;

@@ -27,10 +27,10 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <process.h>
-#include "NanoMud.h"
-#include "nanomud-script.h"
+#include "BioMUD.h"
+#include "BioMUD-script.h"
 #include "NWC.h"
-#include "nanomud-plugin-api.h"
+#include "BioMUD-plugin-api.h"
 
 #define ID_BUFFER 7000
 #define ID_MEMORY 7001
@@ -59,16 +59,16 @@ NWC_PARENT* s_window;
 void create_status(void)
 {
     if (Status)
-        {
-            SetFocus(Status); // Fix for #00005 http://biomud.nanobit.net/bug/view.php?id=5
-            return;
-        }
-    s_window = create_parent("Nanomud Status");
+    {
+        SetFocus(Status); // Fix for #00005 http://biomud.nanobit.net/bug/view.php?id=5
+        return;
+    }
+    s_window = create_parent("BioMUD Status");
     if (!s_window)
-        {
-            GiveError("BAD WINDOW!", FALSE);
-            return;
-        }
+    {
+        GiveError("BAD WINDOW!", FALSE);
+        return;
+    }
     set_parent_config(s_window, MudMain, (LRESULT*)StatusProc, 100, 100, 350, 260, g_hInst, FALSE, WS_EX_TOPMOST | WS_EX_CONTROLPARENT, DS_3DLOOK | WS_SYSMENU);
 
     AddStatic_Parent(s_window, "Lines in buffer:", 0, 0, 130, 15, 0, ID_BUFFER, WS_CHILD | SS_RIGHT, TRUE);
@@ -76,7 +76,7 @@ void create_status(void)
     AddStatic_Parent(s_window, "Send Lines:", 0, 30, 130, 15, 0, ID_SENT, WS_CHILD | SS_RIGHT, TRUE);
     AddStatic_Parent(s_window, "Send Bytes:", 0, 45, 130, 15, 0, ID_TOTALSEND, WS_CHILD | SS_RIGHT, TRUE);
     AddStatic_Parent(s_window, "Recv Bytes:", 0, 60, 130, 15, 0, ID_TOTALRECV, WS_CHILD | SS_RIGHT, TRUE);
-    AddStatic_Parent(s_window, "Nanomud Build:", 0, 75, 130, 15, 0, ID_BUILD, WS_CHILD | SS_RIGHT, TRUE);
+    AddStatic_Parent(s_window, "BioMUD Build:", 0, 75, 130, 15, 0, ID_BUILD, WS_CHILD | SS_RIGHT, TRUE);
     AddStatic_Parent(s_window, "Alias Count:", 0, 90, 130, 15, 0, ID_ALIAS, WS_CHILD | SS_RIGHT, TRUE);
     AddStatic_Parent(s_window, "Trig. Count:", 0, 105, 130, 15, 0, ID_TRIG, WS_CHILD | SS_RIGHT, TRUE);
     AddStatic_Parent(s_window, "Path Count:", 0, 120, 130, 15, 0, ID_PATH, WS_CHILD | SS_RIGHT, TRUE);
@@ -106,49 +106,49 @@ void update_status(void)
     float t_total = 0.0;
 
     if (s_window != NULL && Status)
-        {
-            t_total = (float)total_alloc;
-            t_total = (t_total * .05) + t_total;
+    {
+        t_total = (float)total_alloc;
+        t_total = (t_total * .05) + t_total;
 
-            if (t_total > 1024)
-                {
-                    b_type = 1; // KB
-                    t_total = t_total / 1024;
-                }
-            if (t_total > 1024)
-                {
-                    b_type = 2; // MB
-                    t_total = t_total / 1024;
-                }
-            if (t_total > 1024)
-                {
-                    b_type = 3; // GB
-                    t_total = t_total / 1024;
-                }
-            CTRL_SetText(s_window, "l1", "%u", bufcount);
-            CTRL_SetText(s_window, "l2", "%3.2f %s", t_total, b_type == 0 ? "Bytes" : b_type == 1 ? "KBytes" : b_type == 2 ? "Mbytes" : "GBytes");
-            CTRL_SetText(s_window, "l3", "%d", TOTAL_SENT);
-            CTRL_SetText(s_window, "l4", "%s", Mud_client_Version);
-            CTRL_SetText(s_window, "l8", "%d", TOTAL_SEND);
-            CTRL_SetText(s_window, "l9", "%d", TOTAL_RECV);
+        if (t_total > 1024)
+        {
+            b_type = 1; // KB
+            t_total = t_total / 1024;
         }
+        if (t_total > 1024)
+        {
+            b_type = 2; // MB
+            t_total = t_total / 1024;
+        }
+        if (t_total > 1024)
+        {
+            b_type = 3; // GB
+            t_total = t_total / 1024;
+        }
+        CTRL_SetText(s_window, "l1", "%u", bufcount);
+        CTRL_SetText(s_window, "l2", "%3.2f %s", t_total, b_type == 0 ? "Bytes" : b_type == 1 ? "KBytes" : b_type == 2 ? "Mbytes" : "GBytes");
+        CTRL_SetText(s_window, "l3", "%d", TOTAL_SENT);
+        CTRL_SetText(s_window, "l4", "%s", Mud_client_Version);
+        CTRL_SetText(s_window, "l8", "%d", TOTAL_SEND);
+        CTRL_SetText(s_window, "l9", "%d", TOTAL_RECV);
+    }
 }
 
 LRESULT CALLBACK StatusProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
-        {
-        case WM_DESTROY:
-        {
-            ShowWindow(hwnd, SW_HIDE);
-            DestroyParent(s_window);
-            s_window = NULL;
-            Status = NULL;
-            return DefWindowProc(hwnd, message, wParam, lParam);
-        }
-        break;
+    {
+    case WM_DESTROY:
+    {
+        ShowWindow(hwnd, SW_HIDE);
+        DestroyParent(s_window);
+        s_window = NULL;
+        Status = NULL;
+        return DefWindowProc(hwnd, message, wParam, lParam);
+    }
+    break;
 
-        default:
-            return DefWindowProc(hwnd, message, wParam, lParam);
-        }
+    default:
+        return DefWindowProc(hwnd, message, wParam, lParam);
+    }
 }
