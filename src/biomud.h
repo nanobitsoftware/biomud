@@ -89,7 +89,7 @@
 #define LOG_INFO  2
 #define LOG_ERROR 3
 #define LOG_ECHO  4
-#define MAX_TERM_LINE 100000
+#define MAX_TERM_LINE 1000000
 
 /* Defines used to GUI stuff. Do not change these values! - MH
  * If you have to add stuff, go in the order, or perhaps the
@@ -846,3 +846,4 @@ LRESULT APIENTRY logwin_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 void GiveNotify(char* wrong);
 bool init_db(void);
 void close_db(void);
+void show_term_tracking(void);

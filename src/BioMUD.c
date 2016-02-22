@@ -540,6 +540,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             terminal_resize();
             CreateCaret(MudInput, caretbm, 8, 13);
         }
+
         break;
     }
 
@@ -724,6 +725,8 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
         case ID_HELP_CREDITS:
             CreateCreditBox();
             break;
+        default:
+            break;
         }
     case WM_KEYDOWN:
         //     case WM_SYSKEYDOWN:
@@ -817,7 +820,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
     case WM_RBUTTONDOWN:
     {
         int x, y = 0;
-        make_test();
+        //        make_test();
 
         y = LOWORD(lParam);
         x = HIWORD(lParam);
@@ -868,6 +871,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 
             //update_term();
         }
+
         if (this_session->Mouse_coords == TRUE)
         {
             y = LOWORD(lParam);
@@ -1097,28 +1101,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             GetScrollInfo(MudMain, SB_VERT, &info);
 
             scroll_term(1, info.nTrackPos);
-            if (curdis < 0)
-            {
-                viewing = bufcount - -curdis;
-                if (viewing - rows == 1)
-                {
-                    sprintf(tracking, "Tracking: Top of page");
-                }
-                else
-                {
-                    sprintf(tracking, "Tracking: Line:%d-%d (of %lu)", viewing - rows, viewing, bufcount);
-                }
-                tbuf->x_end = (cols * 8) - (strlen(tracking) * 8);
-                tbuf->y_end = 0;
-                FlushBuffer(tracking, TRUE_BLACK, YELLOW, TRUE);
-            }
-            else
-            {
-                sprintf(tracking, "Tracking: Bottom of page");
-                tbuf->x_end = (cols * 8) - (strlen(tracking) * 8);
-                tbuf->y_end = 0;
-                FlushBuffer(tracking, TRUE_BLACK, YELLOW, TRUE);
-            }
+            show_term_tracking();
         }
         break;
         case SB_PAGEUP:
@@ -1179,7 +1162,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
     }
 
     default:
-        FormatText(MudInput);
+        // FormatText(MudInput); // Comment this out. Bugfix #3
 
         return DefWindowProc(hwnd, message, wParam, lParam);
         break;
@@ -1261,6 +1244,7 @@ LRESULT APIENTRY EditProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         SendMessage(CharCountStatic, WM_SETTEXT, strlen(char_count), (LPARAM)(LPCSTR)char_count);
 
         return DefWindowProc(hwnd, msg, wParam, lParam);
+
         break;
     }
     case WM_KEYDOWN:
@@ -1287,6 +1271,31 @@ LRESULT APIENTRY EditProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 return DefWindowProc(hwnd, msg, wParam, lParam);
             }
             break;
+        case 0x21:
+        {
+            // Page down
+            int ppos = 640;
+
+            ppos = (ppos / 120) * 60;
+
+            scroll_term(0, -ppos);
+            show_term_tracking();
+
+            return DefWindowProc(hwnd, msg, wParam, lParam);
+            break;
+        }
+        case 0x22:
+        {
+            // Page up
+            int ppos = -640;
+            ppos = (ppos / 120) * 60;
+
+            scroll_term(0, -ppos);
+            show_term_tracking();
+            return DefWindowProc(hwnd, msg, wParam, lParam);
+            break;
+        }
+
         case 13:
         {
             CHARRANGE cr;
@@ -1432,6 +1441,38 @@ void do_peek(void)
     {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
+    }
+}
+
+/* Show_term_tracking: print a message in upper right to show the current tracking
+position of the scroll term.
+*/
+void show_term_tracking(void)
+{
+    int viewing;
+    char tracking[1024];
+
+    if (curdis < 0)
+    {
+        viewing = bufcount - -curdis;
+        if (viewing - rows == 1)
+        {
+            sprintf(tracking, "Tracking: Top of page");
+        }
+        else
+        {
+            sprintf(tracking, "Tracking: Line:%d-%d (of %lu)", viewing - rows, viewing, bufcount);
+        }
+        tbuf->x_end = (cols * 8) - (strlen(tracking) * 8);
+        tbuf->y_end = 0;
+        FlushBuffer(tracking, TRUE_BLACK, YELLOW, TRUE);
+    }
+    else
+    {
+        sprintf(tracking, "Tracking: Bottom of page");
+        tbuf->x_end = (cols * 8) - (strlen(tracking) * 8);
+        tbuf->y_end = 0;
+        FlushBuffer(tracking, TRUE_BLACK, YELLOW, TRUE);
     }
 }
 

@@ -32,6 +32,40 @@
     <ClCompile Include="..\src\keyboard.c" />
     <ClCompile Include="..\src\logwin.c" />
     <ClCompile Include="..\src\BioMUD.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lapi.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lauxlib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lbaselib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lbitlib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lcode.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lcorolib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lctype.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\ldblib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\ldebug.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\ldo.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\ldump.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lfunc.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lgc.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\linit.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\liolib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\llex.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lmathlib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lmem.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\loadlib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lobject.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lopcodes.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\loslib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lparser.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lstate.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lstring.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lstrlib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\ltable.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\ltablib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\ltm.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lua.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lundump.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lutf8lib.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lvm.c" />
+    <ClCompile Include="..\src\lua-5.3.2\src\lzio.c" />
     <ClCompile Include="..\src\match.c" />
     <ClCompile Include="..\src\memory.c" />
     <ClCompile Include="..\src\misc-dialog.c" />
@@ -65,6 +99,32 @@
     <ClInclude Include="..\src\biomud-plugins.h" />
     <ClInclude Include="..\src\biomud-script.h" />
     <ClInclude Include="..\src\biomud.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lapi.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lauxlib.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lcode.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lctype.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\ldebug.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\ldo.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lfunc.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lgc.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\llex.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\llimits.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lmem.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lobject.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lopcodes.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lparser.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lprefix.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lstate.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lstring.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\ltable.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\ltm.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lua.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lua.hpp" />
+    <ClInclude Include="..\src\lua-5.3.2\src\luaconf.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lualib.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lundump.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lvm.h" />
+    <ClInclude Include="..\src\lua-5.3.2\src\lzio.h" />
     <ClInclude Include="..\src\NWC_LIb\NWC.h" />
     <ClInclude Include="..\src\regex9\regexp9.h" />
     <ClInclude Include="..\src\sqlite3\sqlite3.h" />
@@ -262,7 +322,7 @@
     <ClCompile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <Optimization>MinSpace</Optimization>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN64;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -282,7 +342,8 @@
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FloatingPointModel>Strict</FloatingPointModel>
-      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
