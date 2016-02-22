@@ -2038,7 +2038,7 @@ void handle_input(char* in)
                 if (!strcmp(command, alias->name))
                 {
                     strcat(buff3, alias->script);
-                    strcat(buff3, " ");
+                    //strcat(buff3, " ");
                     if (in[0] != '\0')
                     {
                         strcat(buff3, in);
