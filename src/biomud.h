@@ -84,12 +84,12 @@
 #define somalloc(z) malloc(sizeof(z))
 #define EXTRA_CODE 0 // to disable a lot of random code I have laying around.
 #define MAX_INPUT_LENGTH 1024*2 // Max length of input allowed.
-#define MAX_INPUT_HISTORY 2000 // Max amount of command history to keep
+#define MAX_INPUT_HISTORY 300 // Max amount of command history to keep
 #define LOG_DEBUG 1
 #define LOG_INFO  2
 #define LOG_ERROR 3
 #define LOG_ECHO  4
-#define MAX_TERM_LINE 100
+#define MAX_TERM_LINE 100000
 
 /* Defines used to GUI stuff. Do not change these values! - MH
  * If you have to add stuff, go in the order, or perhaps the

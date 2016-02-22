@@ -301,7 +301,6 @@ DWORD WINAPI check_ping(void)
     //this_session->rawSocket = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
     while (1000)
     {
-        return;
         //update_term();
         sleep(1000);
         //timeout.tv_sec = 1000;

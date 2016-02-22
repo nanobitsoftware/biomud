@@ -111,7 +111,7 @@ void load_history(void)
     timestamp = 0;
     buf[0] = '\0';
     timestr[0] = '\0';
-    memset(buf, '\0', MAX_INPUT_LENGTH);
+    memset(buf, '\0', MAX_INPUT_LENGTH * 2);
     if ((fp = fopen(history_file, "r")) == NULL)
     {
         give_term_error("Unable to open the command history file.", FALSE);
@@ -122,7 +122,7 @@ void load_history(void)
 
     while (!feof(fp))
     {
-        memset(buf, '\0', MAX_INPUT_LENGTH);
+        memset(buf, '\0', MAX_INPUT_LENGTH * 2);
         //Snarf the entire file until EOF.
         if (!read_string(buf, fp, MAX_INPUT_LENGTH))
         {

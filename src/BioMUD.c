@@ -153,7 +153,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
     WSAAsyncSelect(sock, MudMain, WM_SOCKET, FD_CLOSE | FD_READ);
     this_session->max_buffer = MAX_TERM_LINE;
     this_session->port = 4000;
-    this_session->char_wrap = 100;//180;
+    this_session->char_wrap = 180;//180;
     this_session->ping_sent = this_session->ping_recv = this_session->last_ping = 0;
     last_bell = 0; // For last bell sound and timeouts in terminal_beep
 
@@ -482,7 +482,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             ShowWindow(MudInput, SW_SHOW);
 
             SendMessage(MudInput, EM_SETEVENTMASK, 0, 0);
-            SendMessage(MudInput, EM_SETLIMITTEXT, 1024 * 3, 1024 * 3);
+            SendMessage(MudInput, EM_SETLIMITTEXT, MAX_INPUT_LENGTH - 1, MAX_INPUT_LENGTH - 1);
 
             //OldProc = (WNDPROC) SetWindowLong(MudInput,GWL_WNDPROC,(LONG)EditProc);
             OldProc = (WNDPROC)SetWindowLongPtr(MudInput, GWLP_WNDPROC, (LONG_PTR)EditProc);
