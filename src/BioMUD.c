@@ -153,7 +153,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
 	WSAAsyncSelect(sock, MudMain, WM_SOCKET, FD_CLOSE | FD_READ);
 	this_session->max_buffer = MAX_TERM_LINE;
 	this_session->port = 4000;
-	this_session->char_wrap = 180;//180;
+	this_session->char_wrap = 980;//180;
 	this_session->ping_sent = this_session->ping_recv = this_session->last_ping = 0;
 	this_session->enable_password = TRUE;
 	last_bell = 0; // For last bell sound and timeouts in terminal_beep

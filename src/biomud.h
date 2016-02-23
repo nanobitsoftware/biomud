@@ -89,7 +89,7 @@
 #define LOG_INFO  2
 #define LOG_ERROR 3
 #define LOG_ECHO  4
-#define MAX_TERM_LINE 1000000
+#define MAX_TERM_LINE 65357
 
 /* Defines used to GUI stuff. Do not change these values! - MH
  * If you have to add stuff, go in the order, or perhaps the
@@ -237,7 +237,7 @@
 #define ANSI_YELLOW    "\033[0;33m"
 #define html_log "c:/BioMUD/mudlog.html"
 #define NCOLORS 24
-#define INPUT_HEIGHT 60 // input bar height; 60px
+#define INPUT_HEIGHT 20 // input bar height; 60px
 /* Typedefs*/
 //typedef struct sbuff SBUF;
 //unsigned long int bufcount;

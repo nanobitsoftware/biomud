@@ -392,8 +392,7 @@
     <ResourceCompile Include="Nanomud Beta 21.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\biomud_icon.ico" />
-    <Image Include="icon1.ico" />
+    <Image Include="..\src\biomud_icon.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6CB303D3-EBEA-48F2-BB04-A512F98E1DA7}</ProjectGuid>
