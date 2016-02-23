@@ -153,3 +153,5 @@ void get_user_date(NWC_PARENT* p, char* c, int x, int y);
 void initialize_windows(void);
 void parent_disable_all(NWC_PARENT* p_window);
 void print_invoice(char* str, int copies);
+
+int CTRL_sendmessage(NWC_PARENT* p_window, char* name, UINT msg, WPARAM wparam, LPARAM lparam);

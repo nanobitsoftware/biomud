@@ -132,6 +132,7 @@
 #define ID_EDIT_INPUT  1101
 
 #define ID_WINDOW_LOGS 4000
+#define ID_WINDOW_PASSWORD 9999
 
 #define ID_ABOUT_OK_BUTTON 1200
 #define ID_Credit_OK_BUTTON 1201
@@ -287,6 +288,7 @@ HWND MudStatus;
 HWND MudWindow;
 HWND Terminal;
 HWND Status;
+HWND PasswordWindow;
 int bKcolor;
 int color;
 int old_color;
@@ -847,3 +849,4 @@ void GiveNotify(char* wrong);
 bool init_db(void);
 void close_db(void);
 void show_term_tracking(void);
+void create_password_prompt(void);

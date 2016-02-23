@@ -1524,6 +1524,29 @@ int CTRL_list_get_sel_idx(NWC_PARENT* p_window, char* name)
     return count;
 }
 
+int CTRL_sendmessage(NWC_PARENT* p_window, char* name, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    NWC_CTRL* ctrl;
+    int count;
+
+    count = -1;
+
+    if (!p_window || !name)
+    {
+        return -1;
+    }
+
+    ctrl = get_control(p_window, name);
+
+    if (!ctrl || ctrl == NULL)
+    {
+        GiveError("Control Not Found - CTRL_Sendmessage", 0);
+        return -1;
+    }
+    SendMessage(ctrl->handle, msg, wparam, lparam);
+    return 1;
+}
+
 void clist_add_col(NWC_PARENT* p_window, char* name, int width, char* text)
 {
     NWC_CTRL* ctrl;
@@ -1708,7 +1731,7 @@ BOOL AddRichedit_Parent(NWC_PARENT* p_window, char* name, int x, int y, int widt
         show_parent(p_window);
     }
 
-    ctrl->handle = CreateWindowEx(WS_EX_CLIENTEDGE, "RICHEDIT", ctrl->name, ctrl->style, ctrl->x, ctrl->y, ctrl->width, ctrl->height, p_window->window_pointer, (HMENU)(UINT_PTR)ctrl->id, g_hInst, 0);
+    ctrl->handle = CreateWindowEx(WS_EX_CLIENTEDGE, "RichEdit50W", ctrl->name, ctrl->style, ctrl->x, ctrl->y, ctrl->width, ctrl->height, p_window->window_pointer, (HMENU)(UINT_PTR)ctrl->id, g_hInst, 0);
     ShowWindow(ctrl->handle, SW_SHOW);
     return TRUE;
 }

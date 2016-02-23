@@ -207,6 +207,7 @@
     <ClCompile Include="..\src\misc-dialog.c" />
     <ClCompile Include="..\src\net.c" />
     <ClCompile Include="..\src\NWC_LIb\NWC_Main.c" />
+    <ClCompile Include="..\src\password.c" />
     <ClCompile Include="..\src\plugins-main.c" />
     <ClCompile Include="..\src\plugins-pfunc.c" />
     <ClCompile Include="..\src\script-edit.c" />

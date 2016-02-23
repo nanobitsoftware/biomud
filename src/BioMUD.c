@@ -445,6 +445,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
         AppendMenu(hSubMenu, MF_STRING, ID_WINDOW_LOGS, "BioMUD &Logs");
         AppendMenu(hSubMenu, MF_SEPARATOR, 0, NULL);
         AppendMenu(hSubMenu, MF_STRING, ID_SETTINGS_OPTIONS, "&Options");
+        AppendMenu(hSubMenu, MF_STRING, ID_WINDOW_PASSWORD, "&Password Window");
         AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hSubMenu, "&Window");
         SetMenu(hwnd, hMenu);
         hSubMenu = CreatePopupMenu();
@@ -552,7 +553,10 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             export_text_log(save_file("Text Files (*.txt)\0*.txt\0All Files\0*.*"));
             break;
         }
+        case ID_WINDOW_PASSWORD:
+            create_password_prompt();
 
+            break;
         case ID_EDIT_FIND:
             break;
 
@@ -741,8 +745,13 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 #endif
 
     case WM_SETFOCUS:
+        if (PasswordWindow)
+        {
+            SetFocus(PasswordWindow); // Set focus to the password window. NOt here.
+            break;
+        }
 
-        if (IsWindow(MudAbout))
+        else if (IsWindow(MudAbout))
         {
             SetFocus(MudAbout);
             break;
@@ -973,7 +982,8 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
                     TERM_ECHO_OFF = TRUE;
                     SendMessage(MudInput, WM_SETTEXT, 0, (LPARAM)(LPCSTR)""); // Clear the input for a password entry.
 
-                    SendMessage(MudInput, EM_SETPASSWORDCHAR, '*', 0); // Mask entry for passwords.
+                    //SendMessage(MudInput, EM_SETPASSWORDCHAR, '*', 0); // Mask entry for passwords.
+                    create_password_prompt();
                 }
                 if (strstr(readbuff, echo_on_str))
                 {
