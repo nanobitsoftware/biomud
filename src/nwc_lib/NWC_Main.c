@@ -491,7 +491,15 @@ NWC_CTRL* get_control(NWC_PARENT* p_window, char* name)
     }
     for (i = 0; i < p_window->max_controls; i++)
     {
+        if (!p_window->controls)
+        {
+            continue;
+        }
         if (p_window->controls[i] == NULL)
+        {
+            continue;
+        }
+        if (!p_window->controls[i]->name)
         {
             continue;
         }

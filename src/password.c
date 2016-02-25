@@ -85,11 +85,13 @@ LRESULT APIENTRY passwordwin_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lpa
     {
     case WM_SETFOCUS:
     {
-        if (get_control(password_window, "Password"))
-        {
-            SetFocus(get_control(password_window, "Password")->handle);
-            break;
-        }
+        if (password_window)
+
+            if (get_control(password_window, "Password"))
+            {
+                SetFocus(get_control(password_window, "Password")->handle);
+                break;
+            }
     }
     }
     return DefWindowProc(hwnd, msg, wparam, lparam);
@@ -156,6 +158,8 @@ LRESULT APIENTRY password_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
             SendMessage(passinput, EM_EXSETSEL, 0, (LPARAM)&cr);
             DestroyParent(password_window);
             DestroyWindow(PasswordWindow);
+            PasswordWindow = NULL;
+            password_window = NULL;
             SetFocus(MudInput);
             return DefWindowProc(hwnd, msg, wParam, lParam);
         }
@@ -164,6 +168,8 @@ LRESULT APIENTRY password_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
             // They opted to cancel the password option. Return them to mudinput.
             DestroyParent(password_window);
             DestroyWindow(PasswordWindow);
+            PasswordWindow = NULL;
+            password_window = NULL;
             SetFocus(MudInput);
             return DefWindowProc(hwnd, msg, wParam, lParam);
         }
