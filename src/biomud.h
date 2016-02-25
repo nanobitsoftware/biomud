@@ -6,7 +6,7 @@
 * duplicated in all such forms and that any documentation,
 * advertising materials, and other materials related to such
 * distribution and use acknowledge that the software was developed
-* byNanobit Software.The name of
+* by (http://biomud.nanobit.net) Nanobit Software.The name of
 * Nanobit Software may not be used to endorse or promote products derived
 * from this software without specific prior written permission.
 * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
@@ -19,8 +19,8 @@
  *  For the BioMUD
  */
 
- //#define BG_MASK 0x000CC000UL
- //#define ATBLINK 0xFFFFFFFFUL
+//#define BG_MASK 0x000CC000UL
+//#define ATBLINK 0xFFFFFFFFUL
 
 #define ATBLINK 0x10000000UL
 
@@ -52,11 +52,11 @@
 #ifdef bool
 #undef bool
 #define bool unsigned short int  /* It appears windows really doesn't equal unix :P
-							 * so we'll make our OWN bool statement! NYAH! */
+                             * so we'll make our OWN bool statement! NYAH! */
 #define BOOL unsigned short int
 #else
 #define bool unsigned short int  /* It appears windows really doesn't equal unix :P
-							 * so we'll make our OWN bool statement! NYAH! */
+                             * so we'll make our OWN bool statement! NYAH! */
 #define BOOL unsigned short int
 
 #endif
@@ -71,7 +71,7 @@
 #define TRUE 1   // Defined here, so i KNOW what is what */
 #define FALSE 0  // .          .             .        .  */
 
-							 //typedef int sh_int;
+//typedef int sh_int;
 #define IS_IN_DEBUGGING_MODE 0 /* Debugging mode. 0: Off 1: on */
 #define IS_BETA_RELEASE 1
 #define IS_RELEASE 0
@@ -96,7 +96,7 @@
  * pattern as they are shown here. For a new menu, jump 10
  * Numeric digits ahead and start from that for its menu - MH */
 
- /* file */
+/* file */
 #define ID_FILE_EXIT  1001
 #define ID_FILE_OPEN  1002
 #define ID_FILE_DISCONNECT 1008
@@ -316,179 +316,179 @@ BOOL cmd_init;
 
 struct matches
 {
-	BOOL match_end;
-	BOOL match_start;
-	BOOL skip_space;
-	char** match_exp;
-	int total;
+    BOOL match_end;
+    BOOL match_start;
+    BOOL skip_space;
+    char** match_exp;
+    int total;
 };
 
 struct  test_table
 {
-	char*                code;
+    char*                code;
 };
 
 struct color_table
 {
-	int type;
-	COLORREF color;
+    int type;
+    COLORREF color;
 };
 
 struct seltext
 {
-	char* text;
-	unsigned long int lstart;
-	unsigned long int lstop;
-	unsigned long int cstop;
-	unsigned long int cstart;
-	BOOL selected;
+    char* text;
+    unsigned long int lstart;
+    unsigned long int lstop;
+    unsigned long int cstop;
+    unsigned long int cstart;
+    BOOL selected;
 };
 
 struct editor
 {
-	BOOL                      auto_resize; // Special case for input bar
-	BOOL                      blinked;
-	BOOL                      editable;
-	BOOL                      enter_sends;
-	BOOL                      has_focus;
-	BOOL                      has_window;
-	BOOL                      masked;
-	BOOL                      has_selection;
-	char*                     buffer;
-	char*                     mask_char;
-	char*                     name;
-	HDC                       dc;
-	HWND                      window;
-	int                       cols;
-	int                       cur_view_char;
-	int                       rows;
-	int                       cur_view_x;
-	int                       cur_view_y;
-	int                       wraps;
-	RECT                      r;
-	SELTEXT*                  selection;
-	TERMBUF*                  current_line;
-	TERMBUF**                 lines;
-	unsigned long int         buf_len;
-	unsigned long int         buf_x;
-	unsigned long int         buf_y;
-	unsigned long int         bufcount;
-	unsigned long int         caret_pos_x;
-	unsigned long int         caret_pos_y;
-	unsigned long int         max_buffer_len;
-	unsigned long int         max_lines;
-	unsigned long int*        t_buf;
+    BOOL                      auto_resize; // Special case for input bar
+    BOOL                      blinked;
+    BOOL                      editable;
+    BOOL                      enter_sends;
+    BOOL                      has_focus;
+    BOOL                      has_window;
+    BOOL                      masked;
+    BOOL                      has_selection;
+    char*                     buffer;
+    char*                     mask_char;
+    char*                     name;
+    HDC                       dc;
+    HWND                      window;
+    int                       cols;
+    int                       cur_view_char;
+    int                       rows;
+    int                       cur_view_x;
+    int                       cur_view_y;
+    int                       wraps;
+    RECT                      r;
+    SELTEXT*                  selection;
+    TERMBUF*                  current_line;
+    TERMBUF**                 lines;
+    unsigned long int         buf_len;
+    unsigned long int         buf_x;
+    unsigned long int         buf_y;
+    unsigned long int         bufcount;
+    unsigned long int         caret_pos_x;
+    unsigned long int         caret_pos_y;
+    unsigned long int         max_buffer_len;
+    unsigned long int         max_lines;
+    unsigned long int*        t_buf;
 };
 
 struct termbuffer
 {
-	BOOL   has_blink;
-	BOOL   not_finished;
-	BOOL   processed;
-	BOOL     debug_include;
-	BOOL     has_underline;
-	char*   buffer;
-	char stamp[1];
-	int   canary; // For...stuff.
-	long int len;
-	unsigned long*   line;
-	unsigned long int ln;
+    BOOL   has_blink;
+    BOOL   not_finished;
+    BOOL   processed;
+    BOOL     debug_include;
+    BOOL     has_underline;
+    char*   buffer;
+    char stamp[1];
+    int   canary; // For...stuff.
+    long int len;
+    unsigned long*   line;
+    unsigned long int ln;
 };
 
 struct ansi_table
 {
-	char* seq;
-	int  fore;
-	int  back;
+    char* seq;
+    int  fore;
+    int  back;
 };
 
 struct termbuf
 {
-	char*    buffer;
-	int     x_start;
-	int     y_start;
-	int     x_end;
-	int     y_end;
-	HDC     hdc;
-	HDC     page;
-	HWND    hwnd;
-	HANDLE  h;
+    char*    buffer;
+    int     x_start;
+    int     y_start;
+    int     x_end;
+    int     y_end;
+    HDC     hdc;
+    HDC     page;
+    HWND    hwnd;
+    HANDLE  h;
 };
 
 struct hash
 {
-	int val;
-	int place;
-	HASH* next;
-	void* ptr;
+    int val;
+    int place;
+    HASH* next;
+    void* ptr;
 };
 
 struct sbuff
 {
-	char* buffer;
+    char* buffer;
 };
 
 struct cmd_history
 {
-	char   command[MAX_INPUT_LENGTH + 10];
-	size_t timestamp;
+    char   command[MAX_INPUT_LENGTH + 10];
+    size_t timestamp;
 };
 
 CMDHISTORY cmdhistory[MAX_INPUT_HISTORY];
 
 struct session_data
 {
-	BOOL    beta_edit;
-	BOOL    color;
-	BOOL    connected;
-	BOOL    EnableAliases;
-	BOOL    EnableBlinkies;
-	BOOL    EnableClasses;
-	BOOL    EnableClientChat;
-	BOOL    EnableMacros;
-	BOOL    EnablePaths;
-	BOOL    EnablePing;
-	BOOL    EnableScripts;
-	BOOL    EnableSound;
-	BOOL    EnableSplashScreen;
-	BOOL    EnableTestLogging;
-	BOOL    EnableTN; // telnet negotiation. Future telnet connect stuff. I guess.
-	BOOL    EnableTriggers;
-	BOOL    EnableUsageReports;
-	BOOL    IsBetaTester;
-	BOOL    OptimizeDualScreen;
-	BOOL    ShowTimeStamps;
-	BOOL    UseMemoryCompression;
-	BOOL      Mouse_coords;
-	BOOL      show_debug;
-	BOOL    enable_password; // For password window. Toggle.
-	char    attr;
-	char*   host;
-	char*   name;
-	DWORD   ping;
-	DWORD   ping_sent; // Time of last sent buffer;
-	DWORD   ping_recv; // Time of last Recv buffer
-	DWORD   last_ping; // Last time stamp of the ping.
-	int     desc;
-	int     port;
-	int   char_wrap;
-	SOCKET  rawSocket;
-	struct  sockaddr_in saDest;
-	struct  sockaddr_in saSrc;
-	TERMBUF** termlist;
-	unsigned long int     max_buffer;
-	void(*proc) (char*, ...);
+    BOOL    beta_edit;
+    BOOL    color;
+    BOOL    connected;
+    BOOL    EnableAliases;
+    BOOL    EnableBlinkies;
+    BOOL    EnableClasses;
+    BOOL    EnableClientChat;
+    BOOL    EnableMacros;
+    BOOL    EnablePaths;
+    BOOL    EnablePing;
+    BOOL    EnableScripts;
+    BOOL    EnableSound;
+    BOOL    EnableSplashScreen;
+    BOOL    EnableTestLogging;
+    BOOL    EnableTN; // telnet negotiation. Future telnet connect stuff. I guess.
+    BOOL    EnableTriggers;
+    BOOL    EnableUsageReports;
+    BOOL    IsBetaTester;
+    BOOL    OptimizeDualScreen;
+    BOOL    ShowTimeStamps;
+    BOOL    UseMemoryCompression;
+    BOOL      Mouse_coords;
+    BOOL      show_debug;
+    BOOL    enable_password; // For password window. Toggle.
+    char    attr;
+    char*   host;
+    char*   name;
+    DWORD   ping;
+    DWORD   ping_sent; // Time of last sent buffer;
+    DWORD   ping_recv; // Time of last Recv buffer
+    DWORD   last_ping; // Last time stamp of the ping.
+    int     desc;
+    int     port;
+    int   char_wrap;
+    SOCKET  rawSocket;
+    struct  sockaddr_in saDest;
+    struct  sockaddr_in saSrc;
+    TERMBUF** termlist;
+    unsigned long int     max_buffer;
+    void(*proc) (char*, ...);
 };
 
 enum colors
 {
-	red, blue, green, black, yellow, cyan, magenta
+    red, blue, green, black, yellow, cyan, magenta
 };
 
 typedef struct
 {
-	unsigned int x;
-	unsigned int y;
+    unsigned int x;
+    unsigned int y;
 } poss;
 
 /*      @(#)telnet.h 1.7 88/08/19 SMI; from UCB 5.1 5/30/85     */
@@ -498,9 +498,9 @@ typedef struct
  * specifies the terms and conditions for redistribution.
  */
 
- /*
-  * Definitions for the TELNET protocol.
-  */
+/*
+ * Definitions for the TELNET protocol.
+ */
 
 #ifndef _arpa_telnet_h
 #define _arpa_telnet_h
@@ -528,8 +528,8 @@ typedef struct
 #ifdef TELCMDS
 char* telcmds[] =
 {
-	"SE", "NOP", "DMARK", "BRK", "IP", "AO", "AYT", "EC",
-	"EL", "GA", "SB", "WILL", "WONT", "DO", "DONT", "IAC",
+    "SE", "NOP", "DMARK", "BRK", "IP", "AO", "AYT", "EC",
+    "EL", "GA", "SB", "WILL", "WONT", "DO", "DONT", "IAC",
 };
 #endif
 
@@ -567,12 +567,12 @@ char* telcmds[] =
 #define NTELOPTS        (1+TELOPT_EOR)
 char* telopts[NTELOPTS] =
 {
-	"BINARY", "ECHO", "RCP", "SUPPRESS GO AHEAD", "NAME",
-	"STATUS", "TIMING MARK", "RCTE", "NAOL", "NAOP",
-	"NAOCRD", "NAOHTS", "NAOHTD", "NAOFFD", "NAOVTS",
-	"NAOVTD", "NAOLFD", "EXTEND ASCII", "LOGOUT", "BYTE MACRO",
-	"DATA ENTRY TERMINAL", "SUPDUP", "SUPDUP OUTPUT",
-	"SEND LOCATION", "TERMINAL TYPE", "END OF RECORD",
+    "BINARY", "ECHO", "RCP", "SUPPRESS GO AHEAD", "NAME",
+    "STATUS", "TIMING MARK", "RCTE", "NAOL", "NAOP",
+    "NAOCRD", "NAOHTS", "NAOHTD", "NAOFFD", "NAOVTS",
+    "NAOVTD", "NAOLFD", "EXTEND ASCII", "LOGOUT", "BYTE MACRO",
+    "DATA ENTRY TERMINAL", "SUPDUP", "SUPDUP OUTPUT",
+    "SEND LOCATION", "TERMINAL TYPE", "END OF RECORD",
 };
 #endif
 
@@ -590,27 +590,27 @@ char* telopts[NTELOPTS] =
 // IP Header -- RFC 791
 typedef struct tagIPHDR
 {
-	u_char  VIHL;           // Version and IHL
-	u_char  TOS;            // Type Of Service
-	short   TotLen;         // Total Length
-	short   ID;             // Identification
-	short   FlagOff;        // Flags and Fragment Offset
-	u_char  TTL;            // Time To Live
-	u_char  Protocol;       // Protocol
-	u_short Checksum;       // Checksum
-	struct  in_addr iaSrc;  // Internet Address - Source
-	struct  in_addr iaDst;  // Internet Address - Destination
+    u_char  VIHL;           // Version and IHL
+    u_char  TOS;            // Type Of Service
+    short   TotLen;         // Total Length
+    short   ID;             // Identification
+    short   FlagOff;        // Flags and Fragment Offset
+    u_char  TTL;            // Time To Live
+    u_char  Protocol;       // Protocol
+    u_short Checksum;       // Checksum
+    struct  in_addr iaSrc;  // Internet Address - Source
+    struct  in_addr iaDst;  // Internet Address - Destination
 } IPHDR, *PIPHDR;
 
 // ICMP Header - RFC 792
 typedef struct tagICMPHDR
 {
-	u_char  Type;           // Type
-	u_char  Code;           // Code
-	u_short Checksum;       // Checksum
-	u_short ID;             // Identification
-	u_short Seq;            // Sequence
-	char    Data;           // Data
+    u_char  Type;           // Type
+    u_char  Code;           // Code
+    u_short Checksum;       // Checksum
+    u_short ID;             // Identification
+    u_short Seq;            // Sequence
+    char    Data;           // Data
 } ICMPHDR, *PICMPHDR;
 
 bool echo_off;
@@ -619,17 +619,17 @@ bool echo_off;
 // ICMP Echo Request
 typedef struct tagECHOREQUEST
 {
-	ICMPHDR icmpHdr;
-	DWORD   dwTime;
-	char    cData[REQ_DATASIZE];
+    ICMPHDR icmpHdr;
+    DWORD   dwTime;
+    char    cData[REQ_DATASIZE];
 } ECHOREQUEST, *PECHOREQUEST;
 
 // ICMP Echo Reply
 typedef struct tagECHOREPLY
 {
-	IPHDR   ipHdr;
-	ECHOREQUEST echoRequest;
-	char    cFiller[256];
+    IPHDR   ipHdr;
+    ECHOREQUEST echoRequest;
+    char    cFiller[256];
 } ECHOREPLY, *PECHOREPLY;
 
 #define handle_except(a,b,c,d) _except_handler(a,b,c,d, __FILE__, __LINE__)

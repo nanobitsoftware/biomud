@@ -6,7 +6,7 @@
 * duplicated in all such forms and that any documentation,
 * advertising materials, and other materials related to such
 * distribution and use acknowledge that the software was developed
-* byNanobit Software.The name of
+* by (http://biomud.nanobit.net) Nanobit Software.The name of
 * Nanobit Software may not be used to endorse or promote products derived
 * from this software without specific prior written permission.
 * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
