@@ -45,6 +45,7 @@
 #include "../nwc_lib/NWC.h"
 int IDX;
 BOOL INITIALIZED;
+// Crash repair
 
 void initialize_windows(void)
 {
