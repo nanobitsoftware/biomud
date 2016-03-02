@@ -55,6 +55,7 @@ void create_password_prompt(void);
 WNDPROC OldPassProc;
 
 NWC_PARENT* password_window;
+HWND password_input;
 
 #define ID_PASSWORD_INPUT 9090
 
@@ -89,7 +90,7 @@ void create_password_prompt(void)
     CTRL_SetText(password_window, "Password", ""); // Clear the input.
     CTRL_sendmessage(password_window, "Password", EM_SETPASSWORDCHAR, '*', 0); // Set '*' as password mask
     CTRL_sendmessage(password_window, "Password", EM_SETLIMITTEXT, 256, 256); // Set max length of box
-
+    password_input = get_control(password_window, "Password")->handle;
     CenterWindow(PasswordWindow, MudMain);
     ShowWindow(PasswordWindow, SW_SHOW);
     OldPassProc = (WNDPROC)SetWindowLongPtr(get_control(password_window, "Password")->handle, GWLP_WNDPROC, (LONG_PTR)password_proc);
@@ -103,9 +104,9 @@ LRESULT APIENTRY passwordwin_proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lpa
     {
         if (password_window)
 
-            if (get_control(password_window, "Password"))
+            if (password_input)
             {
-                SetFocus(get_control(password_window, "Password")->handle);
+                SetFocus(password_input);
                 break;
             }
     }
@@ -176,6 +177,7 @@ LRESULT APIENTRY password_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
             DestroyWindow(PasswordWindow);
             PasswordWindow = NULL;
             password_window = NULL;
+            password_input = NULL;
             SetFocus(MudInput);
             return DefWindowProc(hwnd, msg, wParam, lParam);
         }
@@ -186,6 +188,7 @@ LRESULT APIENTRY password_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
             DestroyWindow(PasswordWindow);
             PasswordWindow = NULL;
             password_window = NULL;
+            password_input = NULL;
             SetFocus(MudInput);
             return DefWindowProc(hwnd, msg, wParam, lParam);
         }

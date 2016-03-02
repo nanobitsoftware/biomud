@@ -736,9 +736,13 @@ void paint_line(TERMBUF* ter)
     if (i < cols)
     {
         //char pad[2001]="";
-        pad = malloc(sizeof(char*) * ((cols - i) + 5));
-        memset(pad, ' ', ((cols - i) + 5));
-        pad[(cols - i) + 2] = '\0';
+        //pad = malloc(sizeof(char*) * ((cols - i) + 5));
+        //memset(pad, ' ', ((cols - i) + 5));
+        //pad[(cols - i) + 2] = '\0';
+        //FlushBuffer(pad, TRUE_BLACK, TRUE_BLACK, FALSE);
+        pad = malloc(sizeof(char*) * cols);
+        memset(pad, ' ', cols);
+        pad[cols] = '\0';
         FlushBuffer(pad, TRUE_BLACK, TRUE_BLACK, FALSE);
         free(pad);
     }

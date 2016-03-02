@@ -448,12 +448,13 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
         SetMenu(hwnd, hMenu);
 
         hSubMenu = CreatePopupMenu();
-        AppendMenu(hSubMenu, MF_STRING, ID_EDIT_FIND, "&Find");
-        AppendMenu(hSubMenu, MF_STRING, ID_EDIT_FIND_NEXT, "Find &Next");
-        AppendMenu(hSubMenu, MF_STRING, ID_EDIT_PASTE, "&Paste");
+        AppendMenu(hSubMenu, MF_STRING | MF_GRAYED, ID_EDIT_FIND, "&Find");
+        AppendMenu(hSubMenu, MF_STRING | MF_GRAYED, ID_EDIT_FIND_NEXT, "Find &Next");
+        AppendMenu(hSubMenu, MF_STRING | MF_GRAYED, ID_EDIT_PASTE, "&Paste");
         AppendMenu(hSubMenu, MF_STRING, ID_EDIT_COPY, "&Copy");
-        AppendMenu(hSubMenu, MF_STRING, ID_EDIT_SEND, "&Send File to MUD");
-        AppendMenu(hSubMenu, MF_STRING, ID_EDIT_SALL, "S&elect All");
+        AppendMenu(hSubMenu, MF_STRING | MF_GRAYED, ID_EDIT_SEND, "&Send File to MUD");
+        AppendMenu(hSubMenu, MF_STRING | MF_GRAYED, ID_EDIT_SALL, "S&elect All");
+        AppendMenu(hSubMenu, MF_STRING, ID_EDIT_FONT, "&Change Font");
 
         AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT_PTR)hSubMenu, "&Edit");
         SetMenu(hwnd, hMenu);
@@ -583,7 +584,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             create_password_prompt();
 
             break;
-        case ID_EDIT_FIND:
+        case ID_EDIT_FONT:
             enum_fonts();
             break;
 
@@ -836,6 +837,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
         selecting = TRUE;
 
         x = x / this_session->font_height;
+
         y = (y - this_session->font_width) / this_session->font_width;
 
         //GiveError(pfunc_get_line_text(get_x(x)),0);

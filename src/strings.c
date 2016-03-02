@@ -750,6 +750,7 @@ void enum_fonts(void)
     int orow, ocol;
     extern int rows, cols;
     extern int curdis;
+
     //GetObject(g_hfFont, sizeof(LOGFONT), &lf);
 
     cf.Flags = (CF_FIXEDPITCHONLY | CF_FORCEFONTEXIST | CF_INITTOLOGFONTSTRUCT | CF_SCREENFONTS); // Lots of flags, but we're kinda picky.
@@ -760,6 +761,8 @@ void enum_fonts(void)
     sprintf(lf.lfFaceName, "%s", this_session->font_name);
     cf.nSizeMax = 18;
     cf.nSizeMin = 8;
+    cf.iPointSize = 12;
+    lf.lfHeight = 12;
     //cf.rgbColors = g_rgbText;
     lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
@@ -782,13 +785,37 @@ void enum_fonts(void)
             GetTextMetrics(hdc, &tm);
 
             this_session->font_name = str_dup(lf.lfFaceName);
-            this_session->font_width = tm.tmMaxCharWidth;
-            this_session->font_height = tm.tmHeight;
+#define FIRST '0'
+#define LAST '9'
+#define lenof(x) ((sizeof((x))) / (sizeof(*(x))))
+
+            ABCFLOAT widths[LAST - FIRST + 1];
+            int j;
+            int ret;
+            if (GetCharABCWidthsFloat(hdc, FIRST, LAST, widths))
+            {
+                ret = 0;
+                for (j = 0; j < lenof(widths); j++)
+                {
+                    int width = (int)(0.5 + widths[j].abcfA +
+                                      widths[j].abcfB + widths[j].abcfC);
+                    if (ret < width)
+                    {
+                        ret = width;
+                    }
+                }
+            }
+            else
+            {
+                ret = tm.tmMaxCharWidth;
+            }
+
+            this_session->font_width = ret;
+            this_session->font_height = cf.iPointSize / 10;
             this_session->font_size = cf.iPointSize;
+            InvalidateRect(MudMain, NULL, TRUE);
             terminal_resize();
             curdis = 0;
-
-            give_term_error("Old Row/col: %d/%d New: %d/%d", orow, ocol, rows, cols);
             update_term();
         }
         else
