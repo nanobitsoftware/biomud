@@ -481,6 +481,8 @@ struct session_data
     char    attr;
     char*   host;
     char*   name;
+    char*   font_name;
+
     DWORD   ping;
     DWORD   ping_sent; // Time of last sent buffer;
     DWORD   ping_recv; // Time of last Recv buffer
@@ -488,6 +490,9 @@ struct session_data
     int     desc;
     int     port;
     int   char_wrap;
+    int   font_width;
+    int   font_height;
+    int   font_size;
     SOCKET  rawSocket;
     struct  sockaddr_in saDest;
     struct  sockaddr_in saSrc;
@@ -867,3 +872,4 @@ bool init_db(void);
 void close_db(void);
 void show_term_tracking(void);
 void create_password_prompt(void);
+void enum_fonts(void);

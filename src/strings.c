@@ -734,3 +734,66 @@ void* check_match(char* str /* string to check*/, char* pattern /* pattern we ch
     way we can keep some sanity on the single thread. I do believe I will -only- allow non-destructive threads
     to be spawned. Just seems safe. You can peek, but dont' touch.*/
 }
+
+/* enum_fonts: Will allow the user to select from a list of fixed-width fonts inside
+of their computer. It will also calculate width and height for other places.*/
+
+void enum_fonts(void)
+{
+    CHOOSEFONT cf = { sizeof(CHOOSEFONT) };
+    LOGFONT lf;
+    LOGFONT of;
+    static HFONT hhf;
+    extern HFONT hf;
+    HDC hdc;
+    TEXTMETRIC tm;
+    int orow, ocol;
+    extern int rows, cols;
+    extern int curdis;
+    //GetObject(g_hfFont, sizeof(LOGFONT), &lf);
+
+    cf.Flags = (CF_FIXEDPITCHONLY | CF_FORCEFONTEXIST | CF_INITTOLOGFONTSTRUCT | CF_SCREENFONTS); // Lots of flags, but we're kinda picky.
+
+    cf.hwndOwner = hwnd;
+    cf.lpLogFont = &lf;
+    cf.lpLogFont = &lf;
+    sprintf(lf.lfFaceName, "%s", this_session->font_name);
+    cf.nSizeMax = 18;
+    cf.nSizeMin = 8;
+    //cf.rgbColors = g_rgbText;
+    lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
+    lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
+    lf.lfQuality = DEFAULT_QUALITY;
+    lf.lfPitchAndFamily = FIXED_PITCH | FF_DONTCARE;
+
+    if (ChooseFont(&cf))
+    {
+        HFONT hhf = CreateFontIndirect(&lf);
+        if (hhf)
+        {
+            ocol = cols;
+            orow = rows;
+            hhf = CreateFont(cf.iPointSize / 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DEFAULT_QUALITY, 0, lf.lfFaceName); // Create font for terminal.
+
+            hdc = GetDC(MudMain);
+
+            hf = hhf;
+            SelectObject(hdc, hf);
+            GetTextMetrics(hdc, &tm);
+
+            this_session->font_name = str_dup(lf.lfFaceName);
+            this_session->font_width = tm.tmMaxCharWidth;
+            this_session->font_height = tm.tmHeight;
+            this_session->font_size = cf.iPointSize;
+            terminal_resize();
+            curdis = 0;
+
+            give_term_error("Old Row/col: %d/%d New: %d/%d", orow, ocol, rows, cols);
+            update_term();
+        }
+        else
+        {
+            GiveError("Font selection dialog failed to create!", FALSE);
+        }
+    }
+}

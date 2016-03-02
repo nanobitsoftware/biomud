@@ -853,8 +853,8 @@ void blink_term(void)
             {
                 if (((temp->line[bar] & CH_MASK) >> CH_SHIFT) && (temp->line[bar] & AT_BLINK)) // Found it.
                 {
-                    tbuf->y_end = (l * 13);
-                    tbuf->x_end = bar * 8;
+                    tbuf->y_end = (l * this_session->font_height);
+                    tbuf->x_end = bar * this_session->font_width;
                     str[0] = (temp->line[bar] & CH_MASK) >> CH_SHIFT;
                     str[1] = '\0';
                     do_blinked(temp, bar, str);
@@ -886,8 +886,8 @@ void blink_term(void)
         {
             if (((temp->line[bar] & CH_MASK) >> CH_SHIFT) && (temp->line[bar] & AT_BLINK))
             {
-                tbuf->y_end = (runner * 13);
-                tbuf->x_end = bar * 8;
+                tbuf->y_end = (runner * this_session->font_height);
+                tbuf->x_end = bar * this_session->font_width;
                 str[0] = (temp->line[bar] & CH_MASK) >> CH_SHIFT;
                 str[1] = '\0';
                 do_blinked(temp, bar, str);
@@ -1537,7 +1537,7 @@ void do_update_paint(HDC hdc, int left, int top, int right, int bottom)
         viewing = bufcount - -curdis;
         for (i = viewing - rows + top, k = 0, x = top; i <= viewing - rows + bottom; i++, k++, x++)
         {
-            tbuf->y_end = x * 13;
+            tbuf->y_end = x * this_session->font_height;
             tbuf->x_end = 0;
             if (i == bufcount)
             {
@@ -1570,7 +1570,7 @@ void do_update_paint(HDC hdc, int left, int top, int right, int bottom)
     {
         for (i = top + j, x = top; i <= (bufcount <= rows ? bottom : bottom + j); i++, x++)
         {
-            tbuf->y_end = x * 13;
+            tbuf->y_end = x * this_session->font_height;
             tbuf->x_end = 0;
             if (i > bufcount)
             {
@@ -1631,11 +1631,11 @@ void paint_selection(int start, int stop, int cstart, int cstop, int i /* line n
 
             parse_ansi(tt, 0);
             ret_string(tt, t);
-            tbuf->x_end = (cstart + 1) * 8;
+            tbuf->x_end = (cstart + 1) * this_session->font_width;
             t[cstop + 1] = '\0';
             FlushBuffer(&t[cstart + 1], TRUE_BLACK, SELECTED, FALSE);
             ii = tt->len;
-            tbuf->x_end = (ii + 1) * 8;
+            tbuf->x_end = (ii + 1) * this_session->font_width;
         }
         else if (i == start)
         {
@@ -1649,10 +1649,10 @@ void paint_selection(int start, int stop, int cstart, int cstop, int i /* line n
 
             parse_ansi(tt, 0);
             ret_string(tt, t);
-            tbuf->x_end = (cstart + 1) * 8;
+            tbuf->x_end = (cstart + 1) * this_session->font_width;
             FlushBuffer(&t[cstart + 1], TRUE_BLACK, SELECTED, FALSE);
             ii = tt->len;
-            tbuf->x_end = (ii + 1) * 8;
+            tbuf->x_end = (ii + 1) * this_session->font_width;
         }
         else if (i == stop)
         {
@@ -1668,7 +1668,7 @@ void paint_selection(int start, int stop, int cstart, int cstop, int i /* line n
             t[cstop + 1] = '\0';
             FlushBuffer(t, TRUE_BLACK, SELECTED, FALSE);
             ii = tt->len;
-            tbuf->x_end = (ii + 1) * 8;
+            tbuf->x_end = (ii + 1) * this_session->font_width;
         }
         else
         {
@@ -1682,7 +1682,7 @@ void paint_selection(int start, int stop, int cstart, int cstop, int i /* line n
             tbuf->x_end = 0;
             FlushBuffer(t, TRUE_BLACK, SELECTED, FALSE);
             ii = tt->len;
-            tbuf->x_end = ((ii + 1) * 8);
+            tbuf->x_end = ((ii + 1) * this_session->font_width);
         }
 
         if (ii < cols)
@@ -1737,7 +1737,7 @@ void update_term(void)
     curpos = curdis;
 
     hdc = BeginPaint(MudMain, &p);
-    do_update_paint(hdc, (r.left - 8 - 1) / 8, (r.top - 13 - 1) / 13, (r.right - 8 - 1) / 8, (r.bottom - 13 - 1) / 13);
+    do_update_paint(hdc, (r.left - this_session->font_width - 1) / this_session->font_width, (r.top - this_session->font_height - 1) / this_session->font_height, (r.right - this_session->font_width - 1) / this_session->font_width, (r.bottom - this_session->font_height - 1) / this_session->font_height);
     EndPaint(MudMain, &p);
 
     updating = FALSE;
@@ -1983,14 +1983,15 @@ void FlushBuffer(char* buffer, int color2, int bKcolor2, BOOL underlined)
         //LOG("Text underlined: %s", buffer);
         pen = SelectObject(hdc, CreatePen(PS_SOLID, 0, cf));
         MoveToEx(hdc, xx_end, yy_end, NULL);
-        LineTo(hdc, xx_end + (strlen(buffer) * 8), yy_end);
+        LineTo(hdc, xx_end + (strlen(buffer) * this_session->font_width), yy_end);
         pen = SelectObject(hdc, pen);
         DeleteObject(pen);
         cf = 0;
     }
 
-    tbuf->x_end += (strlen(buffer) > 1 ? strlen(buffer) * 8 : 8);
+    tbuf->x_end += (strlen(buffer) > 1 ? strlen(buffer) * this_session->font_width : this_session->font_width);
     buffer[0] = '\0';
+
     return;
 }
 
@@ -2058,28 +2059,37 @@ void terminal_resize()
     int screen_width, screen_heigth;
     BOOL invalid = FALSE;
 
+    if (this_session->font_width <= 0)
+    {
+        this_session->font_width = 8;
+    }
+    if (this_session->font_height <= 0)
+    {
+        this_session->font_height = 13;
+    }
+
     GetClientRect(MudInput, &a);
     GetClientRect(MudMain, &r);
     screen_width = r.right;
     screen_heigth = r.bottom;
     screen_heigth -= INPUT_HEIGHT; // For input bar. We don't want to paint over the bar with terminal data.
 
-    if ((screen_width % 13) == 0)
+    if ((screen_width % this_session->font_height) == 0)
     {
-        screen_width = (screen_width - (screen_width % 13)) / 13;
+        screen_width = (screen_width - (screen_width % this_session->font_height)) / this_session->font_height;
     }
     else
     {
-        screen_width = (screen_width / 8);
+        screen_width = (screen_width / this_session->font_width);
     }
 
-    if ((screen_heigth % 13) == 0)
+    if ((screen_heigth % this_session->font_height) == 0)
     {
-        screen_heigth = (screen_heigth - (screen_heigth % 13)) / 13;
+        screen_heigth = (screen_heigth - (screen_heigth % this_session->font_height)) / this_session->font_height;
     }
     else
     {
-        screen_heigth = (screen_heigth / 13);
+        screen_heigth = (screen_heigth / this_session->font_height);
     }
 
     if (screen_heigth != rows)
@@ -2128,22 +2138,22 @@ void terminal_initialize()
     screen_heigth -= 20;
     init_cmd_history(); // Set up the command history.
 
-    if ((screen_width % 13) == 0)
+    if ((screen_width % this_session->font_height) == 0)
     {
-        cols = (screen_width - (screen_width % 13)) / 13;
+        cols = (screen_width - (screen_width % this_session->font_height)) / this_session->font_height;
     }
     else
     {
-        cols = (screen_width / 8);
+        cols = (screen_width / this_session->font_width);
     }
 
-    if ((screen_heigth % 13) == 0)
+    if ((screen_heigth % this_session->font_height) == 0)
     {
-        rows = (screen_heigth - (screen_heigth % 13)) / 13;
+        rows = (screen_heigth - (screen_heigth % this_session->font_height)) / this_session->font_height;
     }
     else
     {
-        rows = (screen_heigth / 13);
+        rows = (screen_heigth / this_session->font_height);
     }
 
     def_attr = 0UL;
@@ -2251,17 +2261,17 @@ int GetWindowWrap(HWND hwnd/*, int font_width*/)
     int screen_width;
     RECT srect;
     int remainder;
-    int font_width = 8;
+    int font_width = this_session->font_width;
     GetClientRect(hwnd, &srect);
     screen_width = srect.right;
 
     if ((screen_width % font_width) == 0)
     {
-        remainder = (screen_width - (screen_width % 8)) / font_width;
+        remainder = (screen_width - (screen_width % this_session->font_width)) / font_width;
     }
     else
     {
-        remainder = (screen_width / 8);
+        remainder = (screen_width / this_session->font_width);
     }
     return remainder;
 }

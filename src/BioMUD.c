@@ -129,6 +129,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
     MATCH* m;
     NWC_PARENT* t_parent;
     NWC_CHILD* r_button;
+    TEXTMETRIC tm;
 
     hPrevInstance = 0;
     lpszArgument = 0;
@@ -152,7 +153,6 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
     //unlink("debug1.txt");
 
     LoadLibrary("Msftedit.dll"); // For input box.
-
     InitializeClient(hThisInstance);
     g_hInst = hThisInstance;
     MudMain = CreateWindow(szClassName, "BioMud -- Nanobit Software (C) 2003-2017",
@@ -162,6 +162,7 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
     hwnd = MudMain;
     ShowWindow(MudMain, SW_RESTORE);
     ShowWindow(MudMain, SW_MAXIMIZE);
+
     initwinsock();
     init_logs(); // Init the log system.
     Status = NULL;
@@ -174,12 +175,12 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
     this_session->enable_password = TRUE;
     last_bell = 0; // For last bell sound and timeouts in terminal_beep
 
-    caret_bits = (char*)malloc(13 * 8);
-    memset(caret_bits, 0, 13 * 8);
+    caret_bits = (char*)malloc(this_session->font_height * this_session->font_width);
+    memset(caret_bits, 0, this_session->font_height * this_session->font_width);
 
-    caretbm = CreateBitmap(8, 13, 1, 1, caret_bits);
+    caretbm = CreateBitmap(this_session->font_width, this_session->font_height, 1, 1, caret_bits);
     free(caret_bits);
-    CreateCaret(MudMain, caretbm, 8, 13);
+    CreateCaret(MudMain, caretbm, this_session->font_width, this_session->font_height);
 
     PAUSE_UPDATING = FALSE; // No need to update terminal before it's created.
     this_session->termlist = (TERMBUF**)malloc(this_session->max_buffer * sizeof(*this_session->termlist));  // Create the buffers.
@@ -205,6 +206,12 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
     tbuf->hdc = hdc;
 
     hf = CreateFont(13, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, DEFAULT_QUALITY, 0, "Courier"); // Create font for terminal.
+    GetTextMetrics(hdc, &tm);
+    this_session->font_name = str_dup("Courier");
+    this_session->font_width = 8;
+    this_session->font_height = 13;
+    this_session->font_size = 0;
+
     SetBkColor(hdc, RGB(0, 0, 0)); // Set back color
     SetTextColor(hdc, RGB(0, 128, 0)); // Set font color.
 
@@ -271,6 +278,8 @@ int WINAPI WinMain(HINSTANCE hThisInstance,
         give_term_debug("Sizeof: %ld, Other size: %ld",
                         this_session->max_buffer * sizeof(*this_session->termlist), this_session->max_buffer * sizeof(unsigned*));
         give_term_debug("Total MAX of command buffer history: %d", MAX_INPUT_HISTORY);
+        give_term_debug("Font Info: Name: %s, width: %d, height: %d", this_session->font_name,
+                        this_session->font_width, this_session->font_height);
 
 #ifndef BioMUD_NANO
         if (this_session->beta_edit == TRUE) // beta editor.
@@ -512,7 +521,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
         //SendMessage(MudStatus, EM_SETEVENTMASK,0,0);
         tbuf->hwnd = hwnd;
 
-        CreateCaret(MudInput, caretbm, 8, 13);
+        CreateCaret(MudInput, caretbm, this_session->font_width, this_session->font_height);
         FormatText(MudInput);
     }
     break;
@@ -556,7 +565,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             SendMessage(CharCountStatic, WM_SETTEXT, strlen(char_count), (LPARAM)(LPCSTR)char_count);
 
             terminal_resize();
-            CreateCaret(MudInput, caretbm, 8, 13);
+            CreateCaret(MudInput, caretbm, this_session->font_width, this_session->font_height);
         }
 
         break;
@@ -575,6 +584,7 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 
             break;
         case ID_EDIT_FIND:
+            enum_fonts();
             break;
 
         case ID_EDIT_FIND_NEXT:
@@ -825,8 +835,8 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
 
         selecting = TRUE;
 
-        x = x / 13;
-        y = (y - 8) / 8;
+        x = x / this_session->font_height;
+        y = (y - this_session->font_width) / this_session->font_width;
 
         //GiveError(pfunc_get_line_text(get_x(x)),0);
 
@@ -884,8 +894,8 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             y = LOWORD(lParam);
             x = HIWORD(lParam);
 
-            x = x / 13;
-            y = (y) / 8;
+            x = x / this_session->font_height;
+            y = (y) / this_session->font_width;
             selection->lstop = get_x(x);
             selection->cstop = y;
 
@@ -903,10 +913,10 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
             y = LOWORD(lParam);
             x = HIWORD(lParam);
 
-            pos.x = x / 13;
-            pos.y = y / 8;
-            sprintf(buf, "(%-5lu) row(x): %-3d(%04d), col(y): %-3d(%04d) %-12s", bufcount, (x) / 13, x, (y) / 8, y, (wParam & (MK_LBUTTON | !MK_SHIFT)) ? "LBUTTON_DOWN" : (wParam & (MK_RBUTTON | !MK_SHIFT)) ? "RBUTTON_DOWN" : (wParam & (MK_MBUTTON | !MK_SHIFT)) ? "MBUTTON_DOWN" : "");
-            tbuf->y_end = rows * 13 - 15;
+            pos.x = x / this_session->font_height;
+            pos.y = y / this_session->font_width;
+            sprintf(buf, "(%-5lu) row(x): %-3d(%04d), col(y): %-3d(%04d) %-12s", bufcount, (x) / this_session->font_height, x, (y) / this_session->font_width, y, (wParam & (MK_LBUTTON | !MK_SHIFT)) ? "LBUTTON_DOWN" : (wParam & (MK_RBUTTON | !MK_SHIFT)) ? "RBUTTON_DOWN" : (wParam & (MK_MBUTTON | !MK_SHIFT)) ? "MBUTTON_DOWN" : "");
+            tbuf->y_end = rows * this_session->font_height - 15;
             tbuf->x_end = cols * 4 - 50;
 
             FlushBuffer(buf, RED, TRUE_BLACK, TRUE);
@@ -922,8 +932,8 @@ LRESULT APIENTRY WindowProcedure(HWND hwnd, UINT message, WPARAM wParam, LPARAM 
         y = LOWORD(lParam);
         x = HIWORD(lParam);
 
-        x = x / 13;
-        y = (y - 8) / 8;
+        x = x / this_session->font_height;
+        y = (y - this_session->font_width) / this_session->font_width;
 
         selection->cstop = y;
     }
@@ -1490,14 +1500,14 @@ void show_term_tracking(void)
         {
             sprintf(tracking, "Tracking: Line:%d-%d (of %lu)", viewing - rows, viewing, bufcount);
         }
-        tbuf->x_end = (cols * 8) - (strlen(tracking) * 8);
+        tbuf->x_end = (cols * this_session->font_width) - (strlen(tracking) * this_session->font_width);
         tbuf->y_end = 0;
         FlushBuffer(tracking, TRUE_BLACK, YELLOW, TRUE);
     }
     else
     {
         sprintf(tracking, "Tracking: Bottom of page");
-        tbuf->x_end = (cols * 8) - (strlen(tracking) * 8);
+        tbuf->x_end = (cols * this_session->font_width) - (strlen(tracking) * this_session->font_width);
         tbuf->y_end = 0;
         FlushBuffer(tracking, TRUE_BLACK, YELLOW, TRUE);
     }

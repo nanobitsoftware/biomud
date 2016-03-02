@@ -2039,7 +2039,7 @@ void handle_input(char* in)
                 strcat(buff2, "\n");
                 ParseLines(str_dup(buff2));
             }
-            tbuf->y_end += 13;
+            tbuf->y_end += this_session->font_height;
             tbuf->x_end = 0;
             pbuf[0] = '\0';
             buff4[0] = '\0';
@@ -2145,7 +2145,7 @@ void handle_input(char* in)
                 break;
             }
         }
-        tbuf->y_end += 13;
+        tbuf->y_end += this_session->font_height;
         tbuf->x_end = 0;
         buffer[0] = '\0';
         free(command);
