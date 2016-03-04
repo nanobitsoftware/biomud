@@ -1022,7 +1022,7 @@ void import_file(char* file)
     start = GetTickCount();
     nasty = TRUE;
     totals = 0;
-    testing_window = create_status_window(MudMain, NULL, 1, 18);
+    testing_window = create_status_window(MudMain, NULL, 1, this_session->font_height + 5);
     total_sent = 0;
 
     while ((ret = read_string(buf, fp, 1024)) > -1)

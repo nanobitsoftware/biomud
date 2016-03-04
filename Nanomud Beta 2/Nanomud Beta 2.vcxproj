@@ -36,6 +36,7 @@
     <ClCompile Include="..\src\editor.c" />
     <ClCompile Include="..\src\hash.c" />
     <ClCompile Include="..\src\history.c" />
+    <ClCompile Include="..\src\hosts_gui.c" />
     <ClCompile Include="..\src\IOstuff.c" />
     <ClCompile Include="..\src\keyboard.c" />
     <ClCompile Include="..\src\logwin.c" />

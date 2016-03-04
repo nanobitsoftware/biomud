@@ -87,11 +87,11 @@ void output_status_window(char* msg, HWND* status_window)
 
     GetClientRect((HWND)status_window, &r);
 
-    if (len > ((r.right - r.left) / 8))
+    if (len > ((r.right - r.left) / this_session->font_width))
     {
         InvalidateRect((HWND)status_window, NULL, TRUE);
         ShowWindow((HWND)status_window, SW_HIDE);
-        MoveWindow((HWND)status_window, orig_x - (((len)* 8) / 2), orig_y, ((len + 1) * 8), orig_z, TRUE);
+        MoveWindow((HWND)status_window, orig_x - (((len)* this_session->font_width) / 2), orig_y, ((len + 1) * this_session->font_width), orig_z, TRUE);
         ShowWindow((HWND)status_window, SW_SHOW);
     }
     hdc = GetDC((HWND)status_window);

@@ -2114,6 +2114,11 @@ void terminal_resize()
     rows -= 1;
     tbuf->y_end = tbuf->y_start = tbuf->x_end = tbuf->x_start = 0;
     wwrap = GetWindowWrap(MudMain);
+    if (TERM_READY)
+    {
+        give_term_info("Setting terminal wrap to %d columns.", wwrap);
+    }
+    this_session->char_wrap = wwrap;
     update_scroll();
     get_scroll_pos();
     update_term();

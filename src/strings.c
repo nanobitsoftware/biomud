@@ -753,7 +753,7 @@ void enum_fonts(void)
 
     //GetObject(g_hfFont, sizeof(LOGFONT), &lf);
 
-    cf.Flags = (CF_FIXEDPITCHONLY | CF_FORCEFONTEXIST | CF_INITTOLOGFONTSTRUCT | CF_SCREENFONTS); // Lots of flags, but we're kinda picky.
+    cf.Flags = (CF_FIXEDPITCHONLY | CF_FORCEFONTEXIST | CF_INITTOLOGFONTSTRUCT | CF_SCREENFONTS | CF_NOOEMFONTS); // Lots of flags, but we're kinda picky.
 
     cf.hwndOwner = hwnd;
     cf.lpLogFont = &lf;
@@ -813,6 +813,7 @@ void enum_fonts(void)
             this_session->font_width = ret;
             this_session->font_height = cf.iPointSize / 10;
             this_session->font_size = cf.iPointSize;
+            give_term_error("%d:%d", ret, cf.iPointSize / 10);
             InvalidateRect(MudMain, NULL, TRUE);
             terminal_resize();
             curdis = 0;

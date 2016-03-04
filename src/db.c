@@ -71,6 +71,8 @@ unsigned long int SQL_THROTTLE;
 char BioMUD_Config[2048] = "CREATE TABLE IF NOT EXISTS biomud_config (config TEXT PRIMARY KEY,"
                            "data TEXT);";
 char BioMUD_Sessions[] = "";
+char BioMUD_Hosts[] = "CREATE TABLE IF NOT EXISTS biomud_hosts (idx INTEGER PRIMARY KEY AUTOINCREMENT, enabled INTEGER,"
+                      "hostip TEXT, hostname TEXT, hostport INTEGER, desc TEXT, loginstr TEXT);";
 
 /* I am going to use my timed buffer teqnique I came up with for
  DSL. This seems to work well with hundreds of concurrent DB reads
@@ -84,10 +86,10 @@ struct timed_buffer
     time_t      timestamp; // When was this buffer added.
 };
 
-void run_tbufs(void);
-void flush_db(void);
-void free_timedbuf(TIMED_BUF* buf);
-TIMED_BUF* new_timedbuf(void);
+void run_tbufs( void );
+void flush_db( void );
+void free_timedbuf( TIMED_BUF* buf );
+TIMED_BUF* new_timedbuf( void );
 
 /* init_db(): Initialize the sqlite3 database for the mudclient.
  Will create all the tables, if not already made and set up the
@@ -99,13 +101,13 @@ TIMED_BUF* new_timedbuf(void);
  Returns TRUE on success (should be ever time) and FALSE on failure.
  */
 
-bool init_db(void)
+bool init_db( void )
 {
     DB_INIT = DB_OPENED = DB_BLOCK = FALSE; // Set them to default. No matter what.
 
-    if ((sqlite3_open(DB_FILE, &db)))   // If we receive a non null, we failed. Odd way to error out.
+    if (( sqlite3_open( DB_FILE, &db ) ))   // If we receive a non null, we failed. Odd way to error out.
     {
-        GiveError("Database failed to open. Ignoring database requests.", FALSE);
+        GiveError( "Database failed to open. Ignoring database requests.", FALSE );
         return FALSE;
     }
     // We opened? Awesome.
@@ -117,21 +119,25 @@ bool init_db(void)
     SQL_THROTTLE = 250;
 
     /* Let's create the tables, if they do not exist.*/
-    if ((sqlite3_exec(db, BioMUD_Config, 0, 0, 0)))
+    if (( sqlite3_exec( db, BioMUD_Config, 0, 0, 0 ) ))
     {
-        give_term_error("Failed to create BioMUD Config database table.");
+        give_term_error( "Failed to create BioMUD Config database table." );
     }
-    if ((sqlite3_exec(db, BioMUD_Sessions, 0, 0, 0)))
+    if (( sqlite3_exec( db, BioMUD_Sessions, 0, 0, 0 ) ))
     {
-        give_term_error("Failed to create BioMUD session database table.");
+        give_term_error( "Failed to create BioMUD session database table." );
+    }
+    if (( sqlite3_exec( db, BioMUD_Hosts, 0, 0, 0 ) ))
+    {
+        GiveError( "Failed to create BioMUD hosts database table.", FALSE );
     }
     // Let's close the DB and reopen it incase of error.
-    sqlite3_close(db); // Close it.
+    sqlite3_close( db ); // Close it.
     // Let's reopen it now.
-    if ((sqlite3_open(DB_FILE, &db)))   // If we receive a non null, we failed. Odd way to error out.
+    if (( sqlite3_open( DB_FILE, &db ) ))   // If we receive a non null, we failed. Odd way to error out.
     {
         DB_INIT = DB_OPENED = FALSE;
-        GiveError("Database failed to open. Ignoring database requests.", FALSE);
+        GiveError( "Database failed to open. Ignoring database requests.", FALSE );
         return FALSE;
     }
 
@@ -140,7 +146,7 @@ bool init_db(void)
 }
 
 /* close_db(): Closes the database. returns nothing. */
-void close_db(void)
+void close_db( void )
 {
     if (DB_OPENED == FALSE)
     {
@@ -150,12 +156,12 @@ void close_db(void)
     {
         return;
     }
-    sqlite3_close(db); // Close it.
+    sqlite3_close( db ); // Close it.
 }
 
 /* new_timebuf(): Create a new timed buffer for sql transactions.*/
 
-TIMED_BUF* new_timedbuf(void)
+TIMED_BUF* new_timedbuf( void )
 {
     TIMED_BUF* temp;
 
@@ -164,11 +170,11 @@ TIMED_BUF* new_timedbuf(void)
         return NULL;    // Don't work if we're off.
     }
 
-    temp = malloc(sizeof(*temp)); // Allocate it
+    temp = malloc( sizeof( *temp ) ); // Allocate it
 
     if (!temp)
     {
-        give_term_error("Unable to create, or allocate, a new timed buffer.", 0);
+        give_term_error( "Unable to create, or allocate, a new timed buffer.", 0 );
         return NULL;
     }
 
@@ -197,7 +203,7 @@ TIMED_BUF* new_timedbuf(void)
 /* free_timedbuf(tbuf): Free's an allocated time buffer. Does not return
 anything and fails gracefully if needed.*/
 
-void free_timedbuf(TIMED_BUF* buf)
+void free_timedbuf( TIMED_BUF* buf )
 {
     TIMED_BUF* temp;
 
@@ -208,7 +214,7 @@ void free_timedbuf(TIMED_BUF* buf)
 
     if (buf->buffer)
     {
-        free(buf->buffer);
+        free( buf->buffer );
         buf->buffer = NULL;
     }
 
@@ -253,14 +259,14 @@ void free_timedbuf(TIMED_BUF* buf)
 
     buf->next = NULL;
 
-    free(buf);
+    free( buf );
 
     return;
 }
 
 /* flush_db(): Flushes all buffered transactions to the db disk file in case
  of instant need. */
-void flush_db(void)
+void flush_db( void )
 {
     if (!DB_INIT || !DB_OPENED)
     {
@@ -283,7 +289,7 @@ void flush_db(void)
  to work well, even at 1million+ transactions per day.
  */
 
-void run_tbufs(void)
+void run_tbufs( void )
 {
     TIMED_BUF* temp;
     TIMED_BUF* tnext;
@@ -300,7 +306,7 @@ void run_tbufs(void)
         return;    // If the DB is not working, don't do anything.
     }
 
-    sprintf(buf, "BEGIN;\n"); // Set the begin comment.
+    sprintf( buf, "BEGIN;\n" ); // Set the begin comment.
 
     for (temp = tbuf_list; temp; temp = tnext)
     {
@@ -309,41 +315,99 @@ void run_tbufs(void)
         total += 1;
         transcount++;
         found_tbuf = TRUE;
-        if (strlen(buf) + strlen(temp->buffer) > ((MSL * 4) - 9)) // The -9 is for extra space for a commit. Avoid buffer over runs.
+        if (strlen( buf ) + strlen( temp->buffer ) > ( ( MSL * 4 ) - 9 )) // The -9 is for extra space for a commit. Avoid buffer over runs.
         {
             error = NULL;
-            strcat(buf, "COMMIT;\n"); // Add commit to statement.
-            if ((sqlite3_exec(db, buf, 0, 0, &error)))
+            strcat( buf, "COMMIT;\n" ); // Add commit to statement.
+            if (( sqlite3_exec( db, buf, 0, 0, &error ) ))
             {
-                give_term_error("Sqlite3_exec failed: ", 0);
+                give_term_error( "Sqlite3_exec failed: ", 0 );
             }
             if (error)
             {
-                give_term_error(error);
-                sqlite3_free(error);
+                give_term_error( error );
+                sqlite3_free( error );
             }
 
             buf[0] = '\0';
 
-            strcat(buf, "BEGIN;\n");
+            strcat( buf, "BEGIN;\n" );
         }
 
-        strcat(buf, temp->buffer);
+        strcat( buf, temp->buffer );
 
-        free_timedbuf(temp);
+        free_timedbuf( temp );
 
         if (buf[0] != '\0' && found_tbuf == TRUE)
         {
-            strcat(buf, "COMMIT;\n");
+            strcat( buf, "COMMIT;\n" );
             error = NULL;
-            sqlite3_exec(db, buf, 0, 0, &error);
+            sqlite3_exec( db, buf, 0, 0, &error );
 
             if (error)
             {
-                give_term_error(error);
-                sqlite3_free(error);
+                give_term_error( error );
+                sqlite3_free( error );
             }
         }
         buf[0] = '\0';
     }
+}
+
+/* DB_add_host: Adds a host entry in to the database. If IDX is -1, then it won't care about index. Else,
+   it will see if idx is there or not. This is specifically so I can add a default entry for DSL.
+   Returns FALSE if it failed to enter, or exists, TRUE if it is successful.
+   This function will bypass the tbufs and send directly to the database.
+   If 'quiet' is set, no logs or error messages will be given out.
+   */
+
+bool DB_add_host( int idx, char* hostip, char* hostname, char* desc,
+                  char* login_str, int port, bool enabled, bool quiet )
+{
+    char sql[MAX_STRING_LENGTH * 5]; // For sql statement.
+    char* error; // For sql error.
+
+    if (!hostip || !hostname || port <= 0 || port > 65534)
+    {
+        give_term_error( "Unable to add host to the database." );
+        return FALSE; // We need this info, at the very least. We should be checking before this call, so we should never get here.
+    }
+    /*
+     "CREATE TABLE IF NOT EXISTS biomud_hosts (idx INTEGER AS PRIMARY KEY, enabled"
+                      "INTEGER, hostip TEXT, hostname TEXT, hostport INTEGER, desc TEXT, loginstr TEXT); ";
+
+    */
+    if (idx != -1)
+    {
+        sprintf( sql, "INSERT INTO biomud_hosts (idx, enabled, hostip, hostname, hostport, desc, loginstr)"
+                 "VALUES (%d, %d, '%s', '%s', %d, '%s', '%s');\n",
+                 idx, enabled, hostip, hostname, port, desc, login_str );
+    }
+    else
+    {
+        sprintf( sql, "INSERT INTO biomud_hosts (enabled, hostip, hostname, hostport, desc, loginstr)"
+                 "VALUES (%d, '%s', '%s', %d, '%s', '%s');\n",
+                 enabled, hostip, hostname, port, desc, login_str );
+    }
+
+    if (( sqlite3_exec( db, sql, 0, 0, &error ) ))
+    {
+        if (!quiet)
+        {
+            give_term_error( "Sqlite3 database for BioMUD has failed... ", 0 );
+        }
+    }
+    if (error)
+    {
+        if (!quiet)
+        {
+            give_term_error( "The BioMUD Database has returned an error. Error code: %s", error );
+            sqlite3_free( error );
+            return FALSE;
+        }
+    }
+    give_term_debug( "Added a host to the BioMUD Database. HostIP: %s, HostName: %s, Description: \"%s\", Login String: \"%s\", Port: %d, Enabled: %s",
+                     hostip, hostname, desc, login_str, port, enabled ? "Yes" : "No" );
+
+    return TRUE;
 }
