@@ -42,7 +42,7 @@
 #include <malloc.h>
 #include "BioMUD.h"
 #include <commctrl.h>
-
+#include "sqlite3\sqlite3.h" // We need this.
 #include "nwc_lib/NWC.h"
 
 /* This file will have all the gui and related code to take care of host
@@ -58,25 +58,30 @@ creation, editing, deleting, etc.
 #define ID_LIST_HOSTS 2000
 #define ID_BTN_OK     2001
 #define ID_BTN_CANCEL 2002
-#define ID_BTN_EDIT   2003
+#define ID_BTN_REFRESH 2003
 #define ID_BTN_DEL    2004
 #define ID_BTN_ADD    2005
 #define ID_BTN_CHK    2006
 #define ID_CHK_ENABLE 2007
+#define ID_BTN_RESET  2008
+#define ID_BTN_NEW    2009
 
 // Hwnds for elements.
 HWND        HostWindow;
 NWC_PARENT* host_window;
 // Prototypes
+LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam );
 
 // Globals
 
 #define HOST_WIDTH 800         // Width of host window for math later
 #define HOST_HEIGHT 600        // Height of host window
 #define BTN_WIDTH 60           // Width of buttons
-#define BTN_HEIGHT 20          // Height of buttons
+#define BTN_HEIGHT 25          // Height of buttons
 #define HOSTLEN 1024           // 1024 chars for math and stuff.
 #define LOGINLEN (HOSTLEN * 2) // For login string length.
+
+extern sqlite3* db;
 
 unsigned int cur_idx;          // Current view of host. This will be the idx in the database, so we can write to/from.
 
@@ -100,6 +105,56 @@ void init_hosts( void )
     host_window = NULL;
     cur_idx = 0;
 }
+
+void populate_hosts( void )
+{
+    char sql[MAX_STRING_LENGTH];
+    char host[MAX_STRING_LENGTH];
+    char hostip[MAX_STRING_LENGTH];
+    char hostport[MAX_STRING_LENGTH];
+    char id[MAX_STRING_LENGTH];
+    char strhost[MAX_STRING_LENGTH];
+    char** data;
+    sqlite3_stmt* stmt;
+
+    int sr;
+
+    sql[0] = '\0';
+    host[0] = '\0';
+    hostip[0] = '\0';
+    hostport[0] = '\0';
+    id[0] = '\0';
+
+    if (!host_window)
+    {
+        return;    // We need the window here.
+    }
+
+    get_control( host_window, "hostlist" )->clist_index = 0; // This looks odd. But it's needed so we can populate the list.
+
+    sprintf( sql, "select hostname, idx, hostip, hostport from biomud_hosts;" );
+
+    sr = sqlite3_prepare( db, sql, -1, &stmt, 0 );
+    data = malloc( sizeof( char** ) * 3 ); // Create a list of chars for the clist_add_data.
+    if (sr == SQLITE_OK)
+    {
+        while (sqlite3_step( stmt ) == SQLITE_ROW)
+        {
+            sprintf( host, "%s", ( char* ) sqlite3_column_text( stmt, 0 ) );
+            sprintf( id, "%s", ( char* ) sqlite3_column_text( stmt, 1 ) );
+            sprintf( hostip, "%s", ( char* ) sqlite3_column_text( stmt, 2 ) );
+            sprintf( hostport, "%s", ( char* ) sqlite3_column_text( stmt, 3 ) );
+
+            sprintf( strhost, "%s:%s", hostip, hostport );
+            data[0] = id;
+            data[1] = host;
+            data[2] = strhost;
+
+            clist_add_data( host_window, "hostlist", data, 3 ); // Add 'er up.
+        }
+    }
+}
+
 /* create_host_gui: Creates the host window and populates it with info, if it exists.*/
 void create_host_gui( void )
 {
@@ -108,4 +163,97 @@ void create_host_gui( void )
         SetFocus( HostWindow ); // If it exists already, do NOT recreate it.
         return;
     }
+
+    /* Let's start creating the window.*/
+    host_window = create_parent( "BioMUD Host Editor" );
+    set_parent_config( host_window, ( HWND ) 0, ( LRESULT* ) host_proc, CW_USEDEFAULT, CW_USEDEFAULT, HOST_WIDTH, HOST_HEIGHT, 0, TRUE, 0,
+                       WS_MINIMIZEBOX );
+    // Let's create the list box, which will be on the left side, top to bottom, half width of the window.
+    AddCList_Parent( host_window, "hostlist", 20, 20, host_window->width / 2, host_window->heigth - 80, 0, ID_LIST_HOSTS,
+                     LBS_HASSTRINGS | LVS_REPORT, TRUE );
+    AddStatic_Parent( host_window, "Name:", host_window->width / 2 + 40, 20, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
+    AddEdit_Parent( host_window, "inputname", host_window->width / 2 + 40, 40, ( host_window->width / 2 ) - 80, 20, 0, 0, 0, TRUE );
+
+    AddStatic_Parent( host_window, "Host / IP:", host_window->width / 2 + 40, 60, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
+    AddEdit_Parent( host_window, "inputip", host_window->width / 2 + 40, 80, ( host_window->width / 2 ) - 80, 20, 0, 0, 0, TRUE );
+
+    AddStatic_Parent( host_window, "Port:", host_window->width / 2 + 40, 100, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
+    AddEdit_Parent( host_window, "inputport", host_window->width / 2 + 40, 120, ( host_window->width / 2 ) - 80, 20, 0, 0, 0, TRUE );
+
+    AddStatic_Parent( host_window, "Descripton:", host_window->width / 2 + 40, 140, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
+    AddEdit_Parent( host_window, "inputdesc", host_window->width / 2 + 40, 160, ( host_window->width / 2 ) - 80, 80, 0, 0, 0, TRUE );
+
+    AddStatic_Parent( host_window, "Connect Command (use ';' to chain commands):", host_window->width / 2 + 40, 260, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
+    AddEdit_Parent( host_window, "inputcmd", host_window->width / 2 + 40, 280, ( host_window->width / 2 ) - 80, 80, 0, 0, 0, TRUE );
+
+    AddButton_Parent( host_window, "Reset", host_window->width / 2 + 40, 400, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_RESET, 0, TRUE );
+    AddButton_Parent( host_window, "Save", host_window->width / 2 + ( BTN_WIDTH + 20 + 40 ), 400, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_OK, 0, TRUE );
+    AddButton_Parent( host_window, "Cancel", host_window->width / 2 + ( BTN_WIDTH * 2 + 80 ), 400, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_CANCEL, 0, TRUE );
+    AddButton_Parent( host_window, "New", host_window->width / 2 + ( BTN_WIDTH * 3 + 100 ), 400, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_NEW, 0, TRUE );
+
+    clist_add_col( host_window, "hostlist", 60, "Index" );
+    clist_add_col( host_window, "hostlist", 60, "Name" );
+    clist_add_col( host_window, "hostlist", ( host_window->width / 2 ) - 120, "Host:Port" );
+
+    get_control( host_window, "hostlist" )->clist_index = 0; // This looks odd. But it's needed so we can populate the list.
+
+    HostWindow = host_window->window_control;
+    ShowWindow( HostWindow, SW_SHOW );
+    populate_hosts();
+}
+
+LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
+{
+    NMHDR* nm;
+    int idx;
+
+    switch (msg)
+    {
+    case WM_NOTIFY:
+    {
+        nm = ( NMHDR* ) lparam;
+        if (nm->code == NM_DBLCLK)
+        {
+            idx = SendMessage( get_control( host_window, "hostlist" )->handle, LVM_GETNEXTITEM, ( WPARAM ) -1, ( LPARAM ) LVNI_SELECTED );
+            if (idx == -1)
+            {
+                return 0;
+            }
+
+            break;
+        }
+        break;
+    }
+    case WM_DESTROY:
+    {
+        if (host_window)
+        {
+            DestroyParent( host_window );
+            host_window = NULL;
+            DestroyWindow( HostWindow );
+            HostWindow = NULL;
+        }
+        SetFocus( MudMain );
+        break;
+    }
+
+    case WM_COMMAND:
+    {
+        switch (LOWORD( wparam ))
+        {
+        case ID_BTN_CANCEL:
+        {
+            DestroyParent( host_window );
+            host_window = NULL;
+            DestroyWindow( HostWindow );
+            HostWindow = NULL;
+            SetFocus( MudMain );
+            return DefWindowProc( hwnd, msg, wparam, lparam );
+        }
+        }
+    }
+    default:
+        break;
+    }
+    return DefWindowProc( hwnd, msg, wparam, lparam );
 }

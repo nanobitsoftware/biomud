@@ -420,7 +420,7 @@ LRESULT APIENTRY WindowProcedure( HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
         hMenu = CreateMenu();
         hSubMenu = CreatePopupMenu();
-        AppendMenu( hSubMenu, MF_STRING | MF_POPUP | MF_GRAYED, ID_FILE_NEW, "&New Connection" );
+        AppendMenu( hSubMenu, MF_STRING | MF_POPUP, ID_FILE_NEW, "&New Connection" );
         AppendMenu( hSubMenu, MF_STRING | MF_POPUP, ID_FILE_CLOSE, "C&lose Connection" );
         AppendMenu( hSubMenu, MF_STRING, ID_FILE_OPEN, "&Connect" );
         AppendMenu( hSubMenu, MF_STRING, ID_FILE_DISCONNECT, "&Disconnect" );
@@ -717,7 +717,7 @@ LRESULT APIENTRY WindowProcedure( HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
         case ID_FILE_NEW:
         {
-            do_term_test();
+            create_host_gui();
         }
         break;
 
