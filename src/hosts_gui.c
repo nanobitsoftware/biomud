@@ -65,6 +65,12 @@ creation, editing, deleting, etc.
 #define ID_CHK_ENABLE 2007
 #define ID_BTN_RESET  2008
 #define ID_BTN_NEW    2009
+#define ID_INPUT_NAME 3000
+#define ID_INPUT_HOST 3001
+#define ID_INPUT_PORT 3002
+#define ID_INPUT_DESC 3003
+#define ID_INPUT_COMM 3004
+#define ID_HELP_TIP   3005
 
 // Hwnds for elements.
 HWND        HostWindow;
@@ -80,6 +86,7 @@ LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam );
 #define BTN_HEIGHT 25          // Height of buttons
 #define HOSTLEN 1024           // 1024 chars for math and stuff.
 #define LOGINLEN (HOSTLEN * 2) // For login string length.
+HWND name, host, port, desc, command, enabled;
 
 extern sqlite3* db;
 
@@ -167,39 +174,149 @@ void create_host_gui( void )
     /* Let's start creating the window.*/
     host_window = create_parent( "BioMUD Host Editor" );
     set_parent_config( host_window, ( HWND ) 0, ( LRESULT* ) host_proc, CW_USEDEFAULT, CW_USEDEFAULT, HOST_WIDTH, HOST_HEIGHT, 0, TRUE, 0,
-                       WS_MINIMIZEBOX );
+                       WS_TABSTOP | DS_3DLOOK | WS_SYSMENU | WS_MINIMIZEBOX | WS_CLIPCHILDREN | WS_MAXIMIZEBOX | WS_SIZEBOX );
     // Let's create the list box, which will be on the left side, top to bottom, half width of the window.
     AddCList_Parent( host_window, "hostlist", 20, 20, host_window->width / 2, host_window->heigth - 80, 0, ID_LIST_HOSTS,
                      LBS_HASSTRINGS | LVS_REPORT, TRUE );
-    AddStatic_Parent( host_window, "Name:", host_window->width / 2 + 40, 20, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
-    AddEdit_Parent( host_window, "inputname", host_window->width / 2 + 40, 40, ( host_window->width / 2 ) - 80, 20, 0, 0, 0, TRUE );
+    // Name input
+    AddStatic_Parent( host_window, "Name:", host_window->width / 2 + 40, 20,
+                      ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
+    AddEdit_Parent( host_window, "inputname", host_window->width / 2 + 40, 40,
+                    ( host_window->width / 2 ) - 80, 20, 0, ID_INPUT_NAME, 0, TRUE );
+    // Host / IP Input
+    AddStatic_Parent( host_window, "Host / IP:", host_window->width / 2 + 40, 60,
+                      ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
+    AddEdit_Parent( host_window, "inputip", host_window->width / 2 + 40, 80,
+                    ( host_window->width / 2 ) - 80, 20, 0, ID_INPUT_HOST, 0, TRUE );
+    // Port input
+    AddStatic_Parent( host_window, "Port:", host_window->width / 2 + 40, 100,
+                      ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
+    AddEdit_Parent( host_window, "inputport", host_window->width / 2 + 40, 120,
+                    ( host_window->width / 2 ) - 80, 20, 0, ID_INPUT_PORT, 0, TRUE );
+    // Description Input
+    AddStatic_Parent( host_window, "Descripton:", host_window->width / 2 + 40, 140,
+                      ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
+    AddEdit_Parent( host_window, "inputdesc", host_window->width / 2 + 40, 160,
+                    ( host_window->width / 2 ) - 80, 80, 0, ID_INPUT_DESC, 0, TRUE );
+    // Connect Command input
+    AddStatic_Parent( host_window, "Connect Command (use ';' to chain commands):",
+                      host_window->width / 2 + 40, 260, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
+    AddEdit_Parent( host_window, "inputcmd", host_window->width / 2 + 40, 280,
+                    ( host_window->width / 2 ) - 80, 80, 0, ID_INPUT_COMM, 0, TRUE );
 
-    AddStatic_Parent( host_window, "Host / IP:", host_window->width / 2 + 40, 60, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
-    AddEdit_Parent( host_window, "inputip", host_window->width / 2 + 40, 80, ( host_window->width / 2 ) - 80, 20, 0, 0, 0, TRUE );
+    AddButton_Parent( host_window, "Reset", host_window->width / 2 + 40, 380,
+                      BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_RESET, 0, TRUE );
+    AddButton_Parent( host_window, "New", host_window->width / 2 + ( BTN_WIDTH * 1 + 60 ),
+                      380, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_NEW, 0, TRUE );
+    AddButton_Parent( host_window, "Save", host_window->width / 2 + ( BTN_WIDTH * 2 + 100 ),
+                      380, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_OK, 0, TRUE );
+    AddButton_Parent( host_window, "Cancel", host_window->width / 2 + ( BTN_WIDTH * 3 + 120 ),
+                      380, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_CANCEL, 0, TRUE );
 
-    AddStatic_Parent( host_window, "Port:", host_window->width / 2 + 40, 100, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
-    AddEdit_Parent( host_window, "inputport", host_window->width / 2 + 40, 120, ( host_window->width / 2 ) - 80, 20, 0, 0, 0, TRUE );
+    AddStatic_Parent( host_window, "Helpinfo", host_window->width / 2 + 40, 430,
+                      host_window->width / 2 - 80, host_window->heigth - 490, 0, ID_HELP_TIP, WS_BORDER, TRUE );
 
-    AddStatic_Parent( host_window, "Descripton:", host_window->width / 2 + 40, 140, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
-    AddEdit_Parent( host_window, "inputdesc", host_window->width / 2 + 40, 160, ( host_window->width / 2 ) - 80, 80, 0, 0, 0, TRUE );
+    //Enabled Check mark.
+    AddCheck_Parent( host_window, "Enabled", host_window->width / 2 + 290,
+                     20, BTN_WIDTH + 20, 20, 0, ID_CHK_ENABLE, 0, TRUE );
 
-    AddStatic_Parent( host_window, "Connect Command (use ';' to chain commands):", host_window->width / 2 + 40, 260, ( host_window->width / 2 ) - 20, 20, 0, 0, 0, TRUE );
-    AddEdit_Parent( host_window, "inputcmd", host_window->width / 2 + 40, 280, ( host_window->width / 2 ) - 80, 80, 0, 0, 0, TRUE );
-
-    AddButton_Parent( host_window, "Reset", host_window->width / 2 + 40, 400, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_RESET, 0, TRUE );
-    AddButton_Parent( host_window, "Save", host_window->width / 2 + ( BTN_WIDTH + 20 + 40 ), 400, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_OK, 0, TRUE );
-    AddButton_Parent( host_window, "Cancel", host_window->width / 2 + ( BTN_WIDTH * 2 + 80 ), 400, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_CANCEL, 0, TRUE );
-    AddButton_Parent( host_window, "New", host_window->width / 2 + ( BTN_WIDTH * 3 + 100 ), 400, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_NEW, 0, TRUE );
-
+    // Set up the list control for the database data.
     clist_add_col( host_window, "hostlist", 60, "Index" );
     clist_add_col( host_window, "hostlist", 60, "Name" );
     clist_add_col( host_window, "hostlist", ( host_window->width / 2 ) - 120, "Host:Port" );
 
     get_control( host_window, "hostlist" )->clist_index = 0; // This looks odd. But it's needed so we can populate the list.
 
+    // Set up the HWND for later usage.
     HostWindow = host_window->window_control;
+    if (!( get_control( host_window, "inputname" ) ) ||
+            !( get_control( host_window, "inputip" ) ) ||
+            !( get_control( host_window, "inputport" ) ) ||
+            !( get_control( host_window, "inputdesc" ) ) ||
+            !( get_control( host_window, "inputcmd" ) ))
+    {
+        give_term_error( "Help tip for the host window failed to generate a tip." );
+    }
+    else
+    {
+        name = get_control( host_window, "inputname" )->handle;
+        host = get_control( host_window, "inputip" )->handle;
+        port = get_control( host_window, "inputport" )->handle;
+        desc = get_control( host_window, "inputdesc" )->handle;
+        command = get_control( host_window, "inputcmd" )->handle;
+        enabled = get_control( host_window, "Enabled" )->handle;
+    }
+    CTRL_ChangeFont( host_window, "Enabled", "Courier" );
+    populate_hosts(); // Populate the list control with database data.
     ShowWindow( HostWindow, SW_SHOW );
-    populate_hosts();
+    SetFocus( name ); // we need to start on 'name' when starting out.
+}
+
+/* host_Set_tip: Will put some text in the helpinfo static control, telling the user what each box is for.*/
+void host_set_tip( void )
+{
+    HWND focus; // Which control has the focus?
+
+    char default_help[] = "Please select an input box to receive a helpful tip "
+                          "on that particular box. This box will change as the focus changes.";
+
+    if (!IsWindow( HostWindow ))
+    {
+        return;    // We need this window to survive.
+    }
+    // Check to make sure the controls exist.
+
+    focus = GetFocus();
+
+    if (!focus)
+    {
+        // Set the default text.
+        CTRL_SetText( host_window, "Helpinfo", default_help );
+        return;
+    }
+    // Now, let's compare them all and put a focus tip depending on what is what. Fall through on the else.
+    if (focus == name)
+    {
+        CTRL_SetText( host_window, "Helpinfo", "Please give this host a 'name' - "
+                      "This name has nothing to do with the MUD itself, but rather is a unique identifier for the server. Each server must have a unique name." );
+        return;
+    }
+    else if (focus == host)
+    {
+        CTRL_SetText( host_window, "Helpinfo", "The 'host' is the physical address, or IP, of the server "
+                      "you wish to connect to. Such as 'dsl-mud.org' or '123.3.22.91' as an IP. Please make sure this is a valid address." );
+        return;
+    }
+    else if (focus == port)
+    {
+        CTRL_SetText( host_window, "Helpinfo", "Please enter a valid port number for the game server you wish to enter here. "
+                      "Valid port numbers are crucial for proper connections to the game server." );
+        return;
+    }
+    else if (focus == desc)
+    {
+        CTRL_SetText( host_window, "Helpinfo", "You may utilize this space for a short description of the "
+                      "game server, such as who you are or anything else you wish to remember. This section is completely optional." );
+        return;
+    }
+    else if (focus == command)
+    {
+        CTRL_SetText( host_window, "Helpinfo", "This is a special command that is sent to the game upon a "
+                      "successful connection. Chained command are possible here, such as 'y;p;bioteq;<password>' to say 'yes' to color and log in as Bioteq." );
+        return;
+    }
+    else if (focus == enabled)
+    {
+        CTRL_SetText( host_window, "Helpinfo", "If this is checked, the host is available to be connected to. However, if it is not checked, then you will"
+                      " not be able to connect to this server." );
+        return;
+    }
+    else
+    {
+        // Set the default text.
+        CTRL_SetText( host_window, "Helpinfo", default_help );
+        return;
+    }
 }
 
 LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
@@ -209,6 +326,10 @@ LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
 
     switch (msg)
     {
+    case WM_SETCURSOR:
+
+        host_set_tip();
+        break;
     case WM_NOTIFY:
     {
         nm = ( NMHDR* ) lparam;
@@ -224,6 +345,7 @@ LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
         }
         break;
     }
+
     case WM_DESTROY:
     {
         if (host_window)
@@ -241,6 +363,10 @@ LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
     {
         switch (LOWORD( wparam ))
         {
+            if (HIWORD( wparam ) == WM_SETFOCUS)
+            {
+                host_set_tip();
+            }
         case ID_BTN_CANCEL:
         {
             DestroyParent( host_window );
@@ -249,6 +375,16 @@ LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
             HostWindow = NULL;
             SetFocus( MudMain );
             return DefWindowProc( hwnd, msg, wparam, lparam );
+        }
+        case ID_BTN_RESET:
+        {
+            // Reset all the data in the fields.
+            CTRL_SetText( host_window, "inputname", "" );
+            CTRL_SetText( host_window, "inputip", "" );
+            CTRL_SetText( host_window, "inputdesc", "" );
+            CTRL_SetText( host_window, "inputcmd", "" );
+            CTRL_SetText( host_window, "inputport", "" );
+            break;
         }
         }
     }

@@ -390,10 +390,10 @@
     <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Nanomud Beta 21.rc" />
+    <Image Include="..\src\biomud_icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\src\biomud_icon.ico" />
+    <ResourceCompile Include="BioMUD Beta 4.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6CB303D3-EBEA-48F2-BB04-A512F98E1DA7}</ProjectGuid>

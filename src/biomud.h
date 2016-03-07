@@ -877,3 +877,5 @@ void enum_fonts( void );
 bool DB_add_host( int idx, char* hostip, char* hostname, char* desc, char* login_str, int port, bool enabled, bool quiet );
 void init_hosts( void );
 void create_host_gui( void );
+LRESULT APIENTRY id_aboutproc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
+void host_set_tip( void );

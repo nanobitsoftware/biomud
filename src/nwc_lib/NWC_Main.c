@@ -264,8 +264,8 @@ BOOL set_parent_config( NWC_PARENT* p_window, HWND hwnd, LRESULT* proc, int x, i
         p_window->on_top = on_top;
     }
 
-    p_window->window_options = window_options | WS_EX_CLIENTEDGE;
-    p_window->style_options = style_options | WS_CAPTION | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_SYSMENU | DS_SETFONT;
+    p_window->window_options = window_options;// | WS_EX_CLIENTEDGE;
+    p_window->style_options = style_options | WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU | DS_SETFONT;
     p_window->x = x == CW_USEDEFAULT ? CW_USEDEFAULT : x < 0 ? 0 : x;
     p_window->y = y == CW_USEDEFAULT ? CW_USEDEFAULT : y < 0 ? 0 : y;
 
@@ -627,7 +627,7 @@ BOOL AddButton_Parent( NWC_PARENT* p_window, char* name, int x, int y, int width
     ctrl->y = y;
     ctrl->width = width;
     ctrl->height = height;
-    ctrl->style |= style | BS_TEXT | WS_CHILD | BS_BITMAP;
+    ctrl->style |= style | BS_TEXT | WS_CHILD | BS_BITMAP | WS_TABSTOP;
     ctrl->handle = handle;
     ctrl->parent = p_window;
     ctrl->type = BUTTON;
@@ -2007,7 +2007,7 @@ BOOL CenterWindow( HWND hwnd, HWND hwndParent )
     {
         y = 0;
     }
-    if (x + width  > screenwidth)
+    if (x + width > screenwidth)
     {
         x = screenwidth - width;
     }

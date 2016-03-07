@@ -54,6 +54,7 @@
 #include "nwc_lib/NWC.h"
 #include "BioMUD-plugin-api.h"
 #include "BioMUD-plugins.h"
+//#include "../Nanomud Beta 2/resource1.h"
 
 #define COLOR_LTGRAY 0x00808080
 #define TESTLIST 4001
@@ -307,8 +308,11 @@ int WINAPI WinMain( HINSTANCE hThisInstance,
 
     while (GetMessage( &messages, NULL, 0, 0 ))
     {
-        TranslateMessage( &messages ); // Main message loops.
-        DispatchMessage( &messages );
+        if (!IsDialogMessage( MudMain, &messages ))
+        {
+            TranslateMessage( &messages ); // Main message loops.
+            DispatchMessage( &messages );
+        }
     }
 
     return messages.wParam;
@@ -735,6 +739,7 @@ LRESULT APIENTRY WindowProcedure( HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
         case ID_HELP_HELP:
         {
+            break;
             if (IS_IN_DEBUGGING_MODE)
             {
                 FreeTerm();
@@ -752,6 +757,8 @@ LRESULT APIENTRY WindowProcedure( HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
         case ID_HELP_CREDITS:
             CreateCreditBox();
+            //DialogBoxParam( GetModuleHandle( 0 ), MAKEINTRESOURCE( IDD_ABOUT ), MudMain, id_aboutproc, 0 );
+
             break;
         default:
             break;
