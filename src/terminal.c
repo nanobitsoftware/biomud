@@ -91,7 +91,7 @@ bool is_scrolling; /* Gonna be tricky doing this, but if they are viewing the ba
 #define ATTR_CLEAR   0x0000D800UL
 
 char str_empty[1];
-u_short in_cksum(u_short* addr, int len);
+u_short in_cksum( u_short* addr, int len );
 int rows, cols;
 size_t bt_size;
 #define TERM_MAX (MAX_TERM_LINE - 10)
@@ -157,26 +157,26 @@ XXX: \033[(0-8);(30-47)m <- Color codes.
 
 CTABLE c_table[] =
 {
-    {RED,0},
-    {BLUE,0},
-    {GREEN,0},
-    {BLACK, 0},
-    {YELLOW,0},
-    {MAGENTA,0},
-    {CYAN,0},
-    {WHITE,0},
-    {C_RED, 0},
-    {C_BLUE,0},
-    {C_GREEN,0},
-    {C_BLACK,0},
-    {C_YELLOW,0},
-    {C_MAGENTA,0},
-    {C_CYAN,0},
-    {C_WHITE,0},
-    {GREY, 0},
-    {TRUE_BLACK,0},
-    {SELECTED,0},
-    {-1,-1}
+    { RED,0 },
+    { BLUE,0 },
+    { GREEN,0 },
+    { BLACK, 0 },
+    { YELLOW,0 },
+    { MAGENTA,0 },
+    { CYAN,0 },
+    { WHITE,0 },
+    { C_RED, 0 },
+    { C_BLUE,0 },
+    { C_GREEN,0 },
+    { C_BLACK,0 },
+    { C_YELLOW,0 },
+    { C_MAGENTA,0 },
+    { C_CYAN,0 },
+    { C_WHITE,0 },
+    { GREY, 0 },
+    { TRUE_BLACK,0 },
+    { SELECTED,0 },
+    { -1,-1 }
 };
 
 /* ret_string: Return the text-string from a term line.
@@ -184,7 +184,7 @@ CTABLE c_table[] =
 * that we mask everything on one line. Therefor, this makes
 * it much simpler just to call to retreive the string. */
 
-char* ret_string(TERMBUF* ter, char str[])
+char* ret_string( TERMBUF* ter, char str[] )
 {
     int i;
     if (!ter)
@@ -198,7 +198,7 @@ char* ret_string(TERMBUF* ter, char str[])
 
     for (i = 0; i <= ter->len; i++)
     {
-        str[i] = (ter->line[i] & CH_MASK) >> CH_SHIFT;
+        str[i] = ( ter->line[i] & CH_MASK ) >> CH_SHIFT;
     }
 
     str[i] = '\0';
@@ -209,29 +209,29 @@ char* ret_string(TERMBUF* ter, char str[])
 * attribute masks were the same. This is no longer used, currently
 * but may be used later in the future, hence keeping it. */
 
-BOOL is_same(unsigned long a, unsigned long b)
+BOOL is_same( unsigned long a, unsigned long b )
 {
-    if (!(a & ATBOLD) && (b & ATBOLD))
+    if (!( a & ATBOLD ) && ( b & ATBOLD ))
     {
         return FALSE;
     }
-    if (!(a & ATBLINK) && (b & ATBLINK))
+    if (!( a & ATBLINK ) && ( b & ATBLINK ))
     {
         return FALSE;
     }
-    if (!(a & ATREVER) && (b & ATREVER))
+    if (!( a & ATREVER ) && ( b & ATREVER ))
     {
         return FALSE;
     }
-    if (!(a & ATUNDER) && (b & ATUNDER))
+    if (!( a & ATUNDER ) && ( b & ATUNDER ))
     {
         return FALSE;
     }
-    if (((a & FG_MASK) >> FG_SHIFT) != ((b & FG_MASK) >> FG_SHIFT))
+    if (( ( a & FG_MASK ) >> FG_SHIFT ) != ( ( b & FG_MASK ) >> FG_SHIFT ))
     {
         return FALSE;
     }
-    if (((a & BG_MASK) >> BG_SHIFT) != ((b & BG_MASK) >> BG_SHIFT))
+    if (( ( a & BG_MASK ) >> BG_SHIFT ) != ( ( b & BG_MASK ) >> BG_SHIFT ))
     {
         return FALSE;
     }
@@ -245,7 +245,7 @@ BOOL is_same(unsigned long a, unsigned long b)
 * creates all our attribute masks and handles them accordingly.
 */
 
-void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
+void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html )
 {
     char* point;
     char buf2[1024] = "";
@@ -281,14 +281,14 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
     if (ter->processed == TRUE)
     {
         /* This part of parse_ansi is now obsolete. It is now handled in the paint_line
-         * function. This place holder stays for legacy code to function properly.
-         */
+        * function. This place holder stays for legacy code to function properly.
+        */
         if (PAUSE_UPDATING == TRUE)
         {
             return;
         }
 
-        paint_line(ter);
+        paint_line( ter );
 
         if (ter->not_finished == FALSE)
         {
@@ -304,9 +304,9 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
     {
         point = ter->buffer;
     } /* Point is our 'point in memory' pointer that I
-                     * use in just about all my parsing functions.
-                     * So set it to the beginning of the buffer to
-                     * parse. */
+      * use in just about all my parsing functions.
+      * So set it to the beginning of the buffer to
+      * parse. */
     abuf[0] = '\0';
     point = ter->buffer;
 
@@ -330,13 +330,13 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
                 point++;
             }
             i = 0;
-            memset(abuf, 0, 48);
+            memset( abuf, 0, 48 );
 
-            while ((*point != 'm' && *point != 'D') && *point) // Sequence ends with m. We find it.
+            while (( *point != 'm' && *point != 'D' ) && *point) // Sequence ends with m. We find it.
             {
                 *buffer = *point;
                 //strcat(abuf, buffer);
-                strcat_s(abuf, 48, buffer);
+                strcat_s( abuf, 48, buffer );
                 i++;
                 abuf[i] = '\0';
                 point++;
@@ -375,9 +375,9 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
                         abuf[0] = '\0';
                     }
 
-                    if (atoi(sbuf) >= 0)
+                    if (atoi( sbuf ) >= 0)
                     {
-                        c_attr = atoi(sbuf);
+                        c_attr = atoi( sbuf );
                         sbuf[0] = '\0';
 
                         switch (c_attr)
@@ -387,8 +387,8 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
                             c_attr_f = def_attr;
                             c_attr_f &= ~FG_MASK;
                             color = GREY;
-                            c_attr_f |= (color - 30) << FG_SHIFT;
-                            memset(sbuf, 0, sizeof(sbuf));
+                            c_attr_f |= ( color - 30 ) << FG_SHIFT;
+                            memset( sbuf, 0, sizeof( sbuf ) );
                             break;
                         }
                         case 1: // BOLD
@@ -427,9 +427,9 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
                             /* If you don't understand this, then you shouldn't
                             * even be looking. */
                             c_attr_f &= ~FG_MASK;
-                            c_attr_f |= ((c_attr - 30) << FG_SHIFT);
+                            c_attr_f |= ( ( c_attr - 30 ) << FG_SHIFT );
 
-                            if ((c_attr_f & ATBOLD))
+                            if (( c_attr_f & ATBOLD ))
                             {
                                 color = c_attr + 10;
                             }
@@ -457,7 +457,7 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
                             }
 
                             c_attr_f &= ~BG_MASK;
-                            c_attr_f |= ((c_attr - 10) << BG_SHIFT);
+                            c_attr_f |= ( ( c_attr - 10 ) << BG_SHIFT );
 
                             if (had_blink == TRUE)
                             {
@@ -471,7 +471,7 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
                         {
                             c_attr_f &= ~FG_MASK;
                             color = GREY;
-                            c_attr_f |= ((color - 30) << FG_SHIFT);
+                            c_attr_f |= ( ( color - 30 ) << FG_SHIFT );
                             c_attr_f &= ~AT_BLINK;
                             break;
                         }
@@ -495,12 +495,12 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
         case '\t': // TAB
         {
             int bl = 0;
-            bl = 8 - (where % 8);
+            bl = 8 - ( where % 8 );
             //LOG("TAB SPACE: %d",bl);
             for (ts = 0; ts < bl; ts++)
             {
                 c_attr_f &= ~CH_MASK;
-                c_attr_f |= (' ') << CH_SHIFT;
+                c_attr_f |= ( ' ' ) << CH_SHIFT;
                 ter->line[f] = c_attr_f | ATTAB;
                 f++;
                 where++;
@@ -532,16 +532,16 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
         }
 
         /* If, for some reason, we made it through all the state machines
-         * and to here without any type of parsing or bit manipulations,
-         * then we need to set the default bit mask so that everything will
-         * still show uniformly.
-         */
+        * and to here without any type of parsing or bit manipulations,
+        * then we need to set the default bit mask so that everything will
+        * still show uniformly.
+        */
         if (c_attr_f == 0UL)
         {
             c_attr_f &= ~FG_MASK;
 
             color = GREY;
-            c_attr_f |= ((color - 30) << FG_SHIFT);
+            c_attr_f |= ( ( color - 30 ) << FG_SHIFT );
             c_attr_f &= ~AT_BLINK;
         }
 
@@ -549,20 +549,20 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
         *buffer = *point;
         buffer[1] = '\0';
         c_attr_f &= ~CH_MASK;
-        c_attr_f |= (buffer[0]) << CH_SHIFT;
+        c_attr_f |= ( buffer[0] ) << CH_SHIFT;
 
         /* Make sure it has a FG_MASK attr. This is essential.
-         */
-        if (!(c_attr_f & FG_MASK))
+        */
+        if (!( c_attr_f & FG_MASK ))
         {
             c_attr_f &= ~FG_MASK;
             c_attr_f |= 0 << FG_SHIFT;
         }
 
-        if (!(c_attr_f & BG_MASK))
+        if (!( c_attr_f & BG_MASK ))
         {
             c_attr_f &= ~BG_MASK;
-            c_attr_f |= (0 << BG_SHIFT);
+            c_attr_f |= ( 0 << BG_SHIFT );
         }
 
         ter->line[f] = c_attr_f;
@@ -582,26 +582,26 @@ void parse_ansi(/*char *str*/TERMBUF* ter, BOOL is_logging_html)
     //  free (ter->buffer);
     /*  if (ter->buffer != NULL && ter->not_finished == FALSE)
     {
-      //ter->buffer[0] = '\0';
-      free(ter->buffer);
+    //ter->buffer[0] = '\0';
+    free(ter->buffer);
 
-      ter->buffer = NULL;
+    ter->buffer = NULL;
     }
     */
 
     // parse_ansi(ter,0);
-    chop_line(ter);
+    chop_line( ter );
     return;
 }
 
-void find_unused_buffers(void)
+void find_unused_buffers( void )
 {
     /* This function is an internal function that serves no purpose inside the actual client.
-     * It is used periodically throughout the development phase to determine which buffers
-     * are getting used and processed, but not freed after the process of them. This will
-     * iterate through the entire buflist and any that are processed, but still contain
-     * the 'buffer' pointer, it will write them to the log appropriately.
-     */
+    * It is used periodically throughout the development phase to determine which buffers
+    * are getting used and processed, but not freed after the process of them. This will
+    * iterate through the entire buflist and any that are processed, but still contain
+    * the 'buffer' pointer, it will write them to the log appropriately.
+    */
     int i;
 
     for (i = 0; i < bufcount; i++)
@@ -612,16 +612,18 @@ void find_unused_buffers(void)
         }
         if (this_session->termlist[i]->buffer != NULL)
         {
-            LOG("Buffer index  %d still has a valid buffer pointer, but has been processed. It's finished status: %s", i, this_session->termlist[i]->not_finished == TRUE ? "Not finished." : "Finished");
+            //LOG( "Buffer index  %d still has a valid buffer pointer, but has been processed. It's finished status: %s", i, this_session->termlist[i]->not_finished == TRUE ? "Not finished." : "Finished" );
+            free( this_session->termlist[i]->buffer );
+            this_session->termlist[i]->buffer = NULL;
         }
         else
         {
-            LOG("Buffer %d is ok!", i);
+            // LOG( "Buffer %d is ok!", i );
         }
     }
 }
 
-void paint_line(TERMBUF* ter)
+void paint_line( TERMBUF* ter )
 {
     //char pad[2048];
     char* pad;
@@ -652,16 +654,16 @@ void paint_line(TERMBUF* ter)
     /* FIXME: Time stamps do not work well with painting. */
     if (this_session->ShowTimeStamps)
     {
-        sprintf(buf, "-%lu- ", ter->ln);
-        FlushBuffer(buf, WHITE, TRUE_BLACK, FALSE);
+        sprintf( buf, "-%lu- ", ter->ln );
+        FlushBuffer( buf, WHITE, TRUE_BLACK, FALSE );
         buf[0] = '\0';
     }
     /* This for statement (which should be unrollable, will
-     * chew through the buffer, unmasking and setting
-     * proper atrributes for the resulting text. It then
-     * places them into a new buffer and passes them to
-     * flush buffer for painting to the screen.
-     */
+    * chew through the buffer, unmasking and setting
+    * proper atrributes for the resulting text. It then
+    * places them into a new buffer and passes them to
+    * flush buffer for painting to the screen.
+    */
 
     for (i = 0; i <= ter->len; i++)
     {
@@ -672,13 +674,13 @@ void paint_line(TERMBUF* ter)
             underlined = TRUE;
         }
 
-        buffer[0] = (c_attr_f & CH_MASK) >> CH_SHIFT;
+        buffer[0] = ( c_attr_f & CH_MASK ) >> CH_SHIFT;
         buffer[1] = '\0';
         //strcat(buf, buffer);
-        strcat_s(buf, 10244, buffer);
-        c_color = ((c_attr_f & FG_MASK) >> FG_SHIFT);
+        strcat_s( buf, 10244, buffer );
+        c_color = ( ( c_attr_f & FG_MASK ) >> FG_SHIFT );
 
-        if ((c_attr_f & ATBOLD))
+        if (( c_attr_f & ATBOLD ))
         {
             c_color += 10;
         }
@@ -704,26 +706,26 @@ void paint_line(TERMBUF* ter)
         }
         else if (c_attr_f & BG_MASK)
         {
-            bKcolor = ((c_attr_f & BG_MASK) >> BG_SHIFT);
+            bKcolor = ( ( c_attr_f & BG_MASK ) >> BG_SHIFT );
         }
         else
         {
             bKcolor = TRUE_BLACK;
         }
 
-        if (is_same(ter->line[i], ter->line[i + 1]))
+        if (is_same( ter->line[i], ter->line[i + 1] ))
         {
             continue;
         }
 
-        FlushBuffer(buf, c_color, bKcolor, underlined);
+        FlushBuffer( buf, c_color, bKcolor, underlined );
         underlined = FALSE;
         buf[0] = '\0';
         buf2[0] = '\0';
     }
     if (buf[0] != '\0')
     {
-        FlushBuffer(buf, c_color, bKcolor, underlined);
+        FlushBuffer( buf, c_color, bKcolor, underlined );
     }
 
     /* These few little if-else statements are VERY essential.
@@ -740,23 +742,23 @@ void paint_line(TERMBUF* ter)
         //memset(pad, ' ', ((cols - i) + 5));
         //pad[(cols - i) + 2] = '\0';
         //FlushBuffer(pad, TRUE_BLACK, TRUE_BLACK, FALSE);
-        pad = malloc(sizeof(char*) * cols);
-        memset(pad, ' ', cols);
+        pad = malloc( sizeof( char* ) * cols );
+        memset( pad, ' ', cols );
         pad[cols] = '\0';
-        FlushBuffer(pad, TRUE_BLACK, TRUE_BLACK, FALSE);
-        free(pad);
+        FlushBuffer( pad, TRUE_BLACK, TRUE_BLACK, FALSE );
+        free( pad );
     }
     else if (i == 0)
     {
-        pad = malloc(sizeof(char*) * cols);
-        memset(pad, ' ', cols);
+        pad = malloc( sizeof( char* ) * cols );
+        memset( pad, ' ', cols );
         pad[cols] = '\0';
-        FlushBuffer(pad, TRUE_BLACK, TRUE_BLACK, FALSE);
-        free(pad);
+        FlushBuffer( pad, TRUE_BLACK, TRUE_BLACK, FALSE );
+        free( pad );
     }
 }
 
-COLORREF  get_char_color(unsigned long int c)
+COLORREF  get_char_color( unsigned long int c )
 {
     int fg_color;
     int i;
@@ -767,9 +769,9 @@ COLORREF  get_char_color(unsigned long int c)
 
     //fg_color = GREY;
 
-    fg_color = (c & FG_MASK) >> FG_SHIFT;
+    fg_color = ( c & FG_MASK ) >> FG_SHIFT;
 
-    if ((c & ATBOLD))
+    if (( c & ATBOLD ))
     {
         fg_color += 10;
     }
@@ -798,7 +800,7 @@ COLORREF  get_char_color(unsigned long int c)
 /* Edit: If you're viewing the backbuf, you WILL get blinkies, damn it!
 * Yes, I fight with myself via comments. Sue me.
 */
-void blink_term(void)
+void blink_term( void )
 {
     int i = 0;
     int l = 0;
@@ -840,7 +842,7 @@ void blink_term(void)
 
         for (i = viewing - rows, l = 0; l <= rows; l++, i++)
         {
-            temp = fetch_line(i);     // We're viewing scroll back, so get me the line we need
+            temp = fetch_line( i );     // We're viewing scroll back, so get me the line we need
             if (temp == NULL)
             {
                 continue;
@@ -855,13 +857,13 @@ void blink_term(void)
 
             for (bar = 0; bar <= scount; bar++) // Let's start parsing the line for the blink code.
             {
-                if (((temp->line[bar] & CH_MASK) >> CH_SHIFT) && (temp->line[bar] & AT_BLINK)) // Found it.
+                if (( ( temp->line[bar] & CH_MASK ) >> CH_SHIFT ) && ( temp->line[bar] & AT_BLINK )) // Found it.
                 {
-                    tbuf->y_end = (l * this_session->font_height);
+                    tbuf->y_end = ( l * this_session->font_height );
                     tbuf->x_end = bar * this_session->font_width;
-                    str[0] = (temp->line[bar] & CH_MASK) >> CH_SHIFT;
+                    str[0] = ( temp->line[bar] & CH_MASK ) >> CH_SHIFT;
                     str[1] = '\0';
-                    do_blinked(temp, bar, str);
+                    do_blinked( temp, bar, str );
                     str[0] = '\0';
                 }
             }
@@ -870,9 +872,9 @@ void blink_term(void)
     }
 
     /* non-scroll back stuff */
-    for (runner = 0, i = (bufcount <= rows) ? 1 : ((bufcount - rows)); runner <= rows; i++, runner++)
+    for (runner = 0, i = ( bufcount <= rows ) ? 1 : ( ( bufcount - rows ) ); runner <= rows; i++, runner++)
     {
-        temp = fetch_line(i);
+        temp = fetch_line( i );
 
         if (temp == NULL)
         {
@@ -888,13 +890,13 @@ void blink_term(void)
         /*This line DOES have a blink SOMEWHERE in it. Let's find it. */
         for (bar = 0; bar <= scount; bar++)
         {
-            if (((temp->line[bar] & CH_MASK) >> CH_SHIFT) && (temp->line[bar] & AT_BLINK))
+            if (( ( temp->line[bar] & CH_MASK ) >> CH_SHIFT ) && ( temp->line[bar] & AT_BLINK ))
             {
-                tbuf->y_end = (runner * this_session->font_height);
+                tbuf->y_end = ( runner * this_session->font_height );
                 tbuf->x_end = bar * this_session->font_width;
-                str[0] = (temp->line[bar] & CH_MASK) >> CH_SHIFT;
+                str[0] = ( temp->line[bar] & CH_MASK ) >> CH_SHIFT;
                 str[1] = '\0';
-                do_blinked(temp, bar, str);
+                do_blinked( temp, bar, str );
                 str[0] = '\0';
             }
         }
@@ -907,7 +909,7 @@ void blink_term(void)
 * in hard code, over and over and over.
 */
 
-void do_blinked(TERMBUF* temp, int idx, char str[])
+void do_blinked( TERMBUF* temp, int idx, char str[] )
 {
     unsigned long cf = 0;
     //char str[10000];
@@ -940,7 +942,7 @@ void do_blinked(TERMBUF* temp, int idx, char str[])
         }
         else
         {
-            ccolor = ((cf & FG_MASK) >> FG_SHIFT);
+            ccolor = ( ( cf & FG_MASK ) >> FG_SHIFT );
         }
 
         if (ccolor == 0)
@@ -948,7 +950,7 @@ void do_blinked(TERMBUF* temp, int idx, char str[])
             ccolor = GREY;
         }
 
-        if ((cf & ATBOLD))
+        if (( cf & ATBOLD ))
         {
             ccolor += 10;
         }
@@ -967,14 +969,14 @@ void do_blinked(TERMBUF* temp, int idx, char str[])
             ccolor += 30;
         }
 
-        if ((cf & ATREVER))
+        if (( cf & ATREVER ))
         {
             bkcolor = ccolor;
             ccolor = ccolor;
         }
         else if (cf & BG_MASK)
         {
-            bkcolor = ((cf & BG_MASK) >> BG_SHIFT);
+            bkcolor = ( ( cf & BG_MASK ) >> BG_SHIFT );
             ccolor = bkcolor;//TRUE_BLACK;
         }
         else
@@ -983,7 +985,7 @@ void do_blinked(TERMBUF* temp, int idx, char str[])
             ccolor = TRUE_BLACK;
         }
 
-        FlushBuffer(str, ccolor, bkcolor, underlined);
+        FlushBuffer( str, ccolor, bkcolor, underlined );
         underlined = FALSE;
     }
     else
@@ -1000,7 +1002,7 @@ void do_blinked(TERMBUF* temp, int idx, char str[])
         }
         else
         {
-            ccolor = ((cf & FG_MASK) >> FG_SHIFT);
+            ccolor = ( ( cf & FG_MASK ) >> FG_SHIFT );
         }
 
         if (ccolor == 0)
@@ -1008,7 +1010,7 @@ void do_blinked(TERMBUF* temp, int idx, char str[])
             ccolor = GREY;
         }
 
-        if ((cf & ATBOLD))
+        if (( cf & ATBOLD ))
         {
             ccolor += 10;
         }
@@ -1034,13 +1036,13 @@ void do_blinked(TERMBUF* temp, int idx, char str[])
         }
         else if (cf & BG_MASK)
         {
-            bkcolor = ((cf & BG_MASK) >> BG_SHIFT);
+            bkcolor = ( ( cf & BG_MASK ) >> BG_SHIFT );
         }
         else
         {
             bkcolor = TRUE_BLACK;
         }
-        FlushBuffer(str, ccolor, bkcolor, underlined);
+        FlushBuffer( str, ccolor, bkcolor, underlined );
         underlined = FALSE;
     }
 }
@@ -1050,11 +1052,11 @@ void do_blinked(TERMBUF* temp, int idx, char str[])
 * parse out actual 'lines' (checks for newline escape). This code -will- check
 * for fragmented data. IE: Data that has no new line.
 */
-void ParseLines(unsigned char* readbuff)
+void ParseLines( unsigned char* readbuff )
 {
     unsigned char* buf = NULL;
     //char buf[99999];
-    char* point = (char*)readbuff;
+    char* point = ( char* ) readbuff;
     char* buffer;
     char buffer_hold[2];
     TERMBUF* temp;
@@ -1067,12 +1069,12 @@ void ParseLines(unsigned char* readbuff)
 
     if (buf)
     {
-        free(buf);
+        free( buf );
     }
 
-    buf = malloc(sizeof(unsigned char*) * (strlen(readbuff) + 10));
-    memset(buf, '\0', sizeof(unsigned char*) * (strlen(readbuff) + 10));
-    buf_size = strlen(readbuff) + 10;
+    buf = malloc( sizeof( unsigned char* ) * ( strlen( readbuff ) + 10 ) );
+    memset( buf, '\0', sizeof( unsigned char* ) * ( strlen( readbuff ) + 10 ) );
+    buf_size = strlen( readbuff ) + 10;
 
     buffer[0] = '\0';
     buffer_len = 0;
@@ -1085,7 +1087,7 @@ void ParseLines(unsigned char* readbuff)
         buffer[0] = '\0';
         buffer_hold[0] = '\0';
         point = NULL;
-        free(buf);
+        free( buf );
         buf = NULL;
 
         return;
@@ -1095,49 +1097,49 @@ void ParseLines(unsigned char* readbuff)
         if (*point == '\n')
         {
             /* Do not delete this commented out section of code.
-             * was a previous bug fix but seemed to introduce another
-             * bug. commented out, and left, incase it is needed at
-             * another date.
-             */
+            * was a previous bug fix but seemed to introduce another
+            * bug. commented out, and left, incase it is needed at
+            * another date.
+            */
             if (buf[0] == '\0')
             {
                 continue;
             }
 
-            temp = fetch_line(bufcount);
+            temp = fetch_line( bufcount );
 
             if (temp != NULL && temp->not_finished == TRUE && temp->buffer != NULL)
             {
                 if (temp->buffer == NULL)
                 {
-                    temp->buffer = (char*)malloc(sizeof(char*) * (strlen(buf) + 10));
+                    temp->buffer = ( char* ) malloc( sizeof( char* ) * ( strlen( buf ) + 10 ) );
                 }
-                buf_len = strlen(buf);
-                buffer_len = strlen(temp->buffer);
+                buf_len = strlen( buf );
+                buffer_len = strlen( temp->buffer );
 
                 temp->processed = FALSE;
                 temp->not_finished = FALSE;
 
-                temp_buffer = (char*)malloc(((buffer_len + buf_len) * sizeof(char*)) + 5);
+                temp_buffer = ( char* ) malloc( ( ( buffer_len + buf_len ) * sizeof( char* ) ) + 5 );
                 temp->len = buffer_len;
 
-                memcpy(temp_buffer, temp->buffer, buffer_len);
+                memcpy( temp_buffer, temp->buffer, buffer_len );
                 //strcat(temp_buffer, buf);
-                strcat_s(temp_buffer, (buffer_len + buf_len) + 5, buf);
-                free(temp->buffer);
+                strcat_s( temp_buffer, ( buffer_len + buf_len ) + 5, buf );
+                free( temp->buffer );
                 temp->buffer = temp_buffer;
 
-                temp_line = (unsigned long*)malloc((((temp->len * sizeof(unsigned int)) + (sizeof(unsigned int) * buf_len)) + 5));
-                free(temp->line);
+                temp_line = ( unsigned long* ) malloc( ( ( ( temp->len * sizeof( unsigned int ) ) + ( sizeof( unsigned int ) * buf_len ) ) + 5 ) );
+                free( temp->line );
                 temp->line = temp_line;
                 temp->processed = FALSE;
-                parse_ansi(temp, 0);
+                parse_ansi( temp, 0 );
 
                 buf[0] = '\0';
                 continue;
             }
             //READ_AHEAD = 4;
-            realize_lines(buf);
+            realize_lines( buf );
             if (temp != NULL)
             {
                 temp->not_finished = FALSE;
@@ -1150,37 +1152,37 @@ void ParseLines(unsigned char* readbuff)
         buffer[1] = '\0';
         //strcat(buf,buffer);
 
-        strcat_s(buf, buf_size, buffer);
+        strcat_s( buf, buf_size, buffer );
     }
 
     if (buf[0] != '\0')
     {
-        temp = fetch_line(bufcount);
+        temp = fetch_line( bufcount );
         if (temp != NULL && temp->not_finished == TRUE && temp->buffer != NULL)
         {
-            buf_len = strlen(buf);
-            buffer_len = strlen(temp->buffer);
+            buf_len = strlen( buf );
+            buffer_len = strlen( temp->buffer );
             temp->processed = FALSE;
 
-            temp_buffer = (char*)malloc(((temp->len + buf_len + buffer_len) * sizeof(char*)) + 10);
-            memcpy(temp_buffer, temp->buffer, buffer_len);
+            temp_buffer = ( char* ) malloc( ( ( temp->len + buf_len + buffer_len ) * sizeof( char* ) ) + 10 );
+            memcpy( temp_buffer, temp->buffer, buffer_len );
             //strcat(temp_buffer, buf);
-            strcat_s(temp_buffer, (temp->len + buf_len + buffer_len) + 10, buf);
-            free(temp->buffer);
+            strcat_s( temp_buffer, ( temp->len + buf_len + buffer_len ) + 10, buf );
+            free( temp->buffer );
             temp->buffer = temp_buffer;
 
-            temp_line = (unsigned long*)malloc((((temp->len * sizeof(unsigned int)) + (sizeof(unsigned int) * buf_len)) + 10));
-            free(temp->line);
+            temp_line = ( unsigned long* ) malloc( ( ( ( temp->len * sizeof( unsigned int ) ) + ( sizeof( unsigned int ) * buf_len ) ) + 10 ) );
+            free( temp->line );
             temp->line = temp_line;
 
-            parse_ansi(temp, 0);
+            parse_ansi( temp, 0 );
             buf[0] = '\0';
         }
         else
         {
             //READ_AHEAD = 4;
-            realize_lines(buf);
-            temp = fetch_line(bufcount);
+            realize_lines( buf );
+            temp = fetch_line( bufcount );
 
             if (temp != NULL)
             {
@@ -1194,7 +1196,7 @@ void ParseLines(unsigned char* readbuff)
     buffer[0] = '\0';
     buffer_hold[0] = '\0';
     point = NULL;
-    free(buf);
+    free( buf );
     update_term();
     return;
 }
@@ -1202,14 +1204,14 @@ void ParseLines(unsigned char* readbuff)
 /* replace_line: Pretty much what the name implies. It replaces a line in the
 * line list. Well, more like removes the line, but it's still replacing it,
 * in theory. */
-TERMBUF* replace_line(unsigned long int line, TERMBUF* tbuf)
+TERMBUF* replace_line( unsigned long int line, TERMBUF* tbuf )
 {
     unsigned long int i = 0;
     unsigned long int x = 0;
     long int tbuf_mv = 0;
     char test[10000];
     bool start_log;
-    TERMBUF* rem = fetch_line(line);
+    TERMBUF* rem = fetch_line( line );
 
     test[0] = '\0';
     //READ_AHEAD = 5; // Disabled for now
@@ -1217,15 +1219,15 @@ TERMBUF* replace_line(unsigned long int line, TERMBUF* tbuf)
     PAUSE_UPDATING = TRUE;
     READ_AHEAD = 1;
     if (READ_AHEAD >= 2) /* Readahead is used for import functions such as the log import.
-                          * It allows the code to remove more than one line at a time instead
-                          * of doing it one at a time. This is for speed. */
+                         * It allows the code to remove more than one line at a time instead
+                         * of doing it one at a time. This is for speed. */
     {
-        if (READ_AHEAD >= (bufcount / 2))
+        if (READ_AHEAD >= ( bufcount / 2 ))
         {
             READ_AHEAD = bufcount / 4;
         }
 
-        for (i = 0; i < ((READ_AHEAD) > 1 ? (READ_AHEAD) : 1); i++)
+        for (i = 0; i < ( ( READ_AHEAD ) > 1 ? ( READ_AHEAD ) : 1 ); i++)
         {
             rem = this_session->termlist[i];
             if (!rem)
@@ -1234,19 +1236,19 @@ TERMBUF* replace_line(unsigned long int line, TERMBUF* tbuf)
             }
             if (rem->canary != TERMCANARY)
             {
-                LOG("Canary missing from Line %d!", i);
+                LOG( "Canary missing from Line %d!", i );
             }
 
             if (rem != NULL)
             {
                 //free(rem);
-                free_line(rem);
+                free_line( rem );
                 rem = NULL;
             }
             else
             {
-                LOG("Unknown line failure within replaceline function. I: %d, Bufcount: %d, ReadAhead: %d",
-                    i, bufcount, READ_AHEAD);
+                LOG( "Unknown line failure within replaceline function. I: %d, Bufcount: %d, ReadAhead: %d",
+                     i, bufcount, READ_AHEAD );
             }
         }
         x = READ_AHEAD;
@@ -1261,9 +1263,9 @@ TERMBUF* replace_line(unsigned long int line, TERMBUF* tbuf)
             tbuf_mv = tbuf_mv;
         }
 
-        memcpy(&this_session->termlist[0], &this_session->termlist[x], tbuf_mv * sizeof(TERMBUF*));
+        memcpy( &this_session->termlist[0], &this_session->termlist[x], tbuf_mv * sizeof( TERMBUF* ) );
         bufcount -= READ_AHEAD;
-        for (x = (bufcount); x <= TERM_MAX; x++)
+        for (x = ( bufcount ); x <= TERM_MAX; x++)
         {
             this_session->termlist[x] = NULL;
         }
@@ -1276,15 +1278,15 @@ TERMBUF* replace_line(unsigned long int line, TERMBUF* tbuf)
     {
         if (rem != NULL)
         {
-            free_line(rem);
+            free_line( rem );
             rem = NULL;
         }
         else
         {
-            LOG("Line failed stage 2");
+            LOG( "Line failed stage 2" );
         }
 
-        memcpy(&this_session->termlist[0], &this_session->termlist[1], (bufcount)* sizeof(TERMBUF*));
+        memcpy( &this_session->termlist[0], &this_session->termlist[1], ( bufcount ) * sizeof( TERMBUF* ) );
         this_session->termlist[bufcount + 1] = NULL;
     }
     PAUSE_UPDATING = FALSE;
@@ -1294,7 +1296,7 @@ TERMBUF* replace_line(unsigned long int line, TERMBUF* tbuf)
 /* fetch_line: One of the most important functions of the client. Calling
 * fetch_line, with a correct number, will cause fetch_line to return a pointer
 * to the term line buffer that we want. It does check for bad lines. */
-TERMBUF* fetch_line(unsigned long int idx)
+TERMBUF* fetch_line( unsigned long int idx )
 {
     if (!this_session)
     {
@@ -1309,7 +1311,7 @@ TERMBUF* fetch_line(unsigned long int idx)
     {
         if (this_session->termlist[idx] == NULL)
         {
-            LOG("Error! Fetchline tried to grab an invalid line of %d with a max count of %d", idx, bufcount);
+            LOG( "Error! Fetchline tried to grab an invalid line of %d with a max count of %d", idx, bufcount );
 
             return NULL;
         }
@@ -1332,12 +1334,12 @@ TERMBUF* fetch_line(unsigned long int idx)
 * char. FIXME: fix that. */
 
 /* chop_line will now wrap to the nearest space between words. if no space is
- * found on that line (a constant line of a char) it will wrap at ->char_wrap
- * and then continue from there. It now will also mark all 'spaces' that are
- * used in the tabs with a new mask called ATTAB that will allow the recursive
- * calls to not get choked up on the 'tab' spaces.
- */
-void chop_line(TERMBUF* ter)
+* found on that line (a constant line of a char) it will wrap at ->char_wrap
+* and then continue from there. It now will also mark all 'spaces' that are
+* used in the tabs with a new mask called ATTAB that will allow the recursive
+* calls to not get choked up on the 'tab' spaces.
+*/
+void chop_line( TERMBUF* ter )
 {
     TERMBUF* temp;
     unsigned long* line;
@@ -1360,9 +1362,9 @@ void chop_line(TERMBUF* ter)
 
     attr_f = def_attr;
     attr_f &= ~FG_MASK;
-    attr_f |= (GREY - 30) << FG_SHIFT;
+    attr_f |= ( GREY - 30 ) << FG_SHIFT;
     attr_f &= ~CH_MASK;
-    attr_f |= (' ') << CH_SHIFT;
+    attr_f |= ( ' ' ) << CH_SHIFT;
 
     if (ter->processed == TRUE)
     {
@@ -1373,46 +1375,46 @@ void chop_line(TERMBUF* ter)
         if (ter->len > this_session->char_wrap)
         {
             last_space = -1;
-            last_space = term_wrap_last_space(ter);
+            last_space = term_wrap_last_space( ter );
 
             if (last_space == -1)
             {
                 return; // Get out of here. Something is wrong.
             }
 
-            temp = new_line(__LINE__, __FILE__);
+            temp = new_line( __LINE__, __FILE__ );
             temp->len = ter->len - last_space;//this_session->char_wrap;
 
             if (temp->buffer != NULL)
             {
-                free(temp->buffer);
+                free( temp->buffer );
             }
 
             temp->buffer = NULL;
             temp->processed = TRUE;
             temp->not_finished = FALSE;
-            temp->len = (ter->len - /*this_session->char_wrap*/ last_space + 1) + TAB_SIZE;
-            temp->line = malloc((temp->len + 2) * sizeof(unsigned long));
+            temp->len = ( ter->len - /*this_session->char_wrap*/ last_space + 1 ) + TAB_SIZE;
+            temp->line = malloc( ( temp->len + 2 ) * sizeof( unsigned long ) );
 
             for (i = 0; i < TAB_SIZE; i++)
             {
                 temp->line[i] = attr_f | ATTAB;
             }
 
-            memcpy(&temp->line[i], &ter->line[/*this_session->char_wrap*/last_space], ((ter->len - (/*this_session->char_wrap*/last_space)) + 1/*-1*/) * sizeof(unsigned long));
-            line = malloc((/*this_session->char_wrap*/last_space + 1) * sizeof(unsigned long));
-            memcpy(line, ter->line, (/*this_session->char_wrap*/ last_space)* sizeof(unsigned long));
-            free(ter->line);
+            memcpy( &temp->line[i], &ter->line[/*this_session->char_wrap*/last_space], ( ( ter->len - (/*this_session->char_wrap*/last_space ) ) + 1/*-1*/ ) * sizeof( unsigned long ) );
+            line = malloc( (/*this_session->char_wrap*/last_space + 1 ) * sizeof( unsigned long ) );
+            memcpy( line, ter->line, (/*this_session->char_wrap*/ last_space ) * sizeof( unsigned long ) );
+            free( ter->line );
             ter->line = line;
             ter->len = last_space; //this_session->char_wrap;
             //ret_string(ter, b);
-            chop_line(temp);     // Recursive to chop down lines that are too long for even one wrap.
+            chop_line( temp );     // Recursive to chop down lines that are too long for even one wrap.
         }
     }
     return;
 }
 
-int term_wrap_last_space(TERMBUF* ter)
+int term_wrap_last_space( TERMBUF* ter )
 {
     int i;
     int last_space;
@@ -1441,7 +1443,7 @@ int term_wrap_last_space(TERMBUF* ter)
         {
             continue;
         }
-        if (((ter->line[i] & CH_MASK) >> CH_SHIFT) == ' ')
+        if (( ( ter->line[i] & CH_MASK ) >> CH_SHIFT ) == ' ')
         {
             last_space = i;
         }
@@ -1461,7 +1463,7 @@ int term_wrap_last_space(TERMBUF* ter)
 * number of X=5, then this baby will give it to me. It does handle scroll back
 * accordingly. */
 
-unsigned long int get_x(int x)
+unsigned long int get_x( int x )
 {
     int curpos;
     int viewing;
@@ -1470,12 +1472,12 @@ unsigned long int get_x(int x)
     {
         curpos = curdis;
         viewing = bufcount - -curdis;
-        return (viewing - rows) + x;
+        return ( viewing - rows ) + x;
     }
     else // Not scrollback.
     {
         curpos = curdis;
-        return ((bufcount <= rows ? 1 : (bufcount - rows)) + x);
+        return ( ( bufcount <= rows ? 1 : ( bufcount - rows ) ) + x );
     }
 }
 
@@ -1483,7 +1485,7 @@ unsigned long int get_x(int x)
 * probably filled with monsters - but it works. This function is called in
 * response to a WM_PAINT call sent from windows. It will paint the line above,
 * and the line below the requested region. */
-void do_update_paint(HDC hdc, int left, int top, int right, int bottom)
+void do_update_paint( HDC hdc, int left, int top, int right, int bottom )
 {
     unsigned long int start, stop, cstart, cstop;
     unsigned long int i, j, x, k = 0;
@@ -1525,7 +1527,7 @@ void do_update_paint(HDC hdc, int left, int top, int right, int bottom)
     }
     if (!selection)
     {
-        GiveError("Terminal has initialized improperly.", 1);
+        GiveError( "Terminal has initialized improperly.", 1 );
     }
 
     start = selection->lstart;
@@ -1535,7 +1537,7 @@ void do_update_paint(HDC hdc, int left, int top, int right, int bottom)
     //sprintf(t, "top: %d, bottom: %d, right: %d, Left: %d", top, bottom, right, left);
     //GiveError(t,0);
 
-    j = (bufcount <= rows) ? 1 : (bufcount - rows);
+    j = ( bufcount <= rows ) ? 1 : ( bufcount - rows );
     if (curdis < 0) // Scrollback.
     {
         viewing = bufcount - -curdis;
@@ -1559,20 +1561,20 @@ void do_update_paint(HDC hdc, int left, int top, int right, int bottom)
                 cstop = selection->cstart;
             }
             /* selection code */
-            if ((i >= start && i <= stop) && selection->selected)
+            if (( i >= start && i <= stop ) && selection->selected)
             {
-                paint_selection(start, stop, cstart, cstop, i);
+                paint_selection( start, stop, cstart, cstop, i );
             }
 
             else
             {
-                parse_ansi(fetch_line(i), TRUE);
+                parse_ansi( fetch_line( i ), TRUE );
             }
         }
     }
     else
     {
-        for (i = top + j, x = top; i <= (bufcount <= rows ? bottom : bottom + j); i++, x++)
+        for (i = top + j, x = top; i <= ( bufcount <= rows ? bottom : bottom + j ); i++, x++)
         {
             tbuf->y_end = x * this_session->font_height;
             tbuf->x_end = 0;
@@ -1591,13 +1593,13 @@ void do_update_paint(HDC hdc, int left, int top, int right, int bottom)
                 cstop = selection->cstart;
             }
             /* Selection Code */
-            if ((i >= start && i <= stop) && selection->selected)
+            if (( i >= start && i <= stop ) && selection->selected)
             {
-                paint_selection(start, stop, cstart, cstop, i);
+                paint_selection( start, stop, cstart, cstop, i );
             }
             else
             {
-                parse_ansi(fetch_line(i), FALSE);
+                parse_ansi( fetch_line( i ), FALSE );
                 //paint_underline(fetch_line(i));
             }
         }
@@ -1605,11 +1607,11 @@ void do_update_paint(HDC hdc, int left, int top, int right, int bottom)
 
     update_scroll();
     get_scroll_pos();
-    free_context(hdc);
+    free_context( hdc );
     return;
 }
 
-void paint_selection(int start, int stop, int cstart, int cstop, int i /* line number */)
+void paint_selection( int start, int stop, int cstart, int cstop, int i /* line number */ )
 {
     TERMBUF* tt;
     char p[1000];
@@ -1622,84 +1624,84 @@ void paint_selection(int start, int stop, int cstart, int cstop, int i /* line n
         return;
     }
 
-    if ((i >= start && i <= stop) && selection->selected)
+    if (( i >= start && i <= stop ) && selection->selected)
     {
         p[0] = '\0';
         if (start == stop)
         {
-            tt = fetch_line(i);
+            tt = fetch_line( i );
             if (tt == NULL)
             {
                 return;
             }
 
-            parse_ansi(tt, 0);
-            ret_string(tt, t);
-            tbuf->x_end = (cstart + 1) * this_session->font_width;
+            parse_ansi( tt, 0 );
+            ret_string( tt, t );
+            tbuf->x_end = ( cstart + 1 ) * this_session->font_width;
             t[cstop + 1] = '\0';
-            FlushBuffer(&t[cstart + 1], TRUE_BLACK, SELECTED, FALSE);
+            FlushBuffer( &t[cstart + 1], TRUE_BLACK, SELECTED, FALSE );
             ii = tt->len;
-            tbuf->x_end = (ii + 1) * this_session->font_width;
+            tbuf->x_end = ( ii + 1 ) * this_session->font_width;
         }
         else if (i == start)
         {
-            memset(t, '\0', 1000);
+            memset( t, '\0', 1000 );
 
-            tt = fetch_line(i);
+            tt = fetch_line( i );
             if (tt == NULL)
             {
                 return;
             }
 
-            parse_ansi(tt, 0);
-            ret_string(tt, t);
-            tbuf->x_end = (cstart + 1) * this_session->font_width;
-            FlushBuffer(&t[cstart + 1], TRUE_BLACK, SELECTED, FALSE);
+            parse_ansi( tt, 0 );
+            ret_string( tt, t );
+            tbuf->x_end = ( cstart + 1 ) * this_session->font_width;
+            FlushBuffer( &t[cstart + 1], TRUE_BLACK, SELECTED, FALSE );
             ii = tt->len;
-            tbuf->x_end = (ii + 1) * this_session->font_width;
+            tbuf->x_end = ( ii + 1 ) * this_session->font_width;
         }
         else if (i == stop)
         {
-            tt = fetch_line(i);
+            tt = fetch_line( i );
             if (tt == NULL)
             {
                 return;
             }
 
-            parse_ansi(tt, 0);
-            ret_string(tt, t);
+            parse_ansi( tt, 0 );
+            ret_string( tt, t );
             tbuf->x_end = 0;
             t[cstop + 1] = '\0';
-            FlushBuffer(t, TRUE_BLACK, SELECTED, FALSE);
+            FlushBuffer( t, TRUE_BLACK, SELECTED, FALSE );
             ii = tt->len;
-            tbuf->x_end = (ii + 1) * this_session->font_width;
+            tbuf->x_end = ( ii + 1 ) * this_session->font_width;
         }
         else
         {
-            tt = fetch_line(i);
+            tt = fetch_line( i );
             if (tt == NULL)
             {
                 return;
             }
 
-            ret_string(tt, t);
+            ret_string( tt, t );
             tbuf->x_end = 0;
-            FlushBuffer(t, TRUE_BLACK, SELECTED, FALSE);
+            FlushBuffer( t, TRUE_BLACK, SELECTED, FALSE );
             ii = tt->len;
-            tbuf->x_end = ((ii + 1) * this_session->font_width);
+            tbuf->x_end = ( ( ii + 1 ) * this_session->font_width );
         }
 
         if (ii < cols)
         {
             char pad[2000] = "";
 
-            for (jj = 0; jj < ((cols - ii)); jj++)
+            for (jj = 0; jj < ( ( cols - ii ) ); jj++)
             {
                 pad[jj] = ' ';
             }
 
             pad[jj] = '\0';
-            FlushBuffer(pad, TRUE_BLACK, SELECTED, FALSE);
+            FlushBuffer( pad, TRUE_BLACK, SELECTED, FALSE );
         }
         else if (ii == 0)
         {
@@ -1708,8 +1710,8 @@ void paint_selection(int start, int stop, int cstart, int cstop, int i /* line n
                 pad[jj] = ' ';
             }
 
-            pad[(cols - 1) < 0 ? 0 : (cols - 1) > 1023 ? 1023 : (cols - 1)] = '\0';
-            FlushBuffer(pad, TRUE_BLACK, RED, FALSE);
+            pad[( cols - 1 ) < 0 ? 0 : ( cols - 1 ) > 1023 ? 1023 : ( cols - 1 )] = '\0';
+            FlushBuffer( pad, TRUE_BLACK, RED, FALSE );
         }
     }
 }
@@ -1719,12 +1721,12 @@ void paint_selection(int start, int stop, int cstart, int cstop, int i /* line n
 * client's viewing area (be it scrollback or not) and repaint that complete
 * section in full. It does handle any selections as well. */
 
-void update_term(void)
+void update_term( void )
 {
     RECT r;
     HDC hdc;
     PAINTSTRUCT p;
-    GetClientRect(MudMain, &r);
+    GetClientRect( MudMain, &r );
     updating = TRUE;
     //    r.bottom = r.bottom + 20;
 
@@ -1740,12 +1742,13 @@ void update_term(void)
 
     curpos = curdis;
 
-    hdc = BeginPaint(MudMain, &p);
-    do_update_paint(hdc, (r.left - this_session->font_width - 1) / this_session->font_width, (r.top - this_session->font_height - 1) / this_session->font_height, (r.right - this_session->font_width - 1) / this_session->font_width, (r.bottom - this_session->font_height - 1) / this_session->font_height);
-    EndPaint(MudMain, &p);
+    hdc = BeginPaint( MudMain, &p );
+    do_update_paint( hdc, ( r.left - this_session->font_width - 1 ) / this_session->font_width, ( r.top - this_session->font_height - 1 ) / this_session->font_height, ( r.right - this_session->font_width - 1 ) / this_session->font_width, ( r.bottom - this_session->font_height - 1 ) / this_session->font_height );
+    EndPaint( MudMain, &p );
 
     updating = FALSE;
     curpos = curdis;
+    //find_unused_buffers();
     return;
 }
 
@@ -1757,7 +1760,7 @@ void update_term(void)
 * pass it's data off the parseansi so that it can be parsed correctly and
 * painted accordingly. */
 
-int add_term(TERMBUF* term, char* line, int lline, char* file)
+int add_term( TERMBUF* term, char* line, int lline, char* file )
 {
     extern unsigned long int total_alloc;
     TERMBUF* term_back;
@@ -1766,23 +1769,23 @@ int add_term(TERMBUF* term, char* line, int lline, char* file)
     {
         return 0;
     }
-    if (line[0] == '\0' || strlen(line) < 1)
+    if (line[0] == '\0' || strlen( line ) < 1)
     {
         return 0;
     }
 
-    term_back = new_line(lline, file);
+    term_back = new_line( lline, file );
 
     if (term_back == NULL)
     {
-        GiveError("...", FALSE);
+        GiveError( "...", FALSE );
     }
 
-    term_back->buffer = str_dup(line);
+    term_back->buffer = str_dup( line );
 
     //term_back->line = malloc((strlen(strip_ansi(line))+1) * sizeof(unsigned long));
     //LOG("Lenansi: %d, strlen: %d", strip_ansi_len(line), strlen(strip_ansi(line)));
-    term_back->line = malloc((strip_ansi_len(line) + 100) * sizeof(unsigned long));
+    term_back->line = malloc( ( strip_ansi_len( line ) + 100 ) * sizeof( unsigned long ) );
     //LOG("Strlen: %d, lenlen: %d", strlen(strip_ansi(line)), strip_ansi_len(line));
     term_back->has_blink = FALSE;
     term_back->processed = FALSE;
@@ -1791,7 +1794,7 @@ int add_term(TERMBUF* term, char* line, int lline, char* file)
     term_back->len = 0;
     //total_alloc += sizeof(term_back);
     // sprintf(term_back->stamp, "%s", get_time());
-    parse_ansi(term_back, FALSE);
+    parse_ansi( term_back, FALSE );
     //free(term_back->buffer);
     //term_back->buffer = NULL;
     return 0;
@@ -1802,7 +1805,7 @@ int add_term(TERMBUF* term, char* line, int lline, char* file)
 * same. ALl realize lines does is create a frontend for the complete process
 * of creating a new termline. */
 
-void realize_lines_internal(char* lline, int line, char* file)
+void realize_lines_internal( char* lline, int line, char* file )
 {
     //LOG("(%d:%s)RL received \"%s\"",line,file, lline);
     if (!lline)
@@ -1810,7 +1813,7 @@ void realize_lines_internal(char* lline, int line, char* file)
         return;
     }
 
-    add_term(NULL, lline, line, file);
+    add_term( NULL, lline, line, file );
     //LOG("Returning");
     return;
 }
@@ -1818,15 +1821,15 @@ void realize_lines_internal(char* lline, int line, char* file)
 /* new_line: The middle man of our term line creation processes. This allocates
 * the actual term line and does the bufcount math to make sure verything is
 * as it should. */
-TERMBUF* new_line(int line, char* file)
+TERMBUF* new_line( int line, char* file )
 {
     TERMBUF* templine;
 
-    templine = malloc(sizeof(*templine));
+    templine = malloc( sizeof( *templine ) );
 
     if (templine == NULL)
     {
-        GiveError("Wow..something went wrong there! Place: TERMBUF * new_line(void) module: BioMUD-terminal.c", TRUE);
+        GiveError( "Wow..something went wrong there! Place: TERMBUF * new_line(void) module: BioMUD-terminal.c", TRUE );
     }
 
     bufcount += 1;
@@ -1845,7 +1848,7 @@ TERMBUF* new_line(int line, char* file)
     {
         //GiveError("MAX", TRUE);
         bufcount = TERM_MAX;
-        replace_line(1, NULL);
+        replace_line( 1, NULL );
     }
 
     this_session->termlist[bufcount] = templine;
@@ -1854,7 +1857,7 @@ TERMBUF* new_line(int line, char* file)
 }
 
 /* Free_line: complete free a term line that has already been allocated. */
-void free_line(TERMBUF* rem)
+void free_line( TERMBUF* rem )
 {
     char test[1000];
 
@@ -1862,7 +1865,7 @@ void free_line(TERMBUF* rem)
     PAUSE_UPDATING = TRUE;
     if (!rem)
     {
-        LOG("Free_Line passed an invalid REM line.");
+        LOG( "Free_Line passed an invalid REM line." );
         return;
     }
     if (rem != NULL)
@@ -1872,19 +1875,19 @@ void free_line(TERMBUF* rem)
             //  LOG("Freeing buffer");
             if (rem->buffer)
             {
-                free(rem->buffer);
+                free( rem->buffer );
             }
         }
         if (rem->line)
         {
             //LOG("Freeing line");
-            free(rem->line);
+            free( rem->line );
             rem->line = NULL;
         }
         if (rem)
         {
             //LOG("Freeing line pointer");
-            free(rem);
+            free( rem );
             rem = NULL;
         }
     }
@@ -1894,7 +1897,7 @@ void free_line(TERMBUF* rem)
 
 /* Freeterm: Completely free the whole term buffer; backbuffer and regular buf.
 * It'll also fix the termlist array so that we don't have any memory leaks. */
-void FreeTerm(void)
+void FreeTerm( void )
 {
     unsigned long int i;
     TERMBUF* rem;
@@ -1907,11 +1910,11 @@ void FreeTerm(void)
         rem = this_session->termlist[i];
         if (!rem)
         {
-            LOG("Improper REM");
+            LOG( "Improper REM" );
             continue;
         }
 
-        free_line(rem);
+        free_line( rem );
     }
     for (i = 0; i <= this_session->max_buffer; i++)
     {
@@ -1919,8 +1922,8 @@ void FreeTerm(void)
     }
 
     bufcount = 0;
-    free(this_session->termlist);
-    this_session->termlist = (TERMBUF**)malloc(this_session->max_buffer * sizeof(*this_session->termlist));
+    free( this_session->termlist );
+    this_session->termlist = ( TERMBUF** ) malloc( this_session->max_buffer * sizeof( *this_session->termlist ) );
     PAUSE_UPDATING = FALSE;
 
     //update_term();
@@ -1930,7 +1933,7 @@ void FreeTerm(void)
 * color and a background color and paints it in the appropriate place on the
 * screen. The coords are given by the tbuf->x and tbuf->y vars. */
 
-void FlushBuffer(char* buffer, int color2, int bKcolor2, BOOL underlined)
+void FlushBuffer( char* buffer, int color2, int bKcolor2, BOOL underlined )
 {
     RECT mudrect;
     int i;
@@ -1955,14 +1958,14 @@ void FlushBuffer(char* buffer, int color2, int bKcolor2, BOOL underlined)
         return;
     }
 
-    GetClientRect(MudMain, &mudrect);
+    GetClientRect( MudMain, &mudrect );
     hdc = tbuf->hdc;
-    SelectObject(hdc, hf);
+    SelectObject( hdc, hf );
 
     if (this_session->color == FALSE)
     {
-        SetTextColor(hdc, RGB(192, 192, 192));
-        SetBkColor(hdc, RGB(0, 0, 0));
+        SetTextColor( hdc, RGB( 192, 192, 192 ) );
+        SetBkColor( hdc, RGB( 0, 0, 0 ) );
     }
     else
     {
@@ -1970,30 +1973,30 @@ void FlushBuffer(char* buffer, int color2, int bKcolor2, BOOL underlined)
         {
             if (c_table[i].type == bKcolor2)
             {
-                SetBkColor(hdc, c_table[i].color);
+                SetBkColor( hdc, c_table[i].color );
             }
             if (c_table[i].type == color2)
             {
-                SetTextColor(hdc, c_table[i].color);
+                SetTextColor( hdc, c_table[i].color );
                 cf = c_table[i].color;
             }
         }
     }
-    ExtTextOut(hdc, tbuf->x_end, tbuf->y_end, ETO_CLIPPED, 0, buffer, strlen(buffer), NULL);
+    ExtTextOut( hdc, tbuf->x_end, tbuf->y_end, ETO_CLIPPED, 0, buffer, strlen( buffer ), NULL );
     if (underlined == TRUE)
     {
         xx_end = tbuf->x_end;
-        yy_end = (tbuf->y_end) + 12;
+        yy_end = ( tbuf->y_end ) + 12;
         //LOG("Text underlined: %s", buffer);
-        pen = SelectObject(hdc, CreatePen(PS_SOLID, 0, cf));
-        MoveToEx(hdc, xx_end, yy_end, NULL);
-        LineTo(hdc, xx_end + (strlen(buffer) * this_session->font_width), yy_end);
-        pen = SelectObject(hdc, pen);
-        DeleteObject(pen);
+        pen = SelectObject( hdc, CreatePen( PS_SOLID, 0, cf ) );
+        MoveToEx( hdc, xx_end, yy_end, NULL );
+        LineTo( hdc, xx_end + ( strlen( buffer ) * this_session->font_width ), yy_end );
+        pen = SelectObject( hdc, pen );
+        DeleteObject( pen );
         cf = 0;
     }
 
-    tbuf->x_end += (strlen(buffer) > 1 ? strlen(buffer) * this_session->font_width : this_session->font_width);
+    tbuf->x_end += ( strlen( buffer ) > 1 ? strlen( buffer ) * this_session->font_width : this_session->font_width );
     buffer[0] = '\0';
 
     return;
@@ -2004,11 +2007,11 @@ void FlushBuffer(char* buffer, int color2, int bKcolor2, BOOL underlined)
 * positive will scroll down, negative will scroll up. Each scroll by the number
 * given. */
 
-void scroll_term(long int pos, long int to)
+void scroll_term( long int pos, long int to )
 {
-    long int x = -(long int)((bufcount - rows) < 0 ? 0 : (bufcount - 1) - rows);
+    long int x = -( long int ) ( ( bufcount - rows ) < 0 ? 0 : ( bufcount - 1 ) - rows );
 
-    curdis = (pos < 0 ? 0 : pos > 0 ? x : curdis) + to;
+    curdis = ( pos < 0 ? 0 : pos > 0 ? x : curdis ) + to;
 
     if (curdis < x)
     {
@@ -2032,23 +2035,23 @@ void scroll_term(long int pos, long int to)
 /* set_scroll: Little function used by add_line and the like to make sure that
 * the scroll bar stays with the current number of lines. */
 
-void set_scroll(unsigned long int t, unsigned long int s, unsigned long int p)
+void set_scroll( unsigned long int t, unsigned long int s, unsigned long int p )
 {
     SCROLLINFO sr;
-    sr.cbSize = sizeof(sr);
+    sr.cbSize = sizeof( sr );
     sr.fMask = SIF_ALL | SIF_DISABLENOSCROLL;
     sr.nMin = 0;
     sr.nMax = t - 1;
     sr.nPage = p;
     sr.nPos = s;
-    SetScrollInfo(MudMain, SB_VERT, &sr, TRUE);
+    SetScrollInfo( MudMain, SB_VERT, &sr, TRUE );
     return;
 }
 
 /* update_scroll: Actually moves that little slider thing. */
-void update_scroll(void)
+void update_scroll( void )
 {
-    set_scroll(bufcount - 1, ((bufcount - 1) - rows) + curdis, rows);
+    set_scroll( bufcount - 1, ( ( bufcount - 1 ) - rows ) + curdis, rows );
     return;
 }
 
@@ -2072,28 +2075,28 @@ void terminal_resize()
         this_session->font_height = 13;
     }
 
-    GetClientRect(MudInput, &a);
-    GetClientRect(MudMain, &r);
+    GetClientRect( MudInput, &a );
+    GetClientRect( MudMain, &r );
     screen_width = r.right;
     screen_heigth = r.bottom;
     screen_heigth -= INPUT_HEIGHT; // For input bar. We don't want to paint over the bar with terminal data.
 
-    if ((screen_width % this_session->font_height) == 0)
+    if (( screen_width % this_session->font_height ) == 0)
     {
-        screen_width = (screen_width - (screen_width % this_session->font_height)) / this_session->font_height;
+        screen_width = ( screen_width - ( screen_width % this_session->font_height ) ) / this_session->font_height;
     }
     else
     {
-        screen_width = (screen_width / this_session->font_width);
+        screen_width = ( screen_width / this_session->font_width );
     }
 
-    if ((screen_heigth % this_session->font_height) == 0)
+    if (( screen_heigth % this_session->font_height ) == 0)
     {
-        screen_heigth = (screen_heigth - (screen_heigth % this_session->font_height)) / this_session->font_height;
+        screen_heigth = ( screen_heigth - ( screen_heigth % this_session->font_height ) ) / this_session->font_height;
     }
     else
     {
-        screen_heigth = (screen_heigth / this_session->font_height);
+        screen_heigth = ( screen_heigth / this_session->font_height );
     }
 
     if (screen_heigth != rows)
@@ -2108,15 +2111,15 @@ void terminal_resize()
     }
     if (invalid)
     {
-        InvalidateRect(MudMain, &r, FALSE);
+        InvalidateRect( MudMain, &r, FALSE );
     }
 
     rows -= 1;
     tbuf->y_end = tbuf->y_start = tbuf->x_end = tbuf->x_start = 0;
-    wwrap = GetWindowWrap(MudMain);
+    wwrap = GetWindowWrap( MudMain );
     if (TERM_READY)
     {
-        give_term_info("Setting terminal wrap to %d columns.", wwrap);
+        give_term_info( "Setting terminal wrap to %d columns.", wwrap );
     }
     this_session->char_wrap = wwrap;
     update_scroll();
@@ -2138,41 +2141,41 @@ void terminal_initialize()
     int i;
 
     INIT_TERM = 1;
-    GetClientRect(MudMain, &r);
+    GetClientRect( MudMain, &r );
 
     //char some_char[1000];
-    bt_size = (TERM_MAX)*  sizeof(TERMBUF**);
+    bt_size = ( TERM_MAX ) * sizeof( TERMBUF** );
     screen_width = r.right;
     screen_heigth = r.bottom;
     screen_heigth -= 20;
     init_cmd_history(); // Set up the command history.
 
-    if ((screen_width % this_session->font_height) == 0)
+    if (( screen_width % this_session->font_height ) == 0)
     {
-        cols = (screen_width - (screen_width % this_session->font_height)) / this_session->font_height;
+        cols = ( screen_width - ( screen_width % this_session->font_height ) ) / this_session->font_height;
     }
     else
     {
-        cols = (screen_width / this_session->font_width);
+        cols = ( screen_width / this_session->font_width );
     }
 
-    if ((screen_heigth % this_session->font_height) == 0)
+    if (( screen_heigth % this_session->font_height ) == 0)
     {
-        rows = (screen_heigth - (screen_heigth % this_session->font_height)) / this_session->font_height;
+        rows = ( screen_heigth - ( screen_heigth % this_session->font_height ) ) / this_session->font_height;
     }
     else
     {
-        rows = (screen_heigth / this_session->font_height);
+        rows = ( screen_heigth / this_session->font_height );
     }
 
     def_attr = 0UL;
     //LOG("Def attr: %lu", def_attr);
     c_attr_f = def_attr;
-    selection = malloc(sizeof(selection));
+    selection = malloc( sizeof( selection ) );
 
     if (!selection)
     {
-        GiveError("FATAL ERROR: Selection structure could not be created.", TRUE);
+        GiveError( "FATAL ERROR: Selection structure could not be created.", TRUE );
     }
 
     backcurr = term_back;
@@ -2180,7 +2183,7 @@ void terminal_initialize()
     bufcount = 0;
     tbuf->y_end = tbuf->y_start = tbuf->x_end = tbuf->x_start = 0;
     rows -= 1;
-    wwrap = GetWindowWrap(MudMain);
+    wwrap = GetWindowWrap( MudMain );
 
     color = GREY;
     bKcolor = TRUE_BLACK;
@@ -2196,65 +2199,65 @@ void terminal_initialize()
         switch (c_table[i].type)
         {
         case RED:
-            c_table[i].color = RGB(255, 0, 0);
+            c_table[i].color = RGB( 255, 0, 0 );
             break;
         case BLUE:
-            c_table[i].color = RGB(0, 0, 255);
+            c_table[i].color = RGB( 0, 0, 255 );
             break;
         case GREEN:
-            c_table[i].color = RGB(0, 255, 0);
+            c_table[i].color = RGB( 0, 255, 0 );
             break;
         case BLACK:
-            c_table[i].color = RGB(35, 35, 35);
+            c_table[i].color = RGB( 35, 35, 35 );
             break;
         case YELLOW:
-            c_table[i].color = RGB(255, 255, 0);
+            c_table[i].color = RGB( 255, 255, 0 );
             break;
         case MAGENTA:
-            c_table[i].color = RGB(255, 0, 255);
+            c_table[i].color = RGB( 255, 0, 255 );
             break;
         case CYAN:
-            c_table[i].color = RGB(0, 255, 255);
+            c_table[i].color = RGB( 0, 255, 255 );
             break;
         case WHITE:
-            c_table[i].color = RGB(255, 255, 255);
+            c_table[i].color = RGB( 255, 255, 255 );
             break;
         case C_RED:
-            c_table[i].color = RGB(128, 0, 0);
+            c_table[i].color = RGB( 128, 0, 0 );
             break;
         case C_BLUE:
-            c_table[i].color = RGB(0, 0, 128);
+            c_table[i].color = RGB( 0, 0, 128 );
             break;
         case C_GREEN:
-            c_table[i].color = RGB(0, 192, 0);
+            c_table[i].color = RGB( 0, 192, 0 );
             break;
         case C_BLACK:
-            c_table[i].color = RGB(128, 128, 128);
+            c_table[i].color = RGB( 128, 128, 128 );
             break;
         case C_YELLOW:
-            c_table[i].color = RGB(128, 128, 0);
+            c_table[i].color = RGB( 128, 128, 0 );
             break;
         case C_MAGENTA:
-            c_table[i].color = RGB(128, 0, 128);
+            c_table[i].color = RGB( 128, 0, 128 );
             break;
         case C_CYAN:
-            c_table[i].color = RGB(0, 127, 128);
+            c_table[i].color = RGB( 0, 127, 128 );
             break;
         case C_WHITE:
-            c_table[i].color = RGB(128, 128, 128);
+            c_table[i].color = RGB( 128, 128, 128 );
             break;
         case GREY:
-            c_table[i].color = RGB(211, 211, 211);
+            c_table[i].color = RGB( 211, 211, 211 );
             break;
         case TRUE_BLACK:
-            c_table[i].color = RGB(0, 0, 0);
+            c_table[i].color = RGB( 0, 0, 0 );
             break;
         case SELECTED:
-            c_table[i].color = RGB(0, 192, 255);
+            c_table[i].color = RGB( 0, 192, 255 );
             /*RGB(32, 48, 64);*/
             break;
         default:
-            c_table[i].color = RGB(211, 211, 211);
+            c_table[i].color = RGB( 211, 211, 211 );
             break;
         }
     }
@@ -2265,22 +2268,22 @@ void terminal_initialize()
 * and current columns. It will then do the appropriate math to give how many
 * chars can fit within that confined space. */
 
-int GetWindowWrap(HWND hwnd/*, int font_width*/)
+int GetWindowWrap( HWND hwnd/*, int font_width*/ )
 {
     int screen_width;
     RECT srect;
     int remainder;
     int font_width = this_session->font_width;
-    GetClientRect(hwnd, &srect);
+    GetClientRect( hwnd, &srect );
     screen_width = srect.right;
 
-    if ((screen_width % font_width) == 0)
+    if (( screen_width % font_width ) == 0)
     {
-        remainder = (screen_width - (screen_width % this_session->font_width)) / font_width;
+        remainder = ( screen_width - ( screen_width % this_session->font_width ) ) / font_width;
     }
     else
     {
-        remainder = (screen_width / this_session->font_width);
+        remainder = ( screen_width / this_session->font_width );
     }
     return remainder;
 }
@@ -2290,9 +2293,9 @@ int GetWindowWrap(HWND hwnd/*, int font_width*/)
 * parse_ansi is done (for allocation reasons) or, for when we want a pure-text
 * log to be saved. */
 
-char* strip_ansi(const char* str)
+char* strip_ansi( const char* str )
 {
-    char* point = (char*)str;
+    char* point = ( char* ) str;
     char* buffer;
     char buff[50000] = "";
     char* str2;
@@ -2335,8 +2338,8 @@ char* strip_ansi(const char* str)
             /*bl = 8-(len %8);
             for (ts=0;ts < bl;ts++)
             {
-                strcat(temp," ");
-                len++;
+            strcat(temp," ");
+            len++;
             }*/
             len += 4;
             continue;
@@ -2345,7 +2348,7 @@ char* strip_ansi(const char* str)
         *buffer = *point;
         buffer[1] = '\0';
         //strcat (temp, buffer);
-        strcat_s(temp, 50000, buffer);
+        strcat_s( temp, 50000, buffer );
         len++;
     }
     str2[len] = '\0';
@@ -2355,14 +2358,14 @@ char* strip_ansi(const char* str)
 }
 
 /* Same as strip_ansi, except that it does not store, nor return a string.
- * this function was made for pure speed when only the length of the string
- * was required. It is simple maths instead of storing, maintaining, and returning
- * a buffer.
- */
+* this function was made for pure speed when only the length of the string
+* was required. It is simple maths instead of storing, maintaining, and returning
+* a buffer.
+*/
 
-int  strip_ansi_len(const char* str)
+int  strip_ansi_len( const char* str )
 {
-    char* point = (char*)str;
+    char* point = ( char* ) str;
     int len;
     bool found = FALSE;
 
@@ -2414,12 +2417,12 @@ int  strip_ansi_len(const char* str)
 }
 
 /* Terminal_beep: Will play a 'beep' or 'bell' in response to the ansi sequence
-   given in the ansi stream. This will just play the windows default asteric sound.
-   However, it will not allow 'repeated' plays to be done; a time out value will
-   be set each time and if repeated sounds are done before the timeout, it will not
-   play. Timeout is given in MS.
-   */
-void terminal_beep(void)
+given in the ansi stream. This will just play the windows default asteric sound.
+However, it will not allow 'repeated' plays to be done; a time out value will
+be set each time and if repeated sounds are done before the timeout, it will not
+play. Timeout is given in MS.
+*/
+void terminal_beep( void )
 {
     int timeout = 500; // 500 MS or 0.5 seconds.
 
@@ -2430,6 +2433,6 @@ void terminal_beep(void)
     }
 
     last_bell = GetTickCount(); // Set last bell so we don't play beeps too often.
-    PlaySound(TEXT("Sart"), NULL, SND_ALIAS | SND_ASYNC);   // Play the system 'asteric' sound.
+    PlaySound( TEXT( "Sart" ), NULL, SND_ALIAS | SND_ASYNC );   // Play the system 'asteric' sound.
     return;
 }

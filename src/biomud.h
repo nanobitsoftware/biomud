@@ -31,9 +31,9 @@
 * -Mike (mike@nanobit.net)
 */
 /*  BioMUD.h
- *  Handles all declarations, defines, macros, etc
- *  For the BioMUD
- */
+*  Handles all declarations, defines, macros, etc
+*  For the BioMUD
+*/
 
 //#define BG_MASK 0x000CC000UL
 //#define ATBLINK 0xFFFFFFFFUL
@@ -68,11 +68,11 @@
 #ifdef bool
 #undef bool
 #define bool unsigned short int  /* It appears windows really doesn't equal unix :P
-                             * so we'll make our OWN bool statement! NYAH! */
+* so we'll make our OWN bool statement! NYAH! */
 #define BOOL unsigned short int
 #else
 #define bool unsigned short int  /* It appears windows really doesn't equal unix :P
-                             * so we'll make our OWN bool statement! NYAH! */
+* so we'll make our OWN bool statement! NYAH! */
 #define BOOL unsigned short int
 
 #endif
@@ -105,13 +105,13 @@
 #define LOG_INFO  2
 #define LOG_ERROR 3
 #define LOG_ECHO  4
-#define MAX_TERM_LINE 25000
+#define MAX_TERM_LINE 5000000
 #define MAX_STRING_LENGTH 1024 * 5 // Max string length for some buffers.
 
 /* Defines used to GUI stuff. Do not change these values! - MH
- * If you have to add stuff, go in the order, or perhaps the
- * pattern as they are shown here. For a new menu, jump 10
- * Numeric digits ahead and start from that for its menu - MH */
+* If you have to add stuff, go in the order, or perhaps the
+* pattern as they are shown here. For a new menu, jump 10
+* Numeric digits ahead and start from that for its menu - MH */
 
 /* file */
 #define ID_FILE_EXIT  1001
@@ -515,14 +515,14 @@ typedef struct
 
 /*      @(#)telnet.h 1.7 88/08/19 SMI; from UCB 5.1 5/30/85     */
 /*
- * Copyright (c) 1983 Regents of the University of California.
- * All rights reserved.  The Berkeley software License Agreement
- * specifies the terms and conditions for redistribution.
- */
+* Copyright (c) 1983 Regents of the University of California.
+* All rights reserved.  The Berkeley software License Agreement
+* specifies the terms and conditions for redistribution.
+*/
 
 /*
- * Definitions for the TELNET protocol.
- */
+* Definitions for the TELNET protocol.
+*/
 
 #ifndef _arpa_telnet_h
 #define _arpa_telnet_h

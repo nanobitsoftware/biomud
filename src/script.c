@@ -120,12 +120,12 @@ struct func_type func_table[] =
     }
 };
 
-void init_scripts(void)
+void init_scripts( void )
 {
     TR* tri;
     DWORD  nstart, nstop;
 
-    cmd_stack = (cstack**)malloc(500 * sizeof(*cmd_stack));
+    cmd_stack = ( cstack** ) malloc( 500 * sizeof( *cmd_stack ) );
     tri = new_trigger();
     //tri->script = str_dup("%if( %eval( %eval( %secs - %1)/1000/60/60\60), \"+hour\", %if( %eval( %eval( %secs - %1)/1000/60\60) < 10, 0)%eval( %eval( %secs - %1)/1000/60\60):%if( %eval( %eval( %secs - %1)/1000\60) < 10, 0)%eval( %eval( %secs - %1)/1000\60))");
     //parse_script(tri->script);
@@ -135,10 +135,10 @@ void init_scripts(void)
     nstart = GetTickCount();
 
     nstop = GetTickCount();
-    LOG("Took %lu MS to parse all of that.", nstop - nstart);
+    LOG( "Took %lu MS to parse all of that.", nstop - nstart );
 
-    free(tri);
-    free(cmd_stack);
+    free( tri );
+    free( cmd_stack );
 }
 
 /* Struct: {Tok_name, usage (string), commands (string), flags)
@@ -1026,14 +1026,14 @@ struct script_table_command stable[] =
     }
 };
 
-void sort_list(int count, struct script_table_command tab[])
+void sort_list( int count, struct script_table_command tab[] )
 {
     int i, j;
     struct script_table_command temp;
 
     for (i = 0; i < count - 1; i++)
         for (j = i + 1; j < count; j++)
-            if (strcmp(tab[i].name, tab[j].name) > 0)
+            if (strcmp( tab[i].name, tab[j].name ) > 0)
             {
                 temp = tab[i];
                 tab[i] = tab[j];
@@ -1041,14 +1041,14 @@ void sort_list(int count, struct script_table_command tab[])
             }
 }
 
-VR* new_var(void)
+VR* new_var( void )
 {
     static VR vr;
     VR* pvar;
 
     if (freevar == NULL)
     {
-        pvar = malloc(sizeof(*pvar));
+        pvar = malloc( sizeof( *pvar ) );
     }
     else
     {
@@ -1064,14 +1064,14 @@ VR* new_var(void)
     return pvar;
 }
 
-CL* new_class(void)
+CL* new_class( void )
 {
     static CL cl;
     CL* pclass;
 
     if (freeclass == NULL)
     {
-        pclass = malloc(sizeof(*pclass));
+        pclass = malloc( sizeof( *pclass ) );
     }
     else
     {
@@ -1087,14 +1087,14 @@ CL* new_class(void)
     return pclass;
 }
 
-TR* new_trigger(void)
+TR* new_trigger( void )
 {
     static TR tr;
     TR* ptrigger;
 
     if (freetrigger == NULL)
     {
-        ptrigger = malloc(sizeof(*ptrigger));
+        ptrigger = malloc( sizeof( *ptrigger ) );
     }
     else
     {
@@ -1112,14 +1112,14 @@ TR* new_trigger(void)
     return ptrigger;
 }
 
-AL* new_alias(void)
+AL* new_alias( void )
 {
     static AL al;
     AL* palias;
 
     if (freealias == NULL)
     {
-        palias = malloc(sizeof(*palias));
+        palias = malloc( sizeof( *palias ) );
     }
     else
     {
@@ -1137,14 +1137,14 @@ AL* new_alias(void)
     return palias;
 }
 
-MC* new_macro(void)
+MC* new_macro( void )
 {
     static MC mc;
     MC* pmacro;
 
     if (freemacro == NULL)
     {
-        pmacro = malloc(sizeof(*pmacro));
+        pmacro = malloc( sizeof( *pmacro ) );
     }
     else
     {
@@ -1161,14 +1161,14 @@ MC* new_macro(void)
     return pmacro;
 }
 
-PA* new_path(void)
+PA* new_path( void )
 {
     static PA pa;
     PA* ppath;
 
     if (freepath == NULL)
     {
-        ppath = malloc(sizeof(*ppath));
+        ppath = malloc( sizeof( *ppath ) );
     }
     else
     {
@@ -1186,7 +1186,7 @@ PA* new_path(void)
     return ppath;
 }
 
-void free_scripts(void)
+void free_scripts( void )
 {
     free_class();
     free_path();
@@ -1195,17 +1195,17 @@ void free_scripts(void)
     free_macro();
 }
 
-void free_class(void)
+void free_class( void )
 {
     CL* cl;
     for (cl = classlist; cl; cl = cl->next)
     {
-        free(cl);
+        free( cl );
     }
     return;
 }
 
-void free_path(void)
+void free_path( void )
 {
     PA* pa;
 
@@ -1213,40 +1213,40 @@ void free_path(void)
     {
         if (pa != NULL)
         {
-            free(pa);
+            free( pa );
         }
     }
     return;
 }
 
-void free_trigger(void)
+void free_trigger( void )
 {
     TR* tr;
     for (tr = triggerlist; tr; tr = tr->next)
     {
-        free(tr);
+        free( tr );
     }
 
     return;
 }
 
-void free_alias(void)
+void free_alias( void )
 {
     AL* al;
     for (al = aliaslist; al; al = al->next)
     {
-        free(al);
+        free( al );
     }
     return;
 }
 
-void free_macro(void)
+void free_macro( void )
 {
     MC* mc;
 
     for (mc = macrolist; mc; mc = mc->next)
     {
-        free(mc);
+        free( mc );
     }
     return;
 }
@@ -1254,7 +1254,7 @@ void free_macro(void)
 // This creates a new class
 // It also makes the default main_class if no main_class is in existance.
 // -Alex
-void handle_class(char* input)
+void handle_class( char* input )
 {
     CL* newClass;
     char thisName[100];
@@ -1267,7 +1267,7 @@ void handle_class(char* input)
         // this should only run once!
         classlist = new_class();
         classlist->enabled = TRUE;
-        classlist->name = str_dup("main_class");
+        classlist->name = str_dup( "main_class" );
         classlist->priority = 0;
         classlist->next = NULL;
     }
@@ -1276,11 +1276,11 @@ void handle_class(char* input)
 
     if (newClass == NULL)
     {
-        GiveError("Null class encountered... that's not good m'kay?", TRUE);
+        GiveError( "Null class encountered... that's not good m'kay?", TRUE );
     }
 
-    input = script_strip(input, thisName);
-    input = script_strip(input, thisPriority);
+    input = script_strip( input, thisName );
+    input = script_strip( input, thisPriority );
 
     if (thisName[0] == '\0')
     {
@@ -1291,20 +1291,20 @@ void handle_class(char* input)
 
     else
     {
-        if (atoi(thisPriority) > 1000)
+        if (atoi( thisPriority ) > 1000)
         {
             pri = 1000;
         }
-        else if (atoi(thisPriority) < 0)
+        else if (atoi( thisPriority ) < 0)
         {
             pri = 0;
         }
         else
         {
-            pri = atoi(thisPriority);
+            pri = atoi( thisPriority );
         }
 
-        newClass->name = str_dup(thisName);
+        newClass->name = str_dup( thisName );
         newClass->enabled = TRUE;
         newClass->priority = pri;
         newClass->next = classlist->next;
@@ -1316,7 +1316,7 @@ void handle_class(char* input)
 
 // This creates a new trigger with the proper input! NOTE needs to be updated when we imp a global
 // class. -Alex
-void handle_triggers(char* input)
+void handle_triggers( char* input )
 {
     TR* trigger;
     CL* cls2;
@@ -1331,42 +1331,42 @@ void handle_triggers(char* input)
 
     if (trigger == NULL)
     {
-        GiveError("Trigger reported NULL!", TRUE);
+        GiveError( "Trigger reported NULL!", TRUE );
     }
 
-    input = script_strip(input, thisName);
-    input = script_strip(input, thisScript);
-    input = script_strip(input, thisPriority);
-    input = script_strip(input, cls);
+    input = script_strip( input, thisName );
+    input = script_strip( input, thisScript );
+    input = script_strip( input, thisPriority );
+    input = script_strip( input, cls );
 
     if (thisName[0] == '\0')
     {
-        GiveError("Improper Trigger format of type: Name", FALSE);
+        GiveError( "Improper Trigger format of type: Name", FALSE );
         return;
     }
-    if (atoi(thisPriority) > 1000)
+    if (atoi( thisPriority ) > 1000)
     {
         pri = 1000;
     }
-    else if (atoi(thisPriority) < 0)
+    else if (atoi( thisPriority ) < 0)
     {
         pri = 0;
     }
     else
     {
-        pri = atoi(thisPriority);
+        pri = atoi( thisPriority );
     }
 
     for (cls2 = classlist; cls2 != NULL; cls2++)
     {
-        if (string_compare(cls, cls2->name))
+        if (string_compare( cls, cls2->name ))
         {
             break;
         }
     }
 
-    trigger->name = str_dup(thisName);
-    trigger->script = str_dup(thisScript);
+    trigger->name = str_dup( thisName );
+    trigger->script = str_dup( thisScript );
     trigger->enabled = TRUE;
     trigger->priority = pri;
     trigger->next = triggerlist;
@@ -1375,13 +1375,13 @@ void handle_triggers(char* input)
     // the handle_class function.... crap mike, you wanna some up with a better solution? well I
     // guess it will still work, since the classlist pointer is changed in that code, but until it
     // does run a handle_class funtion, this will point to NULL, or worse -Alex
-    trigger->cl = (cls2 == NULL ? classlist : cls2);
+    trigger->cl = ( cls2 == NULL ? classlist : cls2 );
     triggerlist = trigger;
 
     return;
 }
 
-void handle_aliases(char* input)
+void handle_aliases( char* input )
 {
     AL* alias;
 
@@ -1395,61 +1395,61 @@ void handle_aliases(char* input)
     alias = new_alias();
     if (alias == NULL)
     {
-        GiveError("Alias Failed to initialize", TRUE);
+        GiveError( "Alias Failed to initialize", TRUE );
     }
 
-    input = script_strip(input, name);
-    input = script_strip(input, value);
-    input = script_strip(input, priority);
-    input = script_strip(input, cls);
+    input = script_strip( input, name );
+    input = script_strip( input, value );
+    input = script_strip( input, priority );
+    input = script_strip( input, cls );
 
     if (name[0] == '\0')
     {
-        GiveError("Improper Alias format of type: name", FALSE);
+        GiveError( "Improper Alias format of type: name", FALSE );
         return;
     }
     if (value[0] == '\0')
     {
-        GiveError("Improper Alias format of type: value", FALSE);
+        GiveError( "Improper Alias format of type: value", FALSE );
         return;
     }
 
-    if (atoi(priority) > 1000)
+    if (atoi( priority ) > 1000)
     {
         pri = 1000;
     }
-    else if (atoi(priority) < 0)
+    else if (atoi( priority ) < 0)
     {
         pri = 0;
     }
     else
     {
-        pri = atoi(priority);
+        pri = atoi( priority );
     }
 
     for (cls2 = classlist; cls2 != NULL; cls2++)
     {
-        if (string_compare(cls, cls2->name))
+        if (string_compare( cls, cls2->name ))
         {
             break;
         }
     }
 
-    alias->name = str_dup(name);
+    alias->name = str_dup( name );
     alias->enabled = TRUE;
     alias->priority = pri;
-    alias->script = str_dup(value);
+    alias->script = str_dup( value );
     alias->next = aliaslist;
-    alias->cl = (cls2 == NULL ? classlist : cls2);
+    alias->cl = ( cls2 == NULL ? classlist : cls2 );
     aliaslist = alias;
 
     return;
 }
-void handle_macros(char* input)
+void handle_macros( char* input )
 {
     return;
 }
-void handle_var(char* input)
+void handle_var( char* input )
 {
     VR* pvar;
     char name[200];
@@ -1458,20 +1458,20 @@ void handle_var(char* input)
     pvar = new_var();
     if (pvar == NULL)
     {
-        GiveError("Variable failed to initialize.", TRUE);
+        GiveError( "Variable failed to initialize.", TRUE );
     }
 
-    input = script_strip(input, name);
-    input = script_strip(input, value);
+    input = script_strip( input, name );
+    input = script_strip( input, value );
 
     pvar->next = varlist;
-    pvar->name = str_dup(name);
-    pvar->script = str_dup(value);
+    pvar->name = str_dup( name );
+    pvar->script = str_dup( value );
 
     varlist = pvar;
 }
 
-void handle_path(char* input)
+void handle_path( char* input )
 {
     PA* path;
     char name[200];
@@ -1485,94 +1485,94 @@ void handle_path(char* input)
     path = new_path();
     if (path == NULL)
     {
-        GiveError("Path failed to initialize", TRUE);
+        GiveError( "Path failed to initialize", TRUE );
     }
 
-    input = script_strip(input, name);
-    input = script_strip(input, whereto);
-    input = script_strip(input, priority);
-    input = script_strip(input, cls);
+    input = script_strip( input, name );
+    input = script_strip( input, whereto );
+    input = script_strip( input, priority );
+    input = script_strip( input, cls );
 
     if (name[0] == '\0')
     {
-        GiveError("Improper Path format of type: name", FALSE);
+        GiveError( "Improper Path format of type: name", FALSE );
         return;
     }
 
-    if (atoi(priority) > 1000)
+    if (atoi( priority ) > 1000)
     {
         pri = 1000;
     }
-    else if (atoi(priority) < 0)
+    else if (atoi( priority ) < 0)
     {
         pri = 0;
     }
     else
     {
-        pri = atoi(priority);
+        pri = atoi( priority );
     }
 
     for (cls2 = classlist; cls2 != NULL; cls2++)
     {
-        if (string_compare(cls, cls2->name))
+        if (string_compare( cls, cls2->name ))
         {
             break;
         }
     }
 
-    path->name = str_dup(name);
+    path->name = str_dup( name );
     path->enabled = TRUE;
     path->priority = pri;
-    path->script = str_dup(whereto);
+    path->script = str_dup( whereto );
     path->next = pathlist;
-    path->cl = (cls2 == NULL ? classlist : cls2);
+    path->cl = ( cls2 == NULL ? classlist : cls2 );
     pathlist = path;
     return;
 }
-void handle_url(char* input)
+void handle_url( char* input )
 {
     return;
 }
-void handle_open(char* input)
+void handle_open( char* input )
 {
     return;
 }
-void handle_log(char* input)
+void handle_log( char* input )
 {
     return;
 }
-void handle_help(char* input)
+void handle_help( char* input )
 {
     return;
 }
-void handle_capture(char* input)
+void handle_capture( char* input )
 {
     return;
 }
-void handle_script(char* input)
+void handle_script( char* input )
 {
     return;
 }
-void handle_option(char* input)
+void handle_option( char* input )
 {
     return;
 }
-void handle_save(char* input)
-{
-    return;
-}
-
-void handle_scripts(char* input, char* output)
+void handle_save( char* input )
 {
     return;
 }
 
-BOOL check_alias(char* input)
+void handle_scripts( char* input, char* output )
+{
+    return;
+}
+
+BOOL check_alias( char* input )
 {
     AL* alias;
     char command[32000];
 
-    input = one_argument(input, command);
+    input = one_argument( input, command );
     alias = aliaslist;
     if (alias == NULL)
     {
@@ -1580,7 +1580,7 @@ BOOL check_alias(char* input)
     }
     for (alias = aliaslist; alias != NULL; alias = alias->next)
     {
-        if (!strcmp(command, alias->name))
+        if (!strcmp( command, alias->name ))
         {
             // MessageBox(MudMain, alias->script,"",MB_OK);
             //handle_input (alias->script);
@@ -1595,7 +1595,7 @@ BOOL check_alias(char* input)
 
 // This scans the input string for a trigger name, then runs the trigger
 // if it matches the input!
-void check_trigger(char* input)
+void check_trigger( char* input )
 {
     TR* trigger;
     char* point;
@@ -1608,7 +1608,7 @@ void check_trigger(char* input)
     }
     for (; trigger != NULL; trigger = trigger->next)
     {
-        point = strstr(input, trigger->name);
+        point = strstr( input, trigger->name );
         if (point != NULL)
         {
             //parse_trigger(trigger);
@@ -1619,11 +1619,11 @@ void check_trigger(char* input)
     return;
 }
 
-BOOL check_path(char* input)
+BOOL check_path( char* input )
 {
     PA* path;
     char command[500];
-    input = one_argument(input, command);
+    input = one_argument( input, command );
 
     path = pathlist;
     if (path == NULL)
@@ -1632,7 +1632,7 @@ BOOL check_path(char* input)
     }
     for (path = pathlist; path != NULL; path = path->next)
     {
-        if (!strcmp(command, path->name))
+        if (!strcmp( command, path->name ))
         {
             return TRUE;
             continue;
@@ -1641,34 +1641,34 @@ BOOL check_path(char* input)
 
     return FALSE;
 }
-void check_macro(char* input)
+void check_macro( char* input )
 {
     return;
 }
 
-void handle_set_options(char* input)
+void handle_set_options( char* input )
 {
-    input[strlen(input)] = '\0';
-    if (!strprefix("name", input))
+    input[strlen( input )] = '\0';
+    if (!strprefix( "name", input ))
     {
-        this_session->name = str_dup(&input[5]);
-        give_term_debug("Name set to %s.", &input[5]);
+        this_session->name = str_dup( &input[5] );
+        give_term_debug( "Name set to %s.", &input[5] );
     }
-    else if (!strprefix("host", input))
+    else if (!strprefix( "host", input ))
     {
-        this_session->host = str_dup(&input[5]);
-        give_term_debug("Host set to %s.", &input[5]);
+        this_session->host = str_dup( &input[5] );
+        give_term_debug( "Host set to %s.", &input[5] );
         update_term();
     }
-    else if (!strprefix("port", input))
+    else if (!strprefix( "port", input ))
     {
-        this_session->port = atoi(&input[5]);
-        give_term_debug("Port set to %s.", &input[5]);
+        this_session->port = atoi( &input[5] );
+        give_term_debug( "Port set to %s.", &input[5] );
         update_term();
     }
-    else if (!strprefix("color", input))
+    else if (!strprefix( "color", input ))
     {
-        if (input[strlen("color") + 1] == '1')
+        if (input[strlen( "color" ) + 1] == '1')
         {
             this_session->color = TRUE;
         }
@@ -1679,9 +1679,9 @@ void handle_set_options(char* input)
     }
     //else if (!strprefix("max_buffer", input))
     //this_session->max_buffer = atoi(&input[11]);
-    else if (!strprefix("UseMemoryCompression", input))
+    else if (!strprefix( "UseMemoryCompression", input ))
     {
-        if (input[strlen("UseMemoryCompression") + 1] == '1')
+        if (input[strlen( "UseMemoryCompression" ) + 1] == '1')
         {
             this_session->UseMemoryCompression = TRUE;
         }
@@ -1690,9 +1690,9 @@ void handle_set_options(char* input)
             this_session->UseMemoryCompression = FALSE;
         }
     }
-    else if (!strprefix("IsBetaTester", input))
+    else if (!strprefix( "IsBetaTester", input ))
     {
-        if (input[strlen("IsBetaTester") + 1] == '1')
+        if (input[strlen( "IsBetaTester" ) + 1] == '1')
         {
             this_session->IsBetaTester = TRUE;
         }
@@ -1701,9 +1701,9 @@ void handle_set_options(char* input)
             this_session->IsBetaTester = FALSE;
         }
     }
-    else if (!strprefix("BetaEdit", input))
+    else if (!strprefix( "BetaEdit", input ))
     {
-        if (input[strlen("BetaEdit") + 1] == '1')
+        if (input[strlen( "BetaEdit" ) + 1] == '1')
         {
             this_session->beta_edit = TRUE;
         }
@@ -1712,9 +1712,9 @@ void handle_set_options(char* input)
             this_session->beta_edit = FALSE;
         }
     }
-    else if (!strprefix("EnablePasswordWindow", input))
+    else if (!strprefix( "EnablePasswordWindow", input ))
     {
-        if (input[strlen("EnablePasswordWindow") + 1] == '1')
+        if (input[strlen( "EnablePasswordWindow" ) + 1] == '1')
         {
             this_session->enable_password = TRUE;
         }
@@ -1724,9 +1724,9 @@ void handle_set_options(char* input)
         }
     }
 
-    else if (!strprefix("EnableTestLogging", input))
+    else if (!strprefix( "EnableTestLogging", input ))
     {
-        if (input[strlen("EnableTestLogging") + 1] == '1')
+        if (input[strlen( "EnableTestLogging" ) + 1] == '1')
         {
             this_session->EnableTestLogging = TRUE;
         }
@@ -1735,9 +1735,9 @@ void handle_set_options(char* input)
             this_session->EnableTestLogging = FALSE;
         }
     }
-    else if (!strprefix("OptimizeDualScreen", input))
+    else if (!strprefix( "OptimizeDualScreen", input ))
     {
-        if (input[strlen("OptimizeDualScreen") + 1] == '1')
+        if (input[strlen( "OptimizeDualScreen" ) + 1] == '1')
         {
             this_session->OptimizeDualScreen = TRUE;
         }
@@ -1746,9 +1746,9 @@ void handle_set_options(char* input)
             this_session->OptimizeDualScreen = FALSE;
         }
     }
-    else if (!strprefix("EnableScripts", input))
+    else if (!strprefix( "EnableScripts", input ))
     {
-        if (input[strlen("EnableScripts") + 1] == '1')
+        if (input[strlen( "EnableScripts" ) + 1] == '1')
         {
             this_session->EnableScripts = TRUE;
         }
@@ -1757,9 +1757,9 @@ void handle_set_options(char* input)
             this_session->EnableScripts = FALSE;
         }
     }
-    else if (!strprefix("EnableAliases", input))
+    else if (!strprefix( "EnableAliases", input ))
     {
-        if (input[strlen("EnableAliases") + 1] == '1')
+        if (input[strlen( "EnableAliases" ) + 1] == '1')
         {
             this_session->EnableAliases = TRUE;
         }
@@ -1768,9 +1768,9 @@ void handle_set_options(char* input)
             this_session->EnableAliases = FALSE;
         }
     }
-    else if (!strprefix("EnableTriggers", input))
+    else if (!strprefix( "EnableTriggers", input ))
     {
-        if (input[strlen("EnableTriggers") + 1] == '1')
+        if (input[strlen( "EnableTriggers" ) + 1] == '1')
         {
             this_session->EnableTriggers = TRUE;
         }
@@ -1779,9 +1779,9 @@ void handle_set_options(char* input)
             this_session->EnableTriggers = FALSE;
         }
     }
-    else if (!strprefix("EnablePaths", input))
+    else if (!strprefix( "EnablePaths", input ))
     {
-        if (input[strlen("EnablePaths") + 1] == '1')
+        if (input[strlen( "EnablePaths" ) + 1] == '1')
         {
             this_session->EnablePaths = TRUE;
         }
@@ -1790,9 +1790,9 @@ void handle_set_options(char* input)
             this_session->EnablePaths = FALSE;
         }
     }
-    else if (!strprefix("EnableMacros", input))
+    else if (!strprefix( "EnableMacros", input ))
     {
-        if (input[strlen("EnableMacros") + 1] == '1')
+        if (input[strlen( "EnableMacros" ) + 1] == '1')
         {
             this_session->EnableMacros = TRUE;
         }
@@ -1801,9 +1801,9 @@ void handle_set_options(char* input)
             this_session->EnableMacros = FALSE;
         }
     }
-    else if (!strprefix("EnableSplashScreen", input))
+    else if (!strprefix( "EnableSplashScreen", input ))
     {
-        if (input[strlen("EnableSplashScreen") + 1] == '1')
+        if (input[strlen( "EnableSplashScreen" ) + 1] == '1')
         {
             this_session->EnableSplashScreen = TRUE;
         }
@@ -1812,9 +1812,9 @@ void handle_set_options(char* input)
             this_session->EnableSplashScreen = FALSE;
         }
     }
-    else if (!strprefix("EnableClientChat", input))
+    else if (!strprefix( "EnableClientChat", input ))
     {
-        if (input[strlen("EnableClientChat") + 1] == '1')
+        if (input[strlen( "EnableClientChat" ) + 1] == '1')
         {
             this_session->EnableClientChat = TRUE;
         }
@@ -1823,9 +1823,9 @@ void handle_set_options(char* input)
             this_session->EnableClientChat = FALSE;
         }
     }
-    else if (!strprefix("EnablePing", input))
+    else if (!strprefix( "EnablePing", input ))
     {
-        if (input[strlen("EnablePing") + 1] == '1')
+        if (input[strlen( "EnablePing" ) + 1] == '1')
         {
             this_session->EnablePing = TRUE;
         }
@@ -1834,9 +1834,9 @@ void handle_set_options(char* input)
             this_session->EnablePing = FALSE;
         }
     }
-    else if (!strprefix("EnableUsageReports", input))
+    else if (!strprefix( "EnableUsageReports", input ))
     {
-        if (input[strlen("EnableUsageReports") + 1] == '1')
+        if (input[strlen( "EnableUsageReports" ) + 1] == '1')
         {
             this_session->EnableUsageReports = TRUE;
         }
@@ -1845,9 +1845,9 @@ void handle_set_options(char* input)
             this_session->EnableUsageReports = FALSE;
         }
     }
-    else if (!strprefix("EnableBlinkies", input))
+    else if (!strprefix( "EnableBlinkies", input ))
     {
-        if (input[strlen("EnableBlinkies") + 1] == '1')
+        if (input[strlen( "EnableBlinkies" ) + 1] == '1')
         {
             this_session->EnableBlinkies = TRUE;
         }
@@ -1856,9 +1856,9 @@ void handle_set_options(char* input)
             this_session->EnableBlinkies = FALSE;
         }
     }
-    else if (!strprefix("EnableSound", input))
+    else if (!strprefix( "EnableSound", input ))
     {
-        if (input[strlen("EnableSound") + 1] == '1')
+        if (input[strlen( "EnableSound" ) + 1] == '1')
         {
             this_session->EnableSound = TRUE;
         }
@@ -1867,9 +1867,9 @@ void handle_set_options(char* input)
             this_session->EnableSound = FALSE;
         }
     }
-    else if (!strprefix("EnableTN", input))
+    else if (!strprefix( "EnableTN", input ))
     {
-        if (input[strlen("EnableTN") + 1] == '1')
+        if (input[strlen( "EnableTN" ) + 1] == '1')
         {
             this_session->EnableTN = TRUE;
         }
@@ -1878,9 +1878,9 @@ void handle_set_options(char* input)
             this_session->EnableTN = FALSE;
         }
     }
-    else if (!strprefix("ShowTimeStamps", input))
+    else if (!strprefix( "ShowTimeStamps", input ))
     {
-        if (input[strlen("ShowTimeStamps") + 1] == '1')
+        if (input[strlen( "ShowTimeStamps" ) + 1] == '1')
         {
             this_session->ShowTimeStamps = TRUE;
         }
@@ -1889,9 +1889,9 @@ void handle_set_options(char* input)
             this_session->ShowTimeStamps = FALSE;
         }
     }
-    else if (!strprefix("ShowDebug", input))
+    else if (!strprefix( "ShowDebug", input ))
     {
-        if (input[strlen("ShowDebug") + 1] == '1')
+        if (input[strlen( "ShowDebug" ) + 1] == '1')
         {
             this_session->show_debug = TRUE;
         }
@@ -1900,9 +1900,9 @@ void handle_set_options(char* input)
             this_session->show_debug = FALSE;
         }
     }
-    else if (!strprefix("ShowMouseCoords", input))
+    else if (!strprefix( "ShowMouseCoords", input ))
     {
-        if (input[strlen("ShowMouseCoords") + 1] == '1')
+        if (input[strlen( "ShowMouseCoords" ) + 1] == '1')
         {
             this_session->Mouse_coords = TRUE;
         }
@@ -1913,7 +1913,7 @@ void handle_set_options(char* input)
     }
     else
     {
-        give_term_error("Unrecognized option. Please try again.");
+        give_term_error( "Unrecognized option. Please try again." );
     }
 }
 
@@ -1921,7 +1921,7 @@ void handle_set_options(char* input)
 * commands and whatnot
 */
 
-void handle_input(char* in)
+void handle_input( char* in )
 {
     unsigned long int runner = 0;
     typedef struct termbuf      SBuf;
@@ -1940,9 +1940,9 @@ void handle_input(char* in)
     char* pbuf;
     int list;
 
-    unsigned long int ilen = strlen(in);
+    unsigned long int ilen = strlen( in );
 
-    command = malloc(sizeof(char) * ilen + 10);
+    command = malloc( sizeof( char ) * ilen + 10 );
 
     if (ilen < 10)
     {
@@ -1955,21 +1955,21 @@ void handle_input(char* in)
     buffer[0] = '\0';
     list = 0;
 
-    strcpy(buffer, in);
+    strcpy( buffer, in );
 
-    in = one_argument(in, command);
+    in = one_argument( in, command );
 
     update_term();
 
     pbuf = buff3;
     if (!buffer)
     {
-        GiveError(in, 0);
+        GiveError( in, 0 );
         return;
     }
-    if (strprefix("#", &command[0]))
+    if (strprefix( "#", &command[0] ))
     {
-        if ((strchr(buffer, ';') != NULL) && (strlen(strstr(buffer, ";")) != strlen(buffer)))
+        if (( strchr( buffer, ';' ) != NULL ) && ( strlen( strstr( buffer, ";" ) ) != strlen( buffer ) ))
         {
             for (; *point; point++)
             {
@@ -1981,29 +1981,29 @@ void handle_input(char* in)
                 if (*point == ';')
                 {
                     buff3[0] = '\0';
-                    handle_input(buff4);
+                    handle_input( buff4 );
                     buff4[0] = '\0';
                     continue;
                 }
                 *pbuf = *point;
                 pbuf[1] = '\0';
-                strcat(buff4, pbuf);
+                strcat( buff4, pbuf );
             }
             if (buff4[0] != '\0')
             {
                 buff3[0] = '\0';
-                handle_input(buff4);
+                handle_input( buff4 );
                 buff4[0] = '\0';
 
-                free(command);
+                free( command );
 
                 return;
             }
-            free(command);
+            free( command );
 
             return;
         }
-        else if (buffer[0] == ';' && (strstr(&buffer[1], ";") != NULL))
+        else if (buffer[0] == ';' && ( strstr( &buffer[1], ";" ) != NULL ))
         {
             // Let's send the first command on off to the thingie
             for (runner = 0; *point; point++, runner++)
@@ -2015,16 +2015,16 @@ void handle_input(char* in)
 
                 *pbuf = *point;
                 pbuf[1] = '\0';
-                strcat(buff4, pbuf);
+                strcat( buff4, pbuf );
             }
 
-            strcat(buff2, buff4);
-            strcat(buff2, "\n");
+            strcat( buff2, buff4 );
+            strcat( buff2, "\n" );
             for (runner = 0; runner <= 100 || send_buff[runner] != NULL; runner++)
             {
                 if (send_buff[runner]->buffer == NULL)
                 {
-                    send_buff[runner]->buffer = str_dup(buff2);
+                    send_buff[runner]->buffer = str_dup( buff2 );
 
                     check_output();
                     break;
@@ -2033,11 +2033,11 @@ void handle_input(char* in)
             buff2[0] = '\0';
             if (!TERM_ECHO_OFF)
             {
-                strcat(buff2, ANSI_YELLOW);
-                strcat(buff2, buff4);
-                strcat(buff2, "\033[0m");
-                strcat(buff2, "\n");
-                ParseLines(str_dup(buff2));
+                strcat( buff2, ANSI_YELLOW );
+                strcat( buff2, buff4 );
+                strcat( buff2, "\033[0m" );
+                strcat( buff2, "\n" );
+                ParseLines( str_dup( buff2 ) );
             }
             tbuf->y_end += this_session->font_height;
             tbuf->x_end = 0;
@@ -2050,31 +2050,31 @@ void handle_input(char* in)
             for (; *point; *point++)
             {
                 *pbuf = *point;
-                strcat(buff4, pbuf);
+                strcat( buff4, pbuf );
             }
-            handle_input(buff4);
-            free(command);
+            handle_input( buff4 );
+            free( command );
 
             return;
         }
 
-        if (check_alias(command) == TRUE)
+        if (check_alias( command ) == TRUE)
         {
             for (alias = aliaslist; alias != NULL; alias = alias->next)
             {
-                if (!strcmp(command, alias->name))
+                if (!strcmp( command, alias->name ))
                 {
-                    strcat(buff3, alias->script);
+                    strcat( buff3, alias->script );
                     //strcat(buff3, " ");
                     if (in[0] != '\0')
                     {
-                        strcat(buff3, in);
+                        strcat( buff3, in );
                     }
 
-                    memcpy(buffer, buff3, strlen(buff3));
+                    memcpy( buffer, buff3, strlen( buff3 ) );
 
-                    handle_input(buff3);
-                    free(command);
+                    handle_input( buff3 );
+                    free( command );
                     buff3[0] = '\0';
                     buffer[0] = '\0';
 
@@ -2083,54 +2083,54 @@ void handle_input(char* in)
             }
         }
 
-        if (!strprefix(".", &command[0]))
+        if (!strprefix( ".", &command[0] ))
         {
-            if (check_path(&command[1]) == TRUE)
+            if (check_path( &command[1] ) == TRUE)
             {
                 for (path = pathlist; path != NULL; path = path->next)
                 {
-                    if (!strcmp(&command[1], path->name))
+                    if (!strcmp( &command[1], path->name ))
                     {
                         buff3[0] = '\0';
                         buffer[0] = '\0';
                         //                          strcat(buff3, path->script);
                         //                          strcat(buff3, " ");
                         //                          strcat(buff3, in);
-                        memcpy(buffer, buff3, strlen(buff3));//sizeof(buff3));
+                        memcpy( buffer, buff3, strlen( buff3 ) );//sizeof(buff3));
 
-                        give_term_debug(path->script);
+                        give_term_debug( path->script );
                         nasty = TRUE;
-                        handle_input(path->script);
+                        handle_input( path->script );
                         nasty = FALSE;
                         update_term();
-                        free(command);
+                        free( command );
                         return;
                     }
                 }
             }
-            give_term_error("Unknown path [%s]", &command[1]);
+            give_term_error( "Unknown path [%s]", &command[1] );
             update_term();
             return;
         }
 
         if (!TERM_ECHO_OFF && buffer[0] != '\0')
         {
-            strcat(buff2, ANSI_YELLOW);
-            strcat(buff2, buffer);
-            strcat(buff2, "\033[0m ");
+            strcat( buff2, ANSI_YELLOW );
+            strcat( buff2, buffer );
+            strcat( buff2, "\033[0m " );
 
-            strcat(buff2, "\n");
-            strcat(buff2, "\0");
+            strcat( buff2, "\n" );
+            strcat( buff2, "\0" );
 
-            ParseLines(str_dup(buff2));
+            ParseLines( str_dup( buff2 ) );
         }
 
-        if (strlen(buff2) == 0)
+        if (strlen( buff2 ) == 0)
         {
-            strcat(buff2, "\n");
+            strcat( buff2, "\n" );
         }
 
-        strcat(buffer, "\n");
+        strcat( buffer, "\n" );
         //give_term_error("%sSending \"%s\" to mud \033[0m", ANSI_C_1BLINK, buffer);
         for (runner = 0; runner <= 100 || send_buff[runner] != NULL; runner++)
         {
@@ -2140,7 +2140,7 @@ void handle_input(char* in)
             }
             if (send_buff[runner]->buffer == '\0')
             {
-                send_buff[runner]->buffer = str_dup(buffer);
+                send_buff[runner]->buffer = str_dup( buffer );
                 check_output();
                 break;
             }
@@ -2148,133 +2148,137 @@ void handle_input(char* in)
         tbuf->y_end += this_session->font_height;
         tbuf->x_end = 0;
         buffer[0] = '\0';
-        free(command);
+        free( command );
         return;
     }
 
-    if (!strprefix(command, "#trigger"))
+    if (!strprefix( command, "#trigger" ))
     {
-        handle_triggers(in);
+        handle_triggers( in );
     }
-    else if (!strprefix(command, "#alias"))
+    else if (!strprefix( command, "#alias" ))
     {
-        handle_aliases(in);
+        handle_aliases( in );
         return;
     }
 
-    else if (!strprefix(command, "#importansi"))
+    else if (!strprefix( command, "#importansi" ))
     {
-        import_file(in);
+        import_file( in );
         return;
     }
-    else if (!strprefix(command, "#beep"))
+    else if (!strprefix( command, "#beep" ))
     {
         terminal_beep();
         return;
     }
-    else if (!strprefix(command, "#macro"))
+    else if (!strprefix( command, "#macro" ))
     {
-        handle_macros(in);
+        handle_macros( in );
     }
-    else if (!strprefix(command, "#path"))
+    else if (!strprefix( command, "#path" ))
     {
-        handle_path(in);
+        handle_path( in );
     }
-    else if (!strprefix(command, "#url"))
+    else if (!strprefix( command, "#url" ))
     {
-        handle_url(in);
+        handle_url( in );
     }
-    else if (!strprefix(command, "#class"))
+    else if (!strprefix( command, "#class" ))
     {
-        handle_class(in);
+        handle_class( in );
     }
-    else if (!strprefix(command, "#open"))
+    else if (!strprefix( command, "#open" ))
     {
-        handle_open(in);
+        handle_open( in );
     }
-    else if (!strprefix(command, "#log"))
+    else if (!strprefix( command, "#log" ))
     {
-        handle_log(in);
+        handle_log( in );
     }
-    else if (!strprefix(command, "#dumplog"))
+    else if (!strprefix( command, "#dumplog" ))
     {
         dump_echo();
     }
-    else if (!strprefix(command, "#clearlogs"))
+    else if (!strprefix( command, "#clearlogs" ))
     {
         clear_log();
     }
-    else if (!strprefix(command, "#capture"))
+    else if (!strprefix( command, "#capture" ))
     {
-        handle_capture(in);
+        handle_capture( in );
     }
-    else if (!strprefix(command, "#option"))
+    else if (!strprefix( command, "#option" ))
     {
-        handle_option(in);
+        handle_option( in );
     }
-    else if (!strprefix(command, "#save"))
+    else if (!strprefix( command, "#findunusedbuffer" ))
     {
-        handle_save(in);
+        find_unused_buffers();
     }
-    else if (!strprefix(command, "#var"))
+    else if (!strprefix( command, "#save" ))
     {
-        handle_var(in);
+        handle_save( in );
     }
-    else if (!strprefix(command, "#showcommandhistory")) // Show the command history.
+    else if (!strprefix( command, "#var" ))
+    {
+        handle_var( in );
+    }
+    else if (!strprefix( command, "#showcommandhistory" )) // Show the command history.
     {
         int h = 0;
         int cmdcnt = 0;
-        give_term_info("Command history is as follow:");
+        give_term_info( "Command history is as follow:" );
         for (h = 0; h < MAX_INPUT_HISTORY; h++)
         {
             if (cmdhistory[h].command[0] == '\0')
             {
                 continue;    // Don't show it.
             }
-            give_term_info("%d) %s", h + 1/* So 0 index doesn't confuse people */, cmdhistory[h].command);
+            give_term_info( "%d) %s", h + 1/* So 0 index doesn't confuse people */, cmdhistory[h].command );
             cmdcnt++;
         }
-        give_term_info("Total commands in history: %d", cmdcnt);
+        give_term_info( "Total commands in history: %d", cmdcnt );
         update_term();
     }
-    else if (!strprefix(command, "#easter1"))
+    else if (!strprefix( command, "#easter1" ))
     {
-        ParseLines(str_dup(Greet));
+        ParseLines( str_dup( Greet ) );
     }
-    else if (!strprefix(command, "#easter2"))
+    else if (!strprefix( command, "#easter2" ))
     {
-        ParseLines(str_dup(SMILE_FACE));
+        ParseLines( str_dup( SMILE_FACE ) );
     }
-    else if (!strprefix(command, "#setoption"))
+    else if (!strprefix( command, "#setoption" ))
     {
-        handle_set_options(in);
+        handle_set_options( in );
     }
-    else if (!strprefix(command, "#time"))
+    else if (!strprefix( command, "#time" ))
     {
-        do_timed(in);
+        do_timed( in );
     }
-    else if (!strprefix(command, "#termclear"))
+    else if (!strprefix( command, "#termclear" ))
     {
         FreeTerm();
 
         update_term();
     }
-    else if (!strprefix(command, "#quit"))
+    else if (!strprefix( command, "#quit" ))
     {
         char buf[100];
         int runner = 0;
         dump_heap();
-        fflush(0);
+        fflush( 0 );
         if (IS_IN_DEBUGGING_MODE == 1)
         {
-            sprintf(buf, "Thank you for using BioMUD v.%s.", Mud_client_Version);
+            sprintf( buf, "Thank you for using BioMUD v.%s.", Mud_client_Version );
         }
         else
         {
-            sprintf(buf, "Thank you for using BioMUD v.%s.", Mud_client_Version);
+            sprintf( buf, "Thank you for using BioMUD v.%s.", Mud_client_Version );
         }
 
-        GiveError(buf, FALSE);
+        GiveError( buf, FALSE );
 
         save_scripts();
 
@@ -2288,90 +2292,90 @@ void handle_input(char* in)
 
         for (runner = 0; runner <= 100; runner++)
         {
-            free(send_buff[runner]);
+            free( send_buff[runner] );
         }
-        free(this_session->termlist);
-        free(this_session);
-        free(tbuf);
+        free( this_session->termlist );
+        free( this_session );
+        free( tbuf );
         //free_scripts();
 
         save_scripts();
 
         walk_heap();
-        PostQuitMessage(0);
+        PostQuitMessage( 0 );
         return;
     }
-    else if (!strprefix(command, "#updateterminal"))
+    else if (!strprefix( command, "#updateterminal" ))
     {
-        give_term_info("Terminal screen updated.");
+        give_term_info( "Terminal screen updated." );
         update_term();
     }
 
-    else if (!strprefix(command, "#repeat"))
+    else if (!strprefix( command, "#repeat" ))
     {
-        do_repeat(in, NULL, NULL, NULL);
+        do_repeat( in, NULL, NULL, NULL );
     }
-    else if (!strprefix(command, "#import"))
+    else if (!strprefix( command, "#import" ))
     {
-        do_import(in, NULL, NULL, NULL);
+        do_import( in, NULL, NULL, NULL );
     }
-    else if (!strprefix(command, "#echoon"))
+    else if (!strprefix( command, "#echoon" ))
     {
-        give_term_debug("Echo On!");
+        give_term_debug( "Echo On!" );
         update_term();
         TERM_ECHO_OFF = FALSE;
     }
-    else if (!strprefix(command, "#echooff"))
+    else if (!strprefix( command, "#echooff" ))
     {
-        give_term_debug("Echo off!");
+        give_term_debug( "Echo off!" );
         update_term();
         TERM_ECHO_OFF = TRUE;
     }
-    else if (!strprefix(command, "#listalias"))
+    else if (!strprefix( command, "#listalias" ))
     {
         list = 0;
-        give_term_echo("Current aliases: ");
+        give_term_echo( "Current aliases: " );
         for (alias = aliaslist; alias != NULL; alias = alias->next)
         {
             list++;
-            give_term_echo("[%d] Alias name [%s] Alias script [%s] Priority [%d]", list, alias->name, alias->script, alias->priority);
+            give_term_echo( "[%d] Alias name [%s] Alias script [%s] Priority [%d]", list, alias->name, alias->script, alias->priority );
         }
         if (list = 0)
         {
-            give_term_echo("No current aliases defined.");
+            give_term_echo( "No current aliases defined." );
         }
         update_term();
     }
 
-    else if (!strprefix(command, "#listpath"))
+    else if (!strprefix( command, "#listpath" ))
     {
         list = 0;
-        give_term_echo("Current pathes: ");
+        give_term_echo( "Current pathes: " );
         for (path = pathlist; path != NULL; path = path->next)
         {
             list++;
-            give_term_echo("[%d] path name [%s] path script [%s] Priority [%d]", list, path->name, path->script, path->priority);
+            give_term_echo( "[%d] path name [%s] path script [%s] Priority [%d]", list, path->name, path->script, path->priority );
         }
         if (list = 0)
         {
-            give_term_echo("No current pathes defined.");
+            give_term_echo( "No current pathes defined." );
         }
         update_term();
     }
 
-    SendMessage(MudInput, WM_SETTEXT, 0, (LPARAM)(LPCSTR)"");
-    free(command);
+    SendMessage( MudInput, WM_SETTEXT, 0, ( LPARAM ) ( LPCSTR )"" );
+    free( command );
     return;
 }
 
-void check_string(char* pattern, char* str)
+void check_string( char* pattern, char* str )
 {
     //   LOG("Analyzing string: %s with pattern of: %s", str, pattern);
     //    if (fnmatch(pattern, str, 0) == 0)
     //      GiveError("Match", FALSE);
 }
 
-BOOL is_operator(char* point)
+BOOL is_operator( char* point )
 {
     if (!point)
     {
@@ -2398,12 +2402,12 @@ BOOL is_operator(char* point)
     return FALSE;
 }
 
-int is_function(char* str) //This should be a string chunk from space to space. Will check for partial names
+int is_function( char* str ) //This should be a string chunk from space to space. Will check for partial names
 {
     int i = 0;
 
     for (i = 0; stable[i].name != NULL; i++)
-        if (!strcmp(makeupper(stable[i].name), makeupper(str)))
+        if (!strcmp( makeupper( stable[i].name ), makeupper( str ) ))
         {
             return stable[i].token;
         }
@@ -2411,16 +2415,16 @@ int is_function(char* str) //This should be a string chunk from space to space. 
     return -1;
 }
 
-unsigned long int tokenize(char* str)
+unsigned long int tokenize( char* str )
 {
     return 0;
 }
 
-void make_token(char* str)
+void make_token( char* str )
 {
 }
 
-void  strip_space(char* str)
+void  strip_space( char* str )
 {
     char* point = str;
     char* to_ret;
@@ -2429,7 +2433,7 @@ void  strip_space(char* str)
 
     BOOL in_quote = FALSE;
     buffer = buf;
-    to_ret = malloc(sizeof(char) * strlen(str));
+    to_ret = malloc( sizeof( char ) * strlen( str ) );
 
     to_ret[0] = '\0';
 
@@ -2457,14 +2461,14 @@ void  strip_space(char* str)
         }
         *buffer = *point;
         buffer[1] = '\0';
-        strcat(to_ret, buffer);
+        strcat( to_ret, buffer );
     }
-    memcpy(str, to_ret, strlen(to_ret));
-    str[strlen(to_ret)] = '\0';
-    free(to_ret);
+    memcpy( str, to_ret, strlen( to_ret ) );
+    str[strlen( to_ret )] = '\0';
+    free( to_ret );
 }
 
-void strip_paren(char* str)
+void strip_paren( char* str )
 {
     char* point = str;
     char* to_ret;
@@ -2477,7 +2481,7 @@ void strip_paren(char* str)
         return;
     }
 
-    to_ret = malloc(sizeof(char) * strlen(str));
+    to_ret = malloc( sizeof( char ) * strlen( str ) );
     to_ret[0] = '\0';
     for (; *point; point++)
     {
@@ -2487,21 +2491,21 @@ void strip_paren(char* str)
         }
         *buffer = *point;
         buffer[1] = '\0';
-        strcat(to_ret, buffer);
+        strcat( to_ret, buffer );
     }
 
-    memcpy(str, to_ret, strlen(to_ret));
-    str[strlen(to_ret)] = '\0';
-    free(to_ret);
+    memcpy( str, to_ret, strlen( to_ret ) );
+    str[strlen( to_ret )] = '\0';
+    free( to_ret );
 }
 
-BOOL is_math(char* str)
+BOOL is_math( char* str )
 {
     char* point = str;
     BOOL found_op = FALSE;
 
-    strip_space(str);
-    strip_paren(str);
+    strip_space( str );
+    strip_paren( str );
 
     for (; *point; point++)
     {
@@ -2527,7 +2531,7 @@ BOOL is_math(char* str)
     }
 }
 
-void do_math_internal(char* str)
+void do_math_internal( char* str )
 {
     long int total;
     char arg1[10000] = "";
@@ -2548,12 +2552,12 @@ void do_math_internal(char* str)
     point = str;
     buffer = buf;
     arg1[0] = arg2[0] = buf[0] = '\0';
-    strip_space(str);
-    strip_paren(str);
+    strip_space( str );
+    strip_paren( str );
 
-    if (!is_math(str))
+    if (!is_math( str ))
     {
-        GiveError("Wow............", 1);
+        GiveError( "Wow............", 1 );
     }
 
     arg1[0] = '\0';
@@ -2561,14 +2565,14 @@ void do_math_internal(char* str)
 
     for (; *point; point++, count++)
     {
-        if ((*point == '+' || *point == '-' || *point == '/' || *point == '*'
-                || *point == '%') && arg1[0] != '\0')
+        if (( *point == '+' || *point == '-' || *point == '/' || *point == '*'
+                || *point == '%' ) && arg1[0] != '\0')
         {
             break;
         }
         *buffer = *point;
         buffer[1] = '\0';
-        strcat(arg1, buffer);
+        strcat( arg1, buffer );
     }
     switch (*point)
     {
@@ -2596,69 +2600,69 @@ void do_math_internal(char* str)
 
     for (; *point; point++, count++)
     {
-        if ((*point == '+' || *point == '-' || *point == '/' || *point == '*'
-                || *point == '%') && arg2[0] != '\0')
+        if (( *point == '+' || *point == '-' || *point == '/' || *point == '*'
+                || *point == '%' ) && arg2[0] != '\0')
         {
             break;
         }
         *buffer = *point;
         buffer[1] = '\0';
-        strcat(arg2, buffer);
+        strcat( arg2, buffer );
     }
 
-    memcpy(temp, &str[count], strlen(str) - count);
+    memcpy( temp, &str[count], strlen( str ) - count );
 
     switch (oper)
     {
     case ADD:
-        if ((!isdigit(arg1[0]) || !isdigit(arg2[0])))
+        if (( !isdigit( arg1[0] ) || !isdigit( arg2[0] ) ))
         {
-            if ((arg1[0] != '-' && arg2[0] != '-'))
+            if (( arg1[0] != '-' && arg2[0] != '-' ))
             {
-                sprintf(str, "%s%s", arg1, arg2);
+                sprintf( str, "%s%s", arg1, arg2 );
                 return;
             }
         }
 
-        total = atol(arg1) + atol(arg2);
+        total = atol( arg1 ) + atol( arg2 );
 
         break;
     case MUL:
-        total = atol(arg1) * atol(arg2);
+        total = atol( arg1 ) * atol( arg2 );
 
         break;
     case SUB:
-        total = atol(arg1) - atol(arg2);
+        total = atol( arg1 ) - atol( arg2 );
 
         break;
     case DIV:
-        if (atoi(arg1) == 0 || atoi(arg2) == 0)
+        if (atoi( arg1 ) == 0 || atoi( arg2 ) == 0)
         {
-            give_term_error("division by 0 error.");
-            sprintf(str, "0");
+            give_term_error( "division by 0 error." );
+            sprintf( str, "0" );
             return;
         }
-        total = atol(arg1) / atol(arg2);
+        total = atol( arg1 ) / atol( arg2 );
 
         break;
     case MODULO:
-        total = atol(arg1) % atol(arg2);
+        total = atol( arg1 ) % atol( arg2 );
 
         break;
     default:
         break;
     }
-    sprintf(temp2, "%ld%s", total, temp);
-    if (is_math(temp2))
+    sprintf( temp2, "%ld%s", total, temp );
+    if (is_math( temp2 ))
     {
-        do_math_internal(temp2);
+        do_math_internal( temp2 );
     }
     str[0] = '\0';
 
-    sprintf(str, "%s", temp2);
+    sprintf( str, "%s", temp2 );
 }
 
-BOOL eval_expression(char* exp)
+BOOL eval_expression( char* exp )
 {
     int idx, ldx, fdx;
     BOOL quote = FALSE;
@@ -2674,13 +2678,13 @@ BOOL eval_expression(char* exp)
     char* ret;
     static int c = 0;
 
-    int len = strlen(exp);
+    int len = strlen( exp );
 
     char* point = exp;
 
     fdx = 0;
 
-    new_string = malloc(sizeof(char) * (strlen(exp) * 2));
+    new_string = malloc( sizeof( char ) * ( strlen( exp ) * 2 ) );
 
     stack[0] = '\0';
     idx = 0;
@@ -2703,65 +2707,65 @@ BOOL eval_expression(char* exp)
     {
         if (!quote && exp[idx + 1] == ')')
         {
-            ldx = left_token(exp, idx, "(");
+            ldx = left_token( exp, idx, "(" );
             if (idx == 0)
             {
-                LOG("Missing open paren");
-                free(new_string);
+                LOG( "Missing open paren" );
+                free( new_string );
                 return 0;
             }
 
-            get_mid(exp, stack, ldx, idx);
-            if (is_math(stack))
+            get_mid( exp, stack, ldx, idx );
+            if (is_math( stack ))
             {
-                do_math_internal(stack);
+                do_math_internal( stack );
 
-                memcpy(new_string, exp, ldx);
+                memcpy( new_string, exp, ldx );
                 new_string[ldx - 1] = '\0';
-                x = strlen(new_string);
+                x = strlen( new_string );
 
-                memcpy(&new_string[x], stack, strlen(stack));
+                memcpy( &new_string[x], stack, strlen( stack ) );
 
-                memcpy(&new_string[x + strlen(stack)], &exp[idx] + 2, strlen(exp) - (idx)+2);
-                memcpy(exp, new_string, strlen(new_string));
-                exp[strlen(new_string)] = '\0';
-                len = strlen(exp);
+                memcpy( &new_string[x + strlen( stack )], &exp[idx] + 2, strlen( exp ) - ( idx ) +2 );
+                memcpy( exp, new_string, strlen( new_string ) );
+                exp[strlen( new_string )] = '\0';
+                len = strlen( exp );
             }
-            ldx = left_token(exp, ldx - 2, "(");
-            memset(function, 0, 1000);
-            get_mid(exp, function, ldx, right_token(exp, ldx, "("));
+            ldx = left_token( exp, ldx - 2, "(" );
+            memset( function, 0, 1000 );
+            get_mid( exp, function, ldx, right_token( exp, ldx, "(" ) );
 
-            if (is_function_internal(function))
+            if (is_function_internal( function ))
             {
-                ret = interp_function(function, stack, 0, 0, 0);
+                ret = interp_function( function, stack, 0, 0, 0 );
 
-                memcpy(new_string, exp, ldx);
+                memcpy( new_string, exp, ldx );
                 new_string[ldx] = '\0';
-                x = strlen(new_string);
+                x = strlen( new_string );
 
-                memcpy(&new_string[x], ret, strlen(ret) + 1);
+                memcpy( &new_string[x], ret, strlen( ret ) + 1 );
 
-                memcpy(&new_string[x + strlen(ret)], &exp[idx + 2], strlen(exp) - (idx));
-                memcpy(exp, new_string, strlen(new_string) + 1);
+                memcpy( &new_string[x + strlen( ret )], &exp[idx + 2], strlen( exp ) - ( idx ) );
+                memcpy( exp, new_string, strlen( new_string ) + 1 );
 
                 c++;
 
-                len = strlen(exp);
-                LOG(ret);
+                len = strlen( exp );
+                LOG( ret );
             }
         }
 
         idx++;
     }
-    if (is_math(exp))
+    if (is_math( exp ))
     {
-        do_math_internal(exp);
+        do_math_internal( exp );
     }
-    free(new_string);
+    free( new_string );
     return FALSE;
 }
 
-void check_grammar(unsigned long int* token)
+void check_grammar( unsigned long int* token )
 {
     int paren = 0; //Parenthesis number.
     int brack = 0; //Bracket ( {} ) number.
@@ -2802,19 +2806,19 @@ void check_grammar(unsigned long int* token)
     }
     if (paren > 0)
     {
-        LOG("Unmatching parenthesis.");
+        LOG( "Unmatching parenthesis." );
     }
     if (paren < 0)
     {
-        LOG("Unmatching parenthesis: Too many closing parenthesis.");
+        LOG( "Unmatching parenthesis: Too many closing parenthesis." );
     }
     if (brack < 0)
     {
-        LOG("Unmatching brackets: Too many closing brackets.");
+        LOG( "Unmatching brackets: Too many closing brackets." );
     }
     if (brack > 0)
     {
-        LOG("Unmatching brackets: Too many opening brackets.");
+        LOG( "Unmatching brackets: Too many opening brackets." );
     }
     return;
 }
@@ -2825,7 +2829,7 @@ void check_grammar(unsigned long int* token)
 * won't send again unless there is a change.
 */
 
-void compile_script(char* scr)
+void compile_script( char* scr )
 {
     unsigned long int token[10000]; // README: Free this damn thing when we're done.
     unsigned long int i; // Interator.
@@ -2847,7 +2851,7 @@ void compile_script(char* scr)
     }
 
     //    token = (unsigned long int*)malloc(strlen(scr)*3000); // give it lots of space.
-    memset(token, 0, sizeof(token));
+    memset( token, 0, sizeof( token ) );
     point = scr;
     exp = scr;
 
@@ -2866,28 +2870,28 @@ void compile_script(char* scr)
         {
             continue;
         }
-        if ((*point >= 'a' && *point <= 'z') || (*point >= 'A' && *point <= 'Z')) //a-zA-Z
+        if (( *point >= 'a' && *point <= 'z' ) || ( *point >= 'A' && *point <= 'Z' )) //a-zA-Z
         {
             buf[0] = '\0';
             for (; *point; point++)
             {
                 *buffer = *point;
-                if (is_operator(buffer) || *point == ' ')
+                if (is_operator( buffer ) || *point == ' ')
                 {
                     *--point;
                     break;
                 }
 
                 buffer[1] = '\0';
-                strcat(buf, buffer);
+                strcat( buf, buffer );
             }
 
-            if (is_function_internal(buf))
+            if (is_function_internal( buf ))
             {
                 token[i] = TOK_FUNCTION;
-                if (!strcmp(makeupper(buf), "IF"))
+                if (!strcmp( makeupper( buf ), "IF" ))
                 {
-                    exp += strlen(buf);
+                    exp += strlen( buf );
 
                     paren = 0;
                     exp_buf[0] = '\0';
@@ -2906,35 +2910,35 @@ void compile_script(char* scr)
 
                         *buffer = *exp;
                         buffer[1] = '\0';
-                        strcat(exp_buf, buffer);
+                        strcat( exp_buf, buffer );
 
                         if (paren == 0)
                         {
-                            give_term_error("IF: %s", exp_buf);
+                            give_term_error( "IF: %s", exp_buf );
                             exp_buf[0] = ' ';
-                            exp_buf[strlen(exp_buf) - 1] = ' ';
-                            strip_space(exp_buf);
-                            eval_expression(exp_buf);
-                            if (atol(exp_buf) > 0)
+                            exp_buf[strlen( exp_buf ) - 1] = ' ';
+                            strip_space( exp_buf );
+                            eval_expression( exp_buf );
+                            if (atol( exp_buf ) > 0)
                             {
-                                give_term_debug("If Succeeded.");
+                                give_term_debug( "If Succeeded." );
                             }
                             else
                             {
-                                give_term_debug("If Failed.");
+                                give_term_debug( "If Failed." );
                             }
-                            free(token);
+                            free( token );
                             point = exp;
                             buf[0] = '\0';
                             break;
                         }
                     }
 
-                    LOG("Paren: %d", paren);
+                    LOG( "Paren: %d", paren );
                 }
                 else
                 {
-                    exp += strlen(buf);
+                    exp += strlen( buf );
 
                     paren = 0;
                     exp_buf[0] = '\0';
@@ -2952,23 +2956,23 @@ void compile_script(char* scr)
 
                         *buffer = *exp;
                         buffer[1] = '\0';
-                        strcat(exp_buf, buffer);
+                        strcat( exp_buf, buffer );
 
                         if (paren == 0)
                         {
                             //exp_buf[strlen(exp_buf)-1] = '\0';
-                            eval_expression(exp_buf);
+                            eval_expression( exp_buf );
                             if (exp_buf[0] == '"')
                             {
                                 exp_buf[0] = ' ';
                             }
-                            if (exp_buf[strlen(exp_buf) - 1] == '"')
+                            if (exp_buf[strlen( exp_buf ) - 1] == '"')
                             {
-                                exp_buf[strlen(exp_buf) - 1] = ' ';
+                                exp_buf[strlen( exp_buf ) - 1] = ' ';
                             }
 
-                            interp_function(buf, exp_buf, NULL, NULL, NULL);
-                            free(token);
+                            interp_function( buf, exp_buf, NULL, NULL, NULL );
+                            free( token );
                             point = exp;
                             buf[0] = '\0';
                             break;
@@ -3050,8 +3054,8 @@ void compile_script(char* scr)
         *buffer = *point;
         buffer[1] = '\0';
         buf[0] = '\0';
-        strcat(buf, buffer);
-        if (is_operator(buf))
+        strcat( buf, buffer );
+        if (is_operator( buf ))
         {
             token[i] = TOK_OPER;
             i++;
@@ -3113,7 +3117,7 @@ void compile_script(char* scr)
     //exit(0);
 }
 
-void parse_script(const unsigned char* script)
+void parse_script( const unsigned char* script )
 {
     char* point = 0;
     char buf[1000] = "";
@@ -3123,7 +3127,7 @@ void parse_script(const unsigned char* script)
     char* block;
     int parn = 1;
     char* msg;
-    point = (unsigned char*)script;
+    point = ( unsigned char* ) script;
 
     buffer = buf;
 
@@ -3161,17 +3165,17 @@ void parse_script(const unsigned char* script)
                     break;
                 }
 
-                strcat(func_name, buffer);
+                strcat( func_name, buffer );
             }
-            if (is_function(func_name) == -1) /* NOT a function..for some reason */
+            if (is_function( func_name ) == -1) /* NOT a function..for some reason */
             {
                 func_name[0] = '\0';
                 continue;
             }
-            if (!strcmp(func_name, "if"))
+            if (!strcmp( func_name, "if" ))
             {
                 // handle if statements here
-                block = (char*)malloc(2056 * sizeof(char*));
+                block = ( char* ) malloc( 2056 * sizeof( char* ) );
 
                 for (; *point; *point++)
                     if (*point == '(')
@@ -3180,7 +3184,7 @@ void parse_script(const unsigned char* script)
                         break;
                     }
 
-                strcat(block, "(");
+                strcat( block, "(" );
                 for (; *point; *point++)
                 {
                     *buffer = *point;
@@ -3196,23 +3200,23 @@ void parse_script(const unsigned char* script)
 
                     if (parn == 0)
                     {
-                        strcat(block, ")");
-                        do_if(block, TRUE, NULL, NULL);
-                        free(block);
+                        strcat( block, ")" );
+                        do_if( block, TRUE, NULL, NULL );
+                        free( block );
                         break;
                     }
-                    strcat(block, buffer);
+                    strcat( block, buffer );
                 }
 
                 if (parn >= 1)
                 {
-                    msg = malloc(sizeof(char) * (strlen(block) + 400));
-                    sprintf(msg, "Script if statement incorrect. Matching parenthesis are not present. Present block: \"%s\". nNumber of missing parenthesis: %d", block, parn);
-                    give_term_echo(msg);
-                    free(msg);
+                    msg = malloc( sizeof( char ) * ( strlen( block ) + 400 ) );
+                    sprintf( msg, "Script if statement incorrect. Matching parenthesis are not present. Present block: \"%s\". nNumber of missing parenthesis: %d", block, parn );
+                    give_term_echo( msg );
+                    free( msg );
                     continue;
                 }
-                free(block);
+                free( block );
                 state = SC_NORM;
                 continue;
             }
@@ -3234,7 +3238,7 @@ void parse_script(const unsigned char* script)
                     break;
                 }
                 *buffer = *point;
-                strcat(var_name, buffer);
+                strcat( var_name, buffer );
             }
 
             var_name[0] = '\0';
@@ -3244,13 +3248,13 @@ void parse_script(const unsigned char* script)
     }
 }
 
-void save_aliases(FILE* fp)
+void save_aliases( FILE* fp )
 {
     AL* alias;
 
     if (fp == NULL)
     {
-        GiveError("Script file is either corrupt, or missing. Please check this file. BioMUD's saving of scripts will now abort.", FALSE);
+        GiveError( "Script file is either corrupt, or missing. Please check this file. BioMUD's saving of scripts will now abort.", FALSE );
         return;
     }
 
@@ -3261,19 +3265,19 @@ void save_aliases(FILE* fp)
     }
     for (alias = aliaslist; alias != NULL; alias = alias->next)
     {
-        fprintf(fp, "#alias {%s} {%s} {%s}\n", alias->name, alias->script, alias->cl == NULL ? "0" : alias->cl->name);
+        fprintf( fp, "#alias {%s} {%s} {%s}\n", alias->name, alias->script, alias->cl == NULL ? "0" : alias->cl->name );
     }
 
     return;
 }
 
-void save_triggers(FILE* fp)
+void save_triggers( FILE* fp )
 {
     TR* trigger;
 
     if (fp == NULL)
     {
-        GiveError("Script file is either corrupt, or missing. Please check this file. BioMUD's saving of scripts will now abort.", FALSE);
+        GiveError( "Script file is either corrupt, or missing. Please check this file. BioMUD's saving of scripts will now abort.", FALSE );
         return;
     }
 
@@ -3284,19 +3288,19 @@ void save_triggers(FILE* fp)
     }
     for (trigger = triggerlist; trigger != NULL; trigger = trigger->next)
     {
-        fprintf(fp, "#trigger {%s} {%s} {%s}\n", trigger->name, trigger->script, trigger->cl == NULL ? "(null)" : trigger->cl->name);
+        fprintf( fp, "#trigger {%s} {%s} {%s}\n", trigger->name, trigger->script, trigger->cl == NULL ? "(null)" : trigger->cl->name );
     }
 
     return;
 }
 
-void save_paths(FILE* fp)
+void save_paths( FILE* fp )
 {
     PA* path;
 
     if (fp == NULL)
     {
-        GiveError("Script file is either corrupt, or missing. Please check this file. BioMUD's saving of scripts will now abort.", FALSE);
+        GiveError( "Script file is either corrupt, or missing. Please check this file. BioMUD's saving of scripts will now abort.", FALSE );
         return;
     }
 
@@ -3307,19 +3311,19 @@ void save_paths(FILE* fp)
     }
     for (path = pathlist; path != NULL; path = path->next)
     {
-        fprintf(fp, "#path {%s} {%s} {%s}\n", path->name, path->script, path->cl == NULL ? "0" : path->cl->name);
+        fprintf( fp, "#path {%s} {%s} {%s}\n", path->name, path->script, path->cl == NULL ? "0" : path->cl->name );
     }
 
     return;
 }
 
-void save_macros(FILE* fp)
+void save_macros( FILE* fp )
 {
     MC* macro;
 
     if (fp == NULL)
     {
-        GiveError("Script file is either corrupt, or missing. Please check this file. BioMUD's saving of scripts will now abort.", FALSE);
+        GiveError( "Script file is either corrupt, or missing. Please check this file. BioMUD's saving of scripts will now abort.", FALSE );
         return;
     }
 
@@ -3331,19 +3335,19 @@ void save_macros(FILE* fp)
 
     for (macro = macrolist; macro != NULL; macro = macro->next)
     {
-        fprintf(fp, "#macro {%s} {%s} {%s}\n", macro->name, macro->script, macro->cl == NULL ? "(null)" : macro->cl->name);
+        fprintf( fp, "#macro {%s} {%s} {%s}\n", macro->name, macro->script, macro->cl == NULL ? "(null)" : macro->cl->name );
     }
 
     return;
 }
 
-void save_vars(FILE* fp)
+void save_vars( FILE* fp )
 {
     VR* var;
 
     if (fp == NULL)
     {
-        GiveError("Script file is either corrupt, or missing. Please check this file. BioMUD's saving of scripts will now abort.", FALSE);
+        GiveError( "Script file is either corrupt, or missing. Please check this file. BioMUD's saving of scripts will now abort.", FALSE );
         return;
     }
 
@@ -3355,31 +3359,31 @@ void save_vars(FILE* fp)
 
     for (var = varlist; var != NULL; var = var->next)
     {
-        fprintf(fp, "#var {%s} {%s} {%s}\n", var->name, var->script, var->cl == NULL ? "(null)" : var->cl->name);
+        fprintf( fp, "#var {%s} {%s} {%s}\n", var->name, var->script, var->cl == NULL ? "(null)" : var->cl->name );
     }
 
     return;
 }
 
-void save_scripts(void)
+void save_scripts( void )
 {
     FILE* fp;
 
-    if ((fp = fopen("c:\\nanobit\\BioMUD_scripts.txt", "w")) == NULL)
+    if (( fp = fopen( "c:\\nanobit\\BioMUD_scripts.txt", "w" ) ) == NULL)
     {
-        GiveError("Unable to open Scripts file.", FALSE);
+        GiveError( "Unable to open Scripts file.", FALSE );
         return;
     }
-    save_aliases(fp);
-    save_triggers(fp);
-    save_paths(fp);
-    save_macros(fp);
-    save_vars(fp);
-    fclose(fp);
+    save_aliases( fp );
+    save_triggers( fp );
+    save_paths( fp );
+    save_macros( fp );
+    save_vars( fp );
+    fclose( fp );
     return;
 }
 
-void load_scripts(void)
+void load_scripts( void )
 {
     FILE* fp;
     int ret;
@@ -3391,21 +3395,21 @@ void load_scripts(void)
 
     p = a = 0;
 
-    if ((fp = fopen("c:\\nanobit\\BioMUD_scripts.txt", "r")) == NULL)
+    if (( fp = fopen( "c:\\nanobit\\BioMUD_scripts.txt", "r" ) ) == NULL)
     {
-        give_term_echo("Unable to open Scripts file for reading.");
+        give_term_echo( "Unable to open Scripts file for reading." );
         return;
     }
 
-    while ((ret = read_string(temp, fp, 5000)) > -1)
+    while (( ret = read_string( temp, fp, 5000 ) ) > -1)
     {
         temp[ret] = '\0';
 
-        handle_input(temp);
+        handle_input( temp );
         temp[0] = '\0';
         buf[0] = '\0';
     }
-    fclose(fp);
+    fclose( fp );
 
     for (path = pathlist; path; path = path->next)
     {
@@ -3416,5 +3420,5 @@ void load_scripts(void)
         a++;
     }
 
-    give_term_info("Scripts loading is complete. [%d] Aliases, [%d] Paths loaded successfully", p, a);
+    give_term_info( "Scripts loading is complete. [%d] Aliases, [%d] Paths loaded successfully", p, a );
 }

@@ -225,7 +225,7 @@ int WINAPI WinMain( HINSTANCE hThisInstance,
     SetFocus( MudMain );
 
     BlinkT = SetTimer( MudMain, ID_TIMER_BLINK, BLINK_HZ, NULL ); // Timer to blink the terminal.
-//  PingT = SetTimer(MudMain,ID_TIMER_CHECK_PING , 1500, NULL);
+    //  PingT = SetTimer(MudMain,ID_TIMER_CHECK_PING , 1500, NULL);
 
     // Init a bunch of different parts of BioMUD
     get_time();
@@ -819,16 +819,16 @@ LRESULT APIENTRY WindowProcedure( HWND hwnd, UINT message, WPARAM wParam, LPARAM
         x = HIWORD( lParam );
         /*if (input_bar)
         {
-            GetWindowRect(input_bar->window, &r);
+        GetWindowRect(input_bar->window, &r);
 
-            if (((x+MENUHEIGTH) >= r.top && (x+MENUHEIGTH) <= r.bottom) && ((y+MENUHEIGTH) >= r.left && (y+MENUHEIGTH) <= r.right))
-            {
-                editor_mouse(input_bar, lParam,wParam,message);
-                break;
-            }
+        if (((x+MENUHEIGTH) >= r.top && (x+MENUHEIGTH) <= r.bottom) && ((y+MENUHEIGTH) >= r.left && (y+MENUHEIGTH) <= r.right))
+        {
+        editor_mouse(input_bar, lParam,wParam,message);
+        break;
+        }
         }
 
-          */
+        */
 
         selecting = TRUE;
 
@@ -1162,13 +1162,13 @@ LRESULT APIENTRY WindowProcedure( HWND hwnd, UINT message, WPARAM wParam, LPARAM
     case WM_MOUSEWHEEL:
     {
         /* scroll the terminal with the call of the mousewheel.
-         * will now properly take the inputs from windows as
-         * to how many lines of scroll should be given.
-         *
-         * if windows calls for 6 lines to scroll, it will scroll
-         * 6, if it calls for an entire page to be scrolled, it'll
-         * roll the term's row count.
-         */
+        * will now properly take the inputs from windows as
+        * to how many lines of scroll should be given.
+        *
+        * if windows calls for 6 lines to scroll, it will scroll
+        * 6, if it calls for an entire page to be scrolled, it'll
+        * roll the term's row count.
+        */
         int pos = 0;
         int way = 0;
         UINT scroll_lines = 0;

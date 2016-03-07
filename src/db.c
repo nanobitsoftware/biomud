@@ -75,10 +75,10 @@ char BioMUD_Hosts[] = "CREATE TABLE IF NOT EXISTS biomud_hosts (idx INTEGER PRIM
                       "hostip TEXT, hostname TEXT, hostport INTEGER, desc TEXT, loginstr TEXT);";
 
 /* I am going to use my timed buffer teqnique I came up with for
- DSL. This seems to work well with hundreds of concurrent DB reads
- and writes. No need to reinvent the wheel when you made it in the
- first place.
- */
+DSL. This seems to work well with hundreds of concurrent DB reads
+and writes. No need to reinvent the wheel when you made it in the
+first place.
+*/
 struct timed_buffer
 {
     TIMED_BUF* next;       // For linked list.
@@ -92,14 +92,14 @@ void free_timedbuf( TIMED_BUF* buf );
 TIMED_BUF* new_timedbuf( void );
 
 /* init_db(): Initialize the sqlite3 database for the mudclient.
- Will create all the tables, if not already made and set up the
- buffers to ensure no slowdown.
- TODO: Turn this in to its own thread. Since we'll be slurping data
- rather than needing it on the fly. No need to dedicate part of the
- main loop to DB transactions.
+Will create all the tables, if not already made and set up the
+buffers to ensure no slowdown.
+TODO: Turn this in to its own thread. Since we'll be slurping data
+rather than needing it on the fly. No need to dedicate part of the
+main loop to DB transactions.
 
- Returns TRUE on success (should be ever time) and FALSE on failure.
- */
+Returns TRUE on success (should be ever time) and FALSE on failure.
+*/
 
 bool init_db( void )
 {
@@ -265,7 +265,7 @@ void free_timedbuf( TIMED_BUF* buf )
 }
 
 /* flush_db(): Flushes all buffered transactions to the db disk file in case
- of instant need. */
+of instant need. */
 void flush_db( void )
 {
     if (!DB_INIT || !DB_OPENED)
@@ -283,11 +283,11 @@ void flush_db( void )
 }
 
 /* run_tbufs: Will loop through the timed buffer list, taking a few out
- and wrapping them in to specific transactions and flushing to the db.
- This keeps lag to a minimum while keeping steady data bandwidth to
- and from the database. This has been very handy and has been proven
- to work well, even at 1million+ transactions per day.
- */
+and wrapping them in to specific transactions and flushing to the db.
+This keeps lag to a minimum while keeping steady data bandwidth to
+and from the database. This has been very handy and has been proven
+to work well, even at 1million+ transactions per day.
+*/
 
 void run_tbufs( void )
 {
@@ -355,11 +355,11 @@ void run_tbufs( void )
 }
 
 /* DB_add_host: Adds a host entry in to the database. If IDX is -1, then it won't care about index. Else,
-   it will see if idx is there or not. This is specifically so I can add a default entry for DSL.
-   Returns FALSE if it failed to enter, or exists, TRUE if it is successful.
-   This function will bypass the tbufs and send directly to the database.
-   If 'quiet' is set, no logs or error messages will be given out.
-   */
+it will see if idx is there or not. This is specifically so I can add a default entry for DSL.
+Returns FALSE if it failed to enter, or exists, TRUE if it is successful.
+This function will bypass the tbufs and send directly to the database.
+If 'quiet' is set, no logs or error messages will be given out.
+*/
 
 bool DB_add_host( int idx, char* hostip, char* hostname, char* desc,
                   char* login_str, int port, bool enabled, bool quiet )
@@ -373,8 +373,8 @@ bool DB_add_host( int idx, char* hostip, char* hostname, char* desc,
         return FALSE; // We need this info, at the very least. We should be checking before this call, so we should never get here.
     }
     /*
-     "CREATE TABLE IF NOT EXISTS biomud_hosts (idx INTEGER AS PRIMARY KEY, enabled"
-                      "INTEGER, hostip TEXT, hostname TEXT, hostport INTEGER, desc TEXT, loginstr TEXT); ";
+    "CREATE TABLE IF NOT EXISTS biomud_hosts (idx INTEGER AS PRIMARY KEY, enabled"
+    "INTEGER, hostip TEXT, hostname TEXT, hostport INTEGER, desc TEXT, loginstr TEXT); ";
 
     */
     if (idx != -1)
