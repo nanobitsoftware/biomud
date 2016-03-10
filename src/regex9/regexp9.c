@@ -40,7 +40,8 @@
 #include "regexp9.h"
 
 #define nil 0
-#define exits(x) exit(x && *x ? 1 : 0)
+//#define exits(x) exit(x && *x ? 1 : 0)
+#define exits(x) return x
 
 /****************************************************
  * Routines from rune.c, runestrchr.c and utfrune.c *
@@ -57,24 +58,24 @@ enum
     Bit3 = 4,
     Bit4 = 3,
 
-    T1 = ((1 << (Bit1 + 1)) - 1) ^ 0xFF,    /* 0000 0000 */
-    Tx = ((1 << (Bitx + 1)) - 1) ^ 0xFF,    /* 1000 0000 */
-    T2 = ((1 << (Bit2 + 1)) - 1) ^ 0xFF,    /* 1100 0000 */
-    T3 = ((1 << (Bit3 + 1)) - 1) ^ 0xFF,    /* 1110 0000 */
-    T4 = ((1 << (Bit4 + 1)) - 1) ^ 0xFF,    /* 1111 0000 */
+    T1 = ( ( 1 << ( Bit1 + 1 ) ) - 1 ) ^ 0xFF,    /* 0000 0000 */
+    Tx = ( ( 1 << ( Bitx + 1 ) ) - 1 ) ^ 0xFF,    /* 1000 0000 */
+    T2 = ( ( 1 << ( Bit2 + 1 ) ) - 1 ) ^ 0xFF,    /* 1100 0000 */
+    T3 = ( ( 1 << ( Bit3 + 1 ) ) - 1 ) ^ 0xFF,    /* 1110 0000 */
+    T4 = ( ( 1 << ( Bit4 + 1 ) ) - 1 ) ^ 0xFF,    /* 1111 0000 */
 
-    Rune1 = (1 << (Bit1 + 0 * Bitx)) - 1,       /* 0000 0000 0111 1111 */
-    Rune2 = (1 << (Bit2 + 1 * Bitx)) - 1,       /* 0000 0111 1111 1111 */
-    Rune3 = (1 << (Bit3 + 2 * Bitx)) - 1,       /* 1111 1111 1111 1111 */
+    Rune1 = ( 1 << ( Bit1 + 0 * Bitx ) ) - 1,       /* 0000 0000 0111 1111 */
+    Rune2 = ( 1 << ( Bit2 + 1 * Bitx ) ) - 1,       /* 0000 0111 1111 1111 */
+    Rune3 = ( 1 << ( Bit3 + 2 * Bitx ) ) - 1,       /* 1111 1111 1111 1111 */
 
-    Maskx = (1 << Bitx) - 1,            /* 0011 1111 */
+    Maskx = ( 1 << Bitx ) - 1,            /* 0011 1111 */
     Testx = Maskx ^ 0xFF,           /* 1100 0000 */
 
     Bad = Runeerror
 };
 
 int
-chartorune(Rune* rune, const char* str)
+chartorune( Rune* rune, const char* str )
 {
     int c, c1, c2;
     long l;
@@ -83,7 +84,7 @@ chartorune(Rune* rune, const char* str)
      * one character sequence
      *  00000-0007F => T1
      */
-    c = *(uchar*)str;
+    c = *( uchar* ) str;
     if (c < Tx)
     {
         *rune = c;
@@ -94,7 +95,7 @@ chartorune(Rune* rune, const char* str)
      * two character sequence
      *  0080-07FF => T2 Tx
      */
-    c1 = *(uchar*)(str + 1) ^ Tx;
+    c1 = *( uchar* ) ( str + 1 ) ^ Tx;
     if (c1 & Testx)
     {
         goto bad;
@@ -105,7 +106,7 @@ chartorune(Rune* rune, const char* str)
         {
             goto bad;
         }
-        l = ((c << Bitx) | c1) & Rune2;
+        l = ( ( c << Bitx ) | c1 ) & Rune2;
         if (l <= Rune1)
         {
             goto bad;
@@ -118,14 +119,14 @@ chartorune(Rune* rune, const char* str)
      * three character sequence
      *  0800-FFFF => T3 Tx Tx
      */
-    c2 = *(uchar*)(str + 2) ^ Tx;
+    c2 = *( uchar* ) ( str + 2 ) ^ Tx;
     if (c2 & Testx)
     {
         goto bad;
     }
     if (c < T4)
     {
-        l = ((((c << Bitx) | c1) << Bitx) | c2) & Rune3;
+        l = ( ( ( ( c << Bitx ) | c1 ) << Bitx ) | c2 ) & Rune3;
         if (l <= Rune2)
         {
             goto bad;
@@ -143,7 +144,7 @@ bad:
 }
 
 Rune*
-runestrchr(const Rune* s, Rune c)
+runestrchr( const Rune* s, Rune c )
 {
     Rune c0 = c;
     Rune c1;
@@ -152,19 +153,19 @@ runestrchr(const Rune* s, Rune c)
     {
         while (*s++)
             ;
-        return (Rune*)s - 1;
+        return ( Rune* ) s - 1;
     }
 
-    while ((c1 = *s++))
+    while (( c1 = *s++ ))
         if (c1 == c0)
         {
-            return (Rune*)s - 1;
+            return ( Rune* ) s - 1;
         }
     return 0;
 }
 
 char*
-utfrune(char* s, long c)
+utfrune( char* s, long c )
 {
     long c1;
     Rune r;
@@ -172,12 +173,12 @@ utfrune(char* s, long c)
 
     if (c < Runesync)       /* not part of utf sequence */
     {
-        return strchr(s, c);
+        return strchr( s, c );
     }
 
     for (;;)
     {
-        c1 = *(uchar*)s;
+        c1 = *( uchar* ) s;
         if (c1 < Runeself)      /* one byte rune */
         {
             if (c1 == 0)
@@ -191,7 +192,7 @@ utfrune(char* s, long c)
             s++;
             continue;
         }
-        n = chartorune(&r, s);
+        n = chartorune( &r, s );
         if (r == c)
         {
             return s;
@@ -208,7 +209,7 @@ utfrune(char* s, long c)
  *  save a new match in mp
  */
 static void
-_renewmatch(Resub* mp, int ms, Resublist* sp)
+_renewmatch( Resub* mp, int ms, Resublist* sp )
 {
     int i;
 
@@ -216,8 +217,8 @@ _renewmatch(Resub* mp, int ms, Resublist* sp)
     {
         return;
     }
-    if (mp[0].s.sp == 0 || sp->m[0].s.sp<mp[0].s.sp ||
-            (sp->m[0].s.sp == mp[0].s.sp && sp->m[0].e.ep>mp[0].e.ep))
+    if (mp[0].s.sp == 0 || sp->m[0].s.sp < mp[0].s.sp ||
+            ( sp->m[0].s.sp == mp[0].s.sp && sp->m[0].e.ep > mp[0].e.ep ))
     {
         for (i = 0; i < ms && i < NSUBEXP; i++)
         {
@@ -236,10 +237,10 @@ _renewmatch(Resub* mp, int ms, Resublist* sp)
  *      at already, the optimization is a bug.
  */
 static Relist*
-_renewthread(Relist* lp,    /* _relist to add to */
-             Reinst* ip,     /* instruction to add */
-             int ms,
-             Resublist* sep)     /* pointers to subexpressions */
+_renewthread( Relist* lp,    /* _relist to add to */
+              Reinst* ip,     /* instruction to add */
+              int ms,
+              Resublist* sep )     /* pointers to subexpressions */
 {
     Relist* p;
 
@@ -270,7 +271,7 @@ _renewthread(Relist* lp,    /* _relist to add to */
     {
         p->se.m[0] = sep->m[0];
     }
-    (++p)->inst = 0;
+    ( ++p )->inst = 0;
     return p;
 }
 
@@ -279,10 +280,10 @@ _renewthread(Relist* lp,    /* _relist to add to */
  * initial empty start pointer.
  */
 static Relist*
-_renewemptythread(Relist* lp,   /* _relist to add to */
-                  Reinst* ip,     /* instruction to add */
-                  int ms,
-                  char* sp)       /* pointers to subexpressions */
+_renewemptythread( Relist* lp,   /* _relist to add to */
+                   Reinst* ip,     /* instruction to add */
+                   int ms,
+                   char* sp )       /* pointers to subexpressions */
 {
     Relist* p;
 
@@ -294,7 +295,7 @@ _renewemptythread(Relist* lp,   /* _relist to add to */
             {
                 if (ms > 1)
                 {
-                    memset(&p->se, 0, sizeof(p->se));
+                    memset( &p->se, 0, sizeof( p->se ) );
                 }
                 p->se.m[0].s.sp = sp;
             }
@@ -304,18 +305,18 @@ _renewemptythread(Relist* lp,   /* _relist to add to */
     p->inst = ip;
     if (ms > 1)
     {
-        memset(&p->se, 0, sizeof(p->se));
+        memset( &p->se, 0, sizeof( p->se ) );
     }
     p->se.m[0].s.sp = sp;
-    (++p)->inst = 0;
+    ( ++p )->inst = 0;
     return p;
 }
 
 static Relist*
-_rrenewemptythread(Relist* lp,  /* _relist to add to */
-                   Reinst* ip,     /* instruction to add */
-                   int ms,
-                   Rune* rsp)      /* pointers to subexpressions */
+_rrenewemptythread( Relist* lp,  /* _relist to add to */
+                    Reinst* ip,     /* instruction to add */
+                    int ms,
+                    Rune* rsp )      /* pointers to subexpressions */
 {
     Relist* p;
 
@@ -327,7 +328,7 @@ _rrenewemptythread(Relist* lp,  /* _relist to add to */
             {
                 if (ms > 1)
                 {
-                    memset(&p->se, 0, sizeof(p->se));
+                    memset( &p->se, 0, sizeof( p->se ) );
                 }
                 p->se.m[0].s.rsp = rsp;
             }
@@ -337,10 +338,10 @@ _rrenewemptythread(Relist* lp,  /* _relist to add to */
     p->inst = ip;
     if (ms > 1)
     {
-        memset(&p->se, 0, sizeof(p->se));
+        memset( &p->se, 0, sizeof( p->se ) );
     }
     p->se.m[0].s.rsp = rsp;
-    (++p)->inst = 0;
+    ( ++p )->inst = 0;
     return p;
 }
 
@@ -382,23 +383,23 @@ static  Reclass* yyclassp;  /* last lex'd class */
 
 /* predeclared crap */
 static  void    operator(int);
-static  void    pushand(Reinst*, Reinst*);
-static  void    pushator(int);
-static  void    evaluntil(int);
-static  int bldcclass(void);
+static  void    pushand( Reinst*, Reinst* );
+static  void    pushator( int );
+static  void    evaluntil( int );
+static  int bldcclass( void );
 
 static jmp_buf regkaboom;
 
 static  void
-rcerror(char* s)
+rcerror( char* s )
 {
     errors++;
-    regerror9(s);
-    longjmp(regkaboom, 1);
+    regerror9( s );
+    longjmp( regkaboom, 1 );
 }
 
 static  Reinst*
-newinst(int t)
+newinst( int t )
 {
     freep->type = t;
     freep->u2.left = 0;
@@ -407,7 +408,7 @@ newinst(int t)
 }
 
 static  void
-operand(int t)
+operand( int t )
 {
     Reinst* i;
 
@@ -415,7 +416,7 @@ operand(int t)
     {
         operator(CAT);    /* catenate is implicit */
     }
-    i = newinst(t);
+    i = newinst( t );
 
     if (t == CCLASS || t == NCCLASS)
     {
@@ -426,7 +427,7 @@ operand(int t)
         i->u1.r = yyrune;
     }
 
-    pushand(i, i);
+    pushand( i, i );
     lastwasand = TRUE;
 }
 
@@ -435,13 +436,13 @@ operator(int t)
 {
     if (t == RBRA && --nbra < 0)
     {
-        rcerror("unmatched right paren");
+        rcerror( "unmatched right paren" );
     }
     if (t == LBRA)
     {
         if (++cursubid >= NSUBEXP)
         {
-            rcerror("too many subexpressions");
+            rcerror( "too many subexpressions" );
         }
         nbra++;
         if (lastwasand)
@@ -451,11 +452,11 @@ operator(int t)
     }
     else
     {
-        evaluntil(t);
+        evaluntil( t );
     }
     if (t != RBRA)
     {
-        pushator(t);
+        pushator( t );
     }
     lastwasand = FALSE;
     if (t == STAR || t == QUEST || t == PLUS || t == RBRA)
@@ -465,7 +466,7 @@ operator(int t)
 }
 
 static  void
-regerr2(char* s, int c)
+regerr2( char* s, int c )
 {
     char buf[100];
     char* cp = buf;
@@ -475,24 +476,24 @@ regerr2(char* s, int c)
     }
     *cp++ = c;
     *cp = '\0';
-    rcerror(buf);
+    rcerror( buf );
 }
 
 static  void
-cant(char* s)
+cant( char* s )
 {
     char buf[100];
-    strcpy(buf, "can't happen: ");
-    strcat(buf, s);
-    rcerror(buf);
+    strcpy( buf, "can't happen: " );
+    strcat( buf, s );
+    rcerror( buf );
 }
 
 static  void
-pushand(Reinst* f, Reinst* l)
+pushand( Reinst* f, Reinst* l )
 {
     if (andp >= &andstack[NSTACK])
     {
-        cant("operand stack overflow");
+        cant( "operand stack overflow" );
     }
     andp->first = f;
     andp->last = l;
@@ -500,44 +501,44 @@ pushand(Reinst* f, Reinst* l)
 }
 
 static  void
-pushator(int t)
+pushator( int t )
 {
     if (atorp >= &atorstack[NSTACK])
     {
-        cant("operator stack overflow");
+        cant( "operator stack overflow" );
     }
     *atorp++ = t;
     *subidp++ = cursubid;
 }
 
 static  Node*
-popand(int op)
+popand( int op )
 {
     Reinst* inst;
 
     if (andp <= &andstack[0])
     {
-        regerr2("missing operand for ", op);
-        inst = newinst(NOP);
+        regerr2( "missing operand for ", op );
+        inst = newinst( NOP );
 
-        pushand(inst, inst);
+        pushand( inst, inst );
     }
     return --andp;
 }
 
 static  int
-popator(void)
+popator( void )
 {
     if (atorp <= &atorstack[0])
     {
-        cant("operator stack underflow");
+        cant( "operator stack underflow" );
     }
     --subidp;
     return *--atorp;
 }
 
 static  void
-evaluntil(int pri)
+evaluntil( int pri )
 {
     Node* op1, *op2;
     Reinst* inst1, *inst2;
@@ -547,64 +548,64 @@ evaluntil(int pri)
         switch (popator())
         {
         default:
-            rcerror("unknown operator in evaluntil");
+            rcerror( "unknown operator in evaluntil" );
             break;
         case LBRA:      /* must have been RBRA */
-            op1 = popand('(');
-            inst2 = newinst(RBRA);
+            op1 = popand( '(' );
+            inst2 = newinst( RBRA );
             inst2->u1.subid = *subidp;
             op1->last->u2.next = inst2;
-            inst1 = newinst(LBRA);
+            inst1 = newinst( LBRA );
             inst1->u1.subid = *subidp;
             inst1->u2.next = op1->first;
-            pushand(inst1, inst2);
+            pushand( inst1, inst2 );
             return;
         case OR:
-            op2 = popand('|');
-            op1 = popand('|');
-            inst2 = newinst(NOP);
+            op2 = popand( '|' );
+            op1 = popand( '|' );
+            inst2 = newinst( NOP );
             op2->last->u2.next = inst2;
             op1->last->u2.next = inst2;
-            inst1 = newinst(OR);
+            inst1 = newinst( OR );
             inst1->u1.right = op1->first;
             inst1->u2.left = op2->first;
-            pushand(inst1, inst2);
+            pushand( inst1, inst2 );
             break;
         case CAT:
-            op2 = popand(0);
-            op1 = popand(0);
+            op2 = popand( 0 );
+            op1 = popand( 0 );
             op1->last->u2.next = op2->first;
-            pushand(op1->first, op2->last);
+            pushand( op1->first, op2->last );
             break;
         case STAR:
-            op2 = popand('*');
-            inst1 = newinst(OR);
+            op2 = popand( '*' );
+            inst1 = newinst( OR );
             op2->last->u2.next = inst1;
             inst1->u1.right = op2->first;
-            pushand(inst1, inst1);
+            pushand( inst1, inst1 );
             break;
         case PLUS:
-            op2 = popand('+');
-            inst1 = newinst(OR);
+            op2 = popand( '+' );
+            inst1 = newinst( OR );
             op2->last->u2.next = inst1;
             inst1->u1.right = op2->first;
-            pushand(op2->first, inst1);
+            pushand( op2->first, inst1 );
             break;
         case QUEST:
-            op2 = popand('?');
-            inst1 = newinst(OR);
-            inst2 = newinst(NOP);
+            op2 = popand( '?' );
+            inst1 = newinst( OR );
+            inst2 = newinst( NOP );
             inst1->u2.left = inst2;
             inst1->u1.right = op2->first;
             op2->last->u2.next = inst2;
-            pushand(inst1, inst2);
+            pushand( inst1, inst2 );
             break;
         }
     }
 }
 
 static  Reprog*
-optimize(Reprog* pp)
+optimize( Reprog* pp )
 {
     Reinst* inst, *target;
     int size;
@@ -630,14 +631,14 @@ optimize(Reprog* pp)
      *  necessary.  Reallocate to the actual space used
      *  and then relocate the code.
      */
-    size = sizeof(Reprog) + (freep - pp->firstinst)*sizeof(Reinst);
-    npp = realloc(pp, size);
+    size = sizeof( Reprog ) + ( freep - pp->firstinst ) * sizeof( Reinst );
+    npp = realloc( pp, size );
     if (npp == 0 || npp == pp)
     {
         return pp;
     }
-    diff = (char*)npp - (char*)pp;
-    freep = (Reinst*)((char*)freep + diff);
+    diff = ( char* ) npp - ( char* ) pp;
+    freep = ( Reinst* ) ( ( char* ) freep + diff );
     for (inst = npp->firstinst; inst < freep; inst++)
     {
         switch (inst->type)
@@ -646,42 +647,42 @@ optimize(Reprog* pp)
         case STAR:
         case PLUS:
         case QUEST:
-            inst->u1.right = (void*)((char*)inst->u1.right + diff);
+            inst->u1.right = ( void* ) ( ( char* ) inst->u1.right + diff );
             break;
         case CCLASS:
         case NCCLASS:
-            inst->u1.right = (void*)((char*)inst->u1.right + diff);
+            inst->u1.right = ( void* ) ( ( char* ) inst->u1.right + diff );
             cl = inst->u1.cp;
-            cl->end = (void*)((char*)cl->end + diff);
+            cl->end = ( void* ) ( ( char* ) cl->end + diff );
             break;
         }
-        inst->u2.left = (void*)((char*)inst->u2.left + diff);
+        inst->u2.left = ( void* ) ( ( char* ) inst->u2.left + diff );
     }
-    npp->startinst = (void*)((char*)npp->startinst + diff);
+    npp->startinst = ( void* ) ( ( char* ) npp->startinst + diff );
     return npp;
 }
 
 #ifdef  DEBUG
 static  void
-dumpstack(void)
+dumpstack( void )
 {
     Node* stk;
     int* ip;
 
-    print("operators\n");
+    print( "operators\n" );
     for (ip = atorstack; ip < atorp; ip++)
     {
-        print("0%o\n", *ip);
+        print( "0%o\n", *ip );
     }
-    print("operands\n");
+    print( "operands\n" );
     for (stk = andstack; stk < andp; stk++)
     {
-        print("0%o\t0%o\n", stk->first->type, stk->last->type);
+        print( "0%o\t0%o\n", stk->first->type, stk->last->type );
     }
 }
 
 static  void
-dump(Reprog* pp)
+dump( Reprog* pp )
 {
     Reinst* l;
     Rune* p;
@@ -689,33 +690,33 @@ dump(Reprog* pp)
     l = pp->firstinst;
     do
     {
-        print("%d:\t0%o\t%d\t%d", l - pp->firstinst, l->type,
-              l->u2.left - pp->firstinst, l->u1.right - pp->firstinst);
+        print( "%d:\t0%o\t%d\t%d", l - pp->firstinst, l->type,
+               l->u2.left - pp->firstinst, l->u1.right - pp->firstinst );
         if (l->type == RUNE)
         {
-            print("\t%C\n", l->u1.r);
+            print( "\t%C\n", l->u1.r );
         }
         else if (l->type == CCLASS || l->type == NCCLASS)
         {
-            print("\t[");
+            print( "\t[" );
             if (l->type == NCCLASS)
             {
-                print("^");
+                print( "^" );
             }
             for (p = l->u1.cp->spans; p < l->u1.cp->end; p += 2)
                 if (p[0] == p[1])
                 {
-                    print("%C", p[0]);
+                    print( "%C", p[0] );
                 }
                 else
                 {
-                    print("%C-%C", p[0], p[1]);
+                    print( "%C-%C", p[0], p[1] );
                 }
-            print("]\n");
+            print( "]\n" );
         }
         else
         {
-            print("\n");
+            print( "\n" );
         }
     }
     while (l++->type);
@@ -723,27 +724,27 @@ dump(Reprog* pp)
 #endif
 
 static  Reclass*
-newclass(void)
+newclass( void )
 {
     if (nclass >= NCLASS)
     {
-        regerr2("too many character classes; limit", NCLASS + '0');
+        regerr2( "too many character classes; limit", NCLASS + '0' );
     }
-    return &(classp[nclass++]);
+    return &( classp[nclass++] );
 }
 
 static  int
-nextc(Rune* rp)
+nextc( Rune* rp )
 {
     if (lexdone)
     {
         *rp = 0;
         return 1;
     }
-    exprp += chartorune(rp, exprp);
+    exprp += chartorune( rp, exprp );
     if (*rp == '\\')
     {
-        exprp += chartorune(rp, exprp);
+        exprp += chartorune( rp, exprp );
         return 1;
     }
     if (*rp == 0)
@@ -754,11 +755,11 @@ nextc(Rune* rp)
 }
 
 static  int
-lex(int literal, int dot_type)
+lex( int literal, int dot_type )
 {
     int quoted;
 
-    quoted = nextc(&yyrune);
+    quoted = nextc( &yyrune );
     if (literal || quoted)
     {
         if (yyrune == 0)
@@ -797,7 +798,7 @@ lex(int literal, int dot_type)
 }
 
 static int
-bldcclass(void)
+bldcclass( void )
 {
     int type;
     Rune r[NCCRUNE];
@@ -812,11 +813,11 @@ bldcclass(void)
     /* look ahead for negation */
     /* SPECIAL CASE!!! negated classes don't match \n */
     ep = r;
-    quoted = nextc(&rune);
+    quoted = nextc( &rune );
     if (!quoted && rune == '^')
     {
         type = NCCLASS;
-        quoted = nextc(&rune);
+        quoted = nextc( &rune );
         *ep++ = '\n';
         *ep++ = '\n';
     }
@@ -826,7 +827,7 @@ bldcclass(void)
     {
         if (rune == 0)
         {
-            rcerror("malformed '[]'");
+            rcerror( "malformed '[]'" );
             return 0;
         }
         if (!quoted && rune == ']')
@@ -837,23 +838,23 @@ bldcclass(void)
         {
             if (ep == r)
             {
-                rcerror("malformed '[]'");
+                rcerror( "malformed '[]'" );
                 return 0;
             }
-            quoted = nextc(&rune);
-            if ((!quoted && rune == ']') || rune == 0)
+            quoted = nextc( &rune );
+            if (( !quoted && rune == ']' ) || rune == 0)
             {
-                rcerror("malformed '[]'");
+                rcerror( "malformed '[]'" );
                 return 0;
             }
-            *(ep - 1) = rune;
+            *( ep - 1 ) = rune;
         }
         else
         {
             *ep++ = rune;
             *ep++ = rune;
         }
-        quoted = nextc(&rune);
+        quoted = nextc( &rune );
     }
 
     /* sort on span start */
@@ -903,23 +904,23 @@ bldcclass(void)
 }
 
 static  Reprog*
-regcomp1(char* s, int literal, int dot_type)
+regcomp1( char* s, int literal, int dot_type )
 {
     int token;
     Reprog* volatile pp;
 
     /* get memory for the program */
-    pp = malloc(sizeof(Reprog) + 6 * sizeof(Reinst)*strlen(s));
+    pp = malloc( sizeof( Reprog ) + 6 * sizeof( Reinst )*strlen( s ) );
     if (pp == 0)
     {
-        regerror9("out of memory");
+        regerror9( "out of memory" );
         return 0;
     }
     freep = pp->firstinst;
     classp = pp->class;
     errors = 0;
 
-    if (setjmp(regkaboom))
+    if (setjmp( regkaboom ))
     {
         goto out;
     }
@@ -936,67 +937,67 @@ regcomp1(char* s, int literal, int dot_type)
     cursubid = 0;
 
     /* Start with a low priority operator to prime parser */
-    pushator(START - 1);
-    while ((token = lex(literal, dot_type)) != END)
+    pushator( START - 1 );
+    while (( token = lex( literal, dot_type ) ) != END)
     {
-        if ((token & 0300) == OPERATOR)
+        if (( token & 0300 ) == OPERATOR)
         {
             operator(token);
         }
         else
         {
-            operand(token);
+            operand( token );
         }
     }
 
     /* Close with a low priority operator */
-    evaluntil(START);
+    evaluntil( START );
 
     /* Force END */
-    operand(END);
-    evaluntil(START);
+    operand( END );
+    evaluntil( START );
 #ifdef DEBUG
     dumpstack();
 #endif
     if (nbra)
     {
-        rcerror("unmatched left paren");
+        rcerror( "unmatched left paren" );
     }
     --andp; /* points to first and only operand */
     pp->startinst = andp->first;
 #ifdef DEBUG
-    dump(pp);
+    dump( pp );
 #endif
-    pp = optimize(pp);
+    pp = optimize( pp );
 #ifdef DEBUG
-    print("start: %d\n", andp->first - pp->firstinst);
-    dump(pp);
+    print( "start: %d\n", andp->first - pp->firstinst );
+    dump( pp );
 #endif
 out:
     if (errors)
     {
-        free(pp);
+        free( pp );
         pp = 0;
     }
     return pp;
 }
 
 extern  Reprog*
-regcomp9(char* s)
+regcomp9( char* s )
 {
-    return regcomp1(s, 0, ANY);
+    return regcomp1( s, 0, ANY );
 }
 
 extern  Reprog*
-regcomplit9(char* s)
+regcomplit9( char* s )
 {
-    return regcomp1(s, 1, ANY);
+    return regcomp1( s, 1, ANY );
 }
 
 extern  Reprog*
-regcompnl9(char* s)
+regcompnl9( char* s )
 {
-    return regcomp1(s, 0, ANYNL);
+    return regcomp1( s, 0, ANYNL );
 }
 
 /*************
@@ -1009,11 +1010,11 @@ regcompnl9(char* s)
  *     <0 if we ran out of _relist space
  */
 static int
-regexec1(const Reprog* progp,   /* program to run */
-         char* bol,  /* string to run machine on */
-         Resub* mp,  /* subexpression elements */
-         int ms,     /* number of elements at mp */
-         Reljunk* j
+regexec1( const Reprog* progp,   /* program to run */
+          char* bol,  /* string to run machine on */
+          Resub* mp,  /* subexpression elements */
+          int ms,     /* number of elements at mp */
+          Reljunk* j
         )
 {
     int flag = 0;
@@ -1051,7 +1052,7 @@ regexec1(const Reprog* progp,   /* program to run */
             switch (j->starttype)
             {
             case RUNE:
-                p = utfrune(s, j->startchar);
+                p = utfrune( s, j->startchar );
                 if (p == 0 || s == j->eol)
                 {
                     return match;
@@ -1063,7 +1064,7 @@ regexec1(const Reprog* progp,   /* program to run */
                 {
                     break;
                 }
-                p = utfrune(s, '\n');
+                p = utfrune( s, '\n' );
                 if (p == 0 || s == j->eol)
                 {
                     return match;
@@ -1072,14 +1073,14 @@ regexec1(const Reprog* progp,   /* program to run */
                 break;
             }
         }
-        r = *(uchar*)s;
+        r = *( uchar* ) s;
         if (r < Runeself)
         {
             n = 1;
         }
         else
         {
-            n = chartorune(&r, s);
+            n = chartorune( &r, s );
         }
 
         /* switch run lists */
@@ -1092,7 +1093,7 @@ regexec1(const Reprog* progp,   /* program to run */
         /* Add first instruction to current list */
         if (match == 0)
         {
-            _renewemptythread(tl, progp->startinst, ms, s);
+            _renewemptythread( tl, progp->startinst, ms, s );
         }
 
         /* Execute machine until current list is empty */
@@ -1105,7 +1106,7 @@ regexec1(const Reprog* progp,   /* program to run */
                 case RUNE:  /* regular character */
                     if (inst->u1.r == r)
                     {
-                        if (_renewthread(nl, inst->u2.next, ms, &tlp->se) == nle)
+                        if (_renewthread( nl, inst->u2.next, ms, &tlp->se ) == nle)
                         {
                             return -1;
                         }
@@ -1119,19 +1120,19 @@ regexec1(const Reprog* progp,   /* program to run */
                     continue;
                 case ANY:
                     if (r != '\n')
-                        if (_renewthread(nl, inst->u2.next, ms, &tlp->se) == nle)
+                        if (_renewthread( nl, inst->u2.next, ms, &tlp->se ) == nle)
                         {
                             return -1;
                         }
                     break;
                 case ANYNL:
-                    if (_renewthread(nl, inst->u2.next, ms, &tlp->se) == nle)
+                    if (_renewthread( nl, inst->u2.next, ms, &tlp->se ) == nle)
                     {
                         return -1;
                     }
                     break;
                 case BOL:
-                    if (s == bol || *(s - 1) == '\n')
+                    if (s == bol || *( s - 1 ) == '\n')
                     {
                         continue;
                     }
@@ -1147,7 +1148,7 @@ regexec1(const Reprog* progp,   /* program to run */
                     for (rp = inst->u1.cp->spans; rp < ep; rp += 2)
                         if (r >= rp[0] && r <= rp[1])
                         {
-                            if (_renewthread(nl, inst->u2.next, ms, &tlp->se) == nle)
+                            if (_renewthread( nl, inst->u2.next, ms, &tlp->se ) == nle)
                             {
                                 return -1;
                             }
@@ -1162,14 +1163,14 @@ regexec1(const Reprog* progp,   /* program to run */
                             break;
                         }
                     if (rp == ep)
-                        if (_renewthread(nl, inst->u2.next, ms, &tlp->se) == nle)
+                        if (_renewthread( nl, inst->u2.next, ms, &tlp->se ) == nle)
                         {
                             return -1;
                         }
                     break;
                 case OR:
                     /* evaluate right choice later */
-                    if (_renewthread(tlp, inst->u1.right, ms, &tlp->se) == tle)
+                    if (_renewthread( tlp, inst->u1.right, ms, &tlp->se ) == tle)
                     {
                         return -1;
                     }
@@ -1180,7 +1181,7 @@ regexec1(const Reprog* progp,   /* program to run */
                     tlp->se.m[0].e.ep = s;
                     if (mp != 0)
                     {
-                        _renewmatch(mp, ms, &tlp->se);
+                        _renewmatch( mp, ms, &tlp->se );
                     }
                     break;
                 }
@@ -1199,26 +1200,26 @@ regexec1(const Reprog* progp,   /* program to run */
 }
 
 static int
-regexec2(const Reprog* progp,   /* program to run */
-         char* bol,  /* string to run machine on */
-         Resub* mp,  /* subexpression elements */
-         int ms,     /* number of elements at mp */
-         Reljunk* j
+regexec2( const Reprog* progp,   /* program to run */
+          char* bol,  /* string to run machine on */
+          Resub* mp,  /* subexpression elements */
+          int ms,     /* number of elements at mp */
+          Reljunk* j
         )
 {
     int rv;
     Relist* relist0, *relist1;
 
     /* mark space */
-    relist0 = malloc(BIGLISTSIZE*sizeof(Relist));
+    relist0 = malloc( BIGLISTSIZE * sizeof( Relist ) );
     if (relist0 == nil)
     {
         return -1;
     }
-    relist1 = malloc(BIGLISTSIZE*sizeof(Relist));
+    relist1 = malloc( BIGLISTSIZE * sizeof( Relist ) );
     if (relist1 == nil)
     {
-        free(relist1);
+        free( relist1 );
         return -1;
     }
     j->relist[0] = relist0;
@@ -1226,17 +1227,17 @@ regexec2(const Reprog* progp,   /* program to run */
     j->reliste[0] = relist0 + BIGLISTSIZE - 2;
     j->reliste[1] = relist1 + BIGLISTSIZE - 2;
 
-    rv = regexec1(progp, bol, mp, ms, j);
-    free(relist0);
-    free(relist1);
+    rv = regexec1( progp, bol, mp, ms, j );
+    free( relist0 );
+    free( relist1 );
     return rv;
 }
 
 extern int
-regexec9(const Reprog* progp,   /* program to run */
-         char* bol,  /* string to run machine on */
-         Resub* mp,  /* subexpression elements */
-         int ms)     /* number of elements at mp */
+regexec9( const Reprog* progp,   /* program to run */
+          char* bol,  /* string to run machine on */
+          Resub* mp,  /* subexpression elements */
+          int ms )     /* number of elements at mp */
 {
     Reljunk j;
     Relist relist0[LISTSIZE], relist1[LISTSIZE];
@@ -1273,15 +1274,15 @@ regexec9(const Reprog* progp,   /* program to run */
     /* mark space */
     j.relist[0] = relist0;
     j.relist[1] = relist1;
-    j.reliste[0] = relist0 + nelem(relist0) - 2;
-    j.reliste[1] = relist1 + nelem(relist1) - 2;
+    j.reliste[0] = relist0 + nelem( relist0 ) - 2;
+    j.reliste[1] = relist1 + nelem( relist1 ) - 2;
 
-    rv = regexec1(progp, bol, mp, ms, &j);
+    rv = regexec1( progp, bol, mp, ms, &j );
     if (rv >= 0)
     {
         return rv;
     }
-    rv = regexec2(progp, bol, mp, ms, &j);
+    rv = regexec2( progp, bol, mp, ms, &j );
     if (rv >= 0)
     {
         return rv;
@@ -1295,11 +1296,11 @@ regexec9(const Reprog* progp,   /* program to run */
 
 /* substitute into one string using the matches from the last regexec() */
 extern  void
-regsub9(char* sp,   /* source string */
-        char* dp,   /* destination string */
-        int dlen,
-        Resub* mp,  /* subexpression elements */
-        int ms)     /* number of elements pointed to by mp */
+regsub9( char* sp,   /* source string */
+         char* dp,   /* destination string */
+         int dlen,
+         Resub* mp,  /* subexpression elements */
+         int ms )     /* number of elements pointed to by mp */
 {
     char* ssp, *ep;
     int i;
@@ -1350,7 +1351,7 @@ regsub9(char* sp,   /* source string */
         }
         else if (*sp == '&')
         {
-            if (mp[0].s.sp != 0 && mp != 0 && ms>0)
+            if (mp[0].s.sp != 0 && mp != 0 && ms > 0)
                 if (mp[0].s.sp != 0)
                     for (ssp = mp[0].s.sp;
                             ssp < mp[0].e.ep; ssp++)
@@ -1376,15 +1377,15 @@ regsub9(char* sp,   /* source string */
  **************/
 
 void
-regerror9(char* s)
+regerror9( char* s )
 {
     char buf[132];
 
-    strcpy(buf, "regerror: ");
-    strcat(buf, s);
-    strcat(buf, "\n");
-    write(2, buf, strlen(buf));
-    exits("regerr");
+    strcpy( buf, "regerror: " );
+    strcat( buf, s );
+    strcat( buf, "\n" );
+    write( 2, buf, strlen( buf ) );
+    exits( "regerr" );
 }
 
 /**************
@@ -1397,11 +1398,11 @@ regerror9(char* s)
  *     <0 if we ran out of _relist space
  */
 static int
-rregexec1(const Reprog* progp,  /* program to run */
-          Rune* bol,      /* string to run machine on */
-          Resub* mp,      /* subexpression elements */
-          int ms,         /* number of elements at mp */
-          Reljunk* j)
+rregexec1( const Reprog* progp,  /* program to run */
+           Rune* bol,      /* string to run machine on */
+           Resub* mp,      /* subexpression elements */
+           int ms,         /* number of elements at mp */
+           Reljunk* j )
 {
     int flag = 0;
     Reinst* inst;
@@ -1437,7 +1438,7 @@ rregexec1(const Reprog* progp,  /* program to run */
             switch (j->starttype)
             {
             case RUNE:
-                p = runestrchr(s, j->startchar);
+                p = runestrchr( s, j->startchar );
                 if (p == 0 || p == j->reol)
                 {
                     return match;
@@ -1449,7 +1450,7 @@ rregexec1(const Reprog* progp,  /* program to run */
                 {
                     break;
                 }
-                p = runestrchr(s, '\n');
+                p = runestrchr( s, '\n' );
                 if (p == 0 || s == j->reol)
                 {
                     return match;
@@ -1469,7 +1470,7 @@ rregexec1(const Reprog* progp,  /* program to run */
         nl->inst = 0;
 
         /* Add first instruction to current list */
-        _rrenewemptythread(tl, progp->startinst, ms, s);
+        _rrenewemptythread( tl, progp->startinst, ms, s );
 
         /* Execute machine until current list is empty */
         for (tlp = tl; tlp->inst; tlp++)
@@ -1480,7 +1481,7 @@ rregexec1(const Reprog* progp,  /* program to run */
                 {
                 case RUNE:  /* regular character */
                     if (inst->u1.r == r)
-                        if (_renewthread(nl, inst->u2.next, ms, &tlp->se) == nle)
+                        if (_renewthread( nl, inst->u2.next, ms, &tlp->se ) == nle)
                         {
                             return -1;
                         }
@@ -1493,19 +1494,19 @@ rregexec1(const Reprog* progp,  /* program to run */
                     continue;
                 case ANY:
                     if (r != '\n')
-                        if (_renewthread(nl, inst->u2.next, ms, &tlp->se) == nle)
+                        if (_renewthread( nl, inst->u2.next, ms, &tlp->se ) == nle)
                         {
                             return -1;
                         }
                     break;
                 case ANYNL:
-                    if (_renewthread(nl, inst->u2.next, ms, &tlp->se) == nle)
+                    if (_renewthread( nl, inst->u2.next, ms, &tlp->se ) == nle)
                     {
                         return -1;
                     }
                     break;
                 case BOL:
-                    if (s == bol || *(s - 1) == '\n')
+                    if (s == bol || *( s - 1 ) == '\n')
                     {
                         continue;
                     }
@@ -1521,7 +1522,7 @@ rregexec1(const Reprog* progp,  /* program to run */
                     for (rp = inst->u1.cp->spans; rp < ep; rp += 2)
                         if (r >= rp[0] && r <= rp[1])
                         {
-                            if (_renewthread(nl, inst->u2.next, ms, &tlp->se) == nle)
+                            if (_renewthread( nl, inst->u2.next, ms, &tlp->se ) == nle)
                             {
                                 return -1;
                             }
@@ -1536,14 +1537,14 @@ rregexec1(const Reprog* progp,  /* program to run */
                             break;
                         }
                     if (rp == ep)
-                        if (_renewthread(nl, inst->u2.next, ms, &tlp->se) == nle)
+                        if (_renewthread( nl, inst->u2.next, ms, &tlp->se ) == nle)
                         {
                             return -1;
                         }
                     break;
                 case OR:
                     /* evaluate right choice later */
-                    if (_renewthread(tlp, inst->u1.right, ms, &tlp->se) == tle)
+                    if (_renewthread( tlp, inst->u1.right, ms, &tlp->se ) == tle)
                     {
                         return -1;
                     }
@@ -1554,7 +1555,7 @@ rregexec1(const Reprog* progp,  /* program to run */
                     tlp->se.m[0].e.rep = s;
                     if (mp != 0)
                     {
-                        _renewmatch(mp, ms, &tlp->se);
+                        _renewmatch( mp, ms, &tlp->se );
                     }
                     break;
                 }
@@ -1573,11 +1574,11 @@ rregexec1(const Reprog* progp,  /* program to run */
 }
 
 static int
-rregexec2(const Reprog* progp,  /* program to run */
-          Rune* bol,  /* string to run machine on */
-          Resub* mp,  /* subexpression elements */
-          int ms,     /* number of elements at mp */
-          Reljunk* j
+rregexec2( const Reprog* progp,  /* program to run */
+           Rune* bol,  /* string to run machine on */
+           Resub* mp,  /* subexpression elements */
+           int ms,     /* number of elements at mp */
+           Reljunk* j
          )
 {
     Relist relist0[5 * LISTSIZE], relist1[5 * LISTSIZE];
@@ -1585,17 +1586,17 @@ rregexec2(const Reprog* progp,  /* program to run */
     /* mark space */
     j->relist[0] = relist0;
     j->relist[1] = relist1;
-    j->reliste[0] = relist0 + nelem(relist0) - 2;
-    j->reliste[1] = relist1 + nelem(relist1) - 2;
+    j->reliste[0] = relist0 + nelem( relist0 ) - 2;
+    j->reliste[1] = relist1 + nelem( relist1 ) - 2;
 
-    return rregexec1(progp, bol, mp, ms, j);
+    return rregexec1( progp, bol, mp, ms, j );
 }
 
 extern int
-rregexec9(const Reprog* progp,  /* program to run */
-          Rune* bol,  /* string to run machine on */
-          Resub* mp,  /* subexpression elements */
-          int ms)     /* number of elements at mp */
+rregexec9( const Reprog* progp,  /* program to run */
+           Rune* bol,  /* string to run machine on */
+           Resub* mp,  /* subexpression elements */
+           int ms )     /* number of elements at mp */
 {
     Reljunk j;
     Relist relist0[LISTSIZE], relist1[LISTSIZE];
@@ -1632,15 +1633,15 @@ rregexec9(const Reprog* progp,  /* program to run */
     /* mark space */
     j.relist[0] = relist0;
     j.relist[1] = relist1;
-    j.reliste[0] = relist0 + nelem(relist0) - 2;
-    j.reliste[1] = relist1 + nelem(relist1) - 2;
+    j.reliste[0] = relist0 + nelem( relist0 ) - 2;
+    j.reliste[1] = relist1 + nelem( relist1 ) - 2;
 
-    rv = rregexec1(progp, bol, mp, ms, &j);
+    rv = rregexec1( progp, bol, mp, ms, &j );
     if (rv >= 0)
     {
         return rv;
     }
-    rv = rregexec2(progp, bol, mp, ms, &j);
+    rv = rregexec2( progp, bol, mp, ms, &j );
     if (rv >= 0)
     {
         return rv;
@@ -1654,16 +1655,16 @@ rregexec9(const Reprog* progp,  /* program to run */
 
 /* substitute into one string using the matches from the last regexec() */
 extern  void
-rregsub9(Rune* sp,  /* source string */
-         Rune* dp,   /* destination string */
-         int dlen,
-         Resub* mp,  /* subexpression elements */
-         int ms)     /* number of elements pointed to by mp */
+rregsub9( Rune* sp,  /* source string */
+          Rune* dp,   /* destination string */
+          int dlen,
+          Resub* mp,  /* subexpression elements */
+          int ms )     /* number of elements pointed to by mp */
 {
     Rune* ssp, *ep;
     int i;
 
-    ep = dp + (dlen / sizeof(Rune)) - 1;
+    ep = dp + ( dlen / sizeof( Rune ) ) - 1;
     while (*sp != '\0')
     {
         if (*sp == '\\')
@@ -1709,7 +1710,7 @@ rregsub9(Rune* sp,  /* source string */
         }
         else if (*sp == '&')
         {
-            if (mp[0].s.rsp != 0 && mp != 0 && ms>0)
+            if (mp[0].s.rsp != 0 && mp != 0 && ms > 0)
                 if (mp[0].s.rsp != 0)
                     for (ssp = mp[0].s.rsp;
                             ssp < mp[0].e.rep; ssp++)

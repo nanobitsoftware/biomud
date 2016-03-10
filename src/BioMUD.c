@@ -1387,7 +1387,7 @@ void GiveError( char* wrong, BOOL KillProcess )
 {
     if (wrong == NULL)
     {
-        MessageBox( MudMain, "An unknown error has occured, please restart BioMud and try again.", "BioMud Error", MB_ICONSTOP | MB_OK );
+        MessageBox( GetFocus(), "An unknown error has occured, please restart BioMud and try again.", "BioMud Error", MB_ICONSTOP | MB_OK );
         if (KillProcess)
         {
             exit( 0 );
@@ -1398,7 +1398,7 @@ void GiveError( char* wrong, BOOL KillProcess )
         }
     }
 
-    MessageBox( MudMain, wrong, "BioMUD Error", MB_ICONSTOP | MB_OK );
+    MessageBox( GetFocus(), wrong, "BioMUD Error", MB_ICONSTOP | MB_OK );
 
     if (KillProcess)
     {
@@ -1413,7 +1413,7 @@ void GiveError( char* wrong, BOOL KillProcess )
 /* GiveNotify: Should give a notify box with an Okay. This is NOT an error.*/
 void GiveNotify( char* wrong )
 {
-    MessageBox( MudMain, wrong, "BioMUD Notification", MB_ICONINFORMATION | MB_TASKMODAL | MB_OK );
+    MessageBox( GetFocus(), wrong, "BioMUD Notification", MB_ICONINFORMATION | MB_TASKMODAL | MB_OK );
     return;
 }
 
@@ -1458,7 +1458,7 @@ BOOL Exclaim_YesNo( char* message )
         return FALSE;
     }
 
-    ret = MessageBoxEx( MudMain, message, "BioMud Exclamation!", MB_YESNO | MB_ICONEXCLAMATION | MB_TOPMOST | MB_SETFOREGROUND | MB_DEFBUTTON2, 0 );
+    ret = MessageBoxEx( GetFocus(), message, "BioMud Exclamation!", MB_YESNO | MB_ICONEXCLAMATION | MB_TOPMOST | MB_SETFOREGROUND | MB_DEFBUTTON2, 0 );
 
     if (ret == IDYES)
     {

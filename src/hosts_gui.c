@@ -63,7 +63,7 @@ creation, editing, deleting, etc.
 #define ID_BTN_ADD    2005
 #define ID_BTN_CHK    2006
 #define ID_CHK_ENABLE 2007
-#define ID_BTN_RESET  2008
+#define ID_BTN_EDIT   2008
 #define ID_BTN_NEW    2009
 #define ID_INPUT_NAME 3000
 #define ID_INPUT_HOST 3001
@@ -86,8 +86,9 @@ LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam );
 #define BTN_HEIGHT 25          // Height of buttons
 #define HOSTLEN 1024           // 1024 chars for math and stuff.
 #define LOGINLEN (HOSTLEN * 2) // For login string length.
-HWND name, host, port, desc, command, enabled;
-
+HWND name, host, port, desc, command, enabled, hostlist, help;
+int host_id; // The ID we're reading from the DB. If this is -1, then we're not reading anything (likely a 'new' host)
+bool modified; // Has the text been modified?
 extern sqlite3* db;
 
 unsigned int cur_idx;          // Current view of host. This will be the idx in the database, so we can write to/from.
@@ -170,6 +171,8 @@ void create_host_gui( void )
         SetFocus( HostWindow ); // If it exists already, do NOT recreate it.
         return;
     }
+    modified = FALSE;
+    host_id = -1; // We're not editing anything, yet.
 
     /* Let's start creating the window.*/
     host_window = create_parent( "BioMUD Host Editor" );
@@ -204,13 +207,13 @@ void create_host_gui( void )
     AddEdit_Parent( host_window, "inputcmd", host_window->width / 2 + 40, 280,
                     ( host_window->width / 2 ) - 80, 80, 0, ID_INPUT_COMM, 0, TRUE );
 
-    AddButton_Parent( host_window, "Reset", host_window->width / 2 + 40, 380,
-                      BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_RESET, 0, TRUE );
+    AddButton_Parent( host_window, "Edit", host_window->width / 2 + 40, 380,
+                      BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_EDIT, 0, TRUE );
     AddButton_Parent( host_window, "New", host_window->width / 2 + ( BTN_WIDTH * 1 + 60 ),
                       380, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_NEW, 0, TRUE );
     AddButton_Parent( host_window, "Save", host_window->width / 2 + ( BTN_WIDTH * 2 + 100 ),
                       380, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_OK, 0, TRUE );
-    AddButton_Parent( host_window, "Cancel", host_window->width / 2 + ( BTN_WIDTH * 3 + 120 ),
+    AddButton_Parent( host_window, "Delete", host_window->width / 2 + ( BTN_WIDTH * 3 + 120 ),
                       380, BTN_WIDTH, BTN_HEIGHT, 0, ID_BTN_CANCEL, 0, TRUE );
 
     AddStatic_Parent( host_window, "Helpinfo", host_window->width / 2 + 40, 430,
@@ -222,8 +225,8 @@ void create_host_gui( void )
 
     // Set up the list control for the database data.
     clist_add_col( host_window, "hostlist", 60, "Index" );
-    clist_add_col( host_window, "hostlist", 60, "Name" );
-    clist_add_col( host_window, "hostlist", ( host_window->width / 2 ) - 120, "Host:Port" );
+    clist_add_col( host_window, "hostlist", 140, "Name" );
+    clist_add_col( host_window, "hostlist", ( host_window->width / 2 ) - 205, "Host:Port" );
 
     get_control( host_window, "hostlist" )->clist_index = 0; // This looks odd. But it's needed so we can populate the list.
 
@@ -245,6 +248,8 @@ void create_host_gui( void )
         desc = get_control( host_window, "inputdesc" )->handle;
         command = get_control( host_window, "inputcmd" )->handle;
         enabled = get_control( host_window, "Enabled" )->handle;
+        hostlist = get_control( host_window, "hostlist" )->handle;
+        help = get_control( host_window, "Helpinfo" )->handle;
     }
     CTRL_ChangeFont( host_window, "Enabled", "Courier" );
     populate_hosts(); // Populate the list control with database data.
@@ -311,6 +316,16 @@ void host_set_tip( void )
                       " not be able to connect to this server." );
         return;
     }
+    else if (focus == hostlist)
+    {
+        CTRL_SetText( host_window, "Helpinfo", "This area will list the currently assigned and saved hosts for BioMUD. Single clicking on "
+                      "one will allow you to edit it (be sure to save!) - Double clicking will cause it to attempt a connection." );
+    }
+    else if (focus == help)
+    {
+        CTRL_SetText( host_window, "Helpinfo", "Oh, well hello there. You probably should not click here, as I do not do anything. I just list some words "
+                      "after you click on something else. Nope, nothing at all. Nothing to see here. Move along please. Please. Stop clicking on me. STOP!" );
+    }
     else
     {
         // Set the default text.
@@ -367,16 +382,49 @@ LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
             {
                 host_set_tip();
             }
-        case ID_BTN_CANCEL:
+        case ID_BTN_CANCEL: // Now used for 'delete'
         {
+            int idx; // for selected index in list.
+            int dbidx; // Idx in the DB. Pulled from the list itself.
+            char str[2048];
+            char strname[2048];
+            char strhost[2048];
+            char strid[2048];
+
+            idx = CTRL_clist_get_sel_idx( host_window, "hostlist" );
+
+            if (idx < 0)
+            {
+                GiveError( "Nothing to delete. Please select a valid host profile for deletion.", FALSE );
+                break;
+            }
+            ListView_GetItemText( get_control( host_window, "hostlist" )->handle, idx, 1, strname, 2048 );
+            ListView_GetItemText( get_control( host_window, "hostlist" )->handle, idx, 2, strhost, 2048 );
+            ListView_GetItemText( get_control( host_window, "hostlist" )->handle, idx, 0, strid, 2048 );
+            dbidx = atoi( strid );
+            sprintf( str, "Are you sure you wish to delete Index %d - %s (%s)?\nSelect 'No' to Cancel, 'Yes' to confirm.", dbidx, strname, strhost );
+            if (Exclaim_YesNo( str ))
+            {
+                // We clicked yes. So let's delete this sumbitch.
+                DB_del_host( dbidx );
+                // No clear the list and repopulate it.
+                CTRL_List_clearlist( host_window, "hostlist" ); // Clear the list before we update it.
+                populate_hosts();
+                GiveNotify( "Host Deleted Successfully." );
+                break;
+            }
+            break;
+
+            /*host_id = -1;
+            modified = FALSE;
             DestroyParent( host_window );
             host_window = NULL;
             DestroyWindow( HostWindow );
             HostWindow = NULL;
             SetFocus( MudMain );
-            return DefWindowProc( hwnd, msg, wparam, lparam );
+            return DefWindowProc( hwnd, msg, wparam, lparam );*/
         }
-        case ID_BTN_RESET:
+        case ID_BTN_EDIT:
         {
             // Reset all the data in the fields.
             CTRL_SetText( host_window, "inputname", "" );
@@ -384,6 +432,107 @@ LRESULT APIENTRY host_proc( HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam )
             CTRL_SetText( host_window, "inputdesc", "" );
             CTRL_SetText( host_window, "inputcmd", "" );
             CTRL_SetText( host_window, "inputport", "" );
+            break;
+        }
+        case ID_BTN_NEW:
+        {
+            CTRL_SetText( host_window, "inputname", "" );
+            CTRL_SetText( host_window, "inputip", "" );
+            CTRL_SetText( host_window, "inputdesc", "" );
+            CTRL_SetText( host_window, "inputcmd", "" );
+            CTRL_SetText( host_window, "inputport", "" );
+            host_id = -1; // We're doing a new entry.
+            SetFocus( name );
+            break;
+        }
+        case ID_BTN_OK: // This is actually the 'save' button. I just got too lazy (forgot) to rename it.
+        {
+            char sql[2048 * 2];
+            char* str_name;
+            char* str_desc;
+            char* str_host;
+            char* str_connect;
+            char* str_port;
+            int real_port;
+            bool err;
+
+            real_port = 0;
+            err = FALSE;
+            str_name = str_desc = str_host = str_connect = str_port = NULL; // Set them first.
+
+            str_name = CTRL_gettext( host_window, "inputname" );
+            str_desc = CTRL_gettext( host_window, "inputdesc" );
+            str_host = CTRL_gettext( host_window, "inputip" );
+            str_connect = CTRL_gettext( host_window, "inputcmd" );
+            str_port = CTRL_gettext( host_window, "inputport" );
+
+            // Do some basic error checking.
+            if (!str_name && !err)
+            {
+                GiveError( "You must supply a valid name for this host. Please try again.", FALSE );
+                err = TRUE;
+            }
+            if (!str_host && !err)
+            {
+                GiveError( "You must supply a valid host or IP for this host. Please try again.", FALSE );
+                err = TRUE;
+            }
+            if (!str_port && !err)
+            {
+                GiveError( "A valid port number must be given, between 0 and 65,000. Please try again.", FALSE );
+                err = TRUE;
+            }
+            if (!isnumber( str_port ) && !err)
+            {
+                GiveError( "A valid port number must be given, between 0 and 65,000. Please try again.", FALSE );
+                err = TRUE;
+            }
+
+            if (!err)
+            {
+                real_port = atoi( str_port );
+            }
+
+            if (( real_port <= 0 || real_port >= 65336 ) && !err)
+            {
+                GiveError( "A valid port number must be given, between 0 and 65,000. Please try again.", FALSE );
+                err = TRUE;
+            }
+            if (!err)
+            {
+                DB_add_host( host_id >= 0 ? host_id : -1, str_host, str_name, str_desc, str_connect, real_port, TRUE, TRUE );
+                err = TRUE; // So the cleanup code below fires. Crude hack, but saves code.
+
+                CTRL_List_clearlist( host_window, "hostlist" ); // Clear the list before we update it.
+                populate_hosts();
+            }
+
+            if (err)
+            {
+                // Clean up after ourselves. Mem leaks are bad.
+                if (str_name)
+                {
+                    free( str_name );
+                }
+                if (str_desc)
+                {
+                    free( str_desc );
+                }
+                if (str_host)
+                {
+                    free( str_host );
+                }
+                if (str_connect)
+                {
+                    free( str_connect );
+                }
+                if (str_port)
+                {
+                    free( str_port );
+                }
+                str_port = str_connect = str_host = str_desc = str_name = NULL;
+            }
+
             break;
         }
         }

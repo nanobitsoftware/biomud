@@ -2224,6 +2224,10 @@ void handle_input( char* in )
     {
         handle_var( in );
     }
+    else if (!strprefix( command, "#strfind" ))
+    {
+        find_term_regex( in );
+    }
     else if (!strprefix( command, "#showcommandhistory" )) // Show the command history.
     {
         int h = 0;

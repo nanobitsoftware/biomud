@@ -40,6 +40,7 @@
 #include <richedit.h>
 #include <assert.h>
 #include "BioMUD.h"
+#include "regex9\regexp9.h"
 
 char str_empty[1];
 char* string_space;
@@ -49,7 +50,7 @@ char* top_string;
 /* Simple string compare. Don't like the standard strcmp function,
 * so we'll use this one :-) */
 
-BOOL string_compare(const char* ostr, const char* tstr)
+BOOL string_compare( const char* ostr, const char* tstr )
 {
     if (ostr == NULL || tstr == NULL)
     {
@@ -57,7 +58,7 @@ BOOL string_compare(const char* ostr, const char* tstr)
     }
     for (; *ostr || *tstr; ostr++, tstr++)
     {
-        if (LOWER(*ostr) != LOWER(*tstr))
+        if (LOWER( *ostr ) != LOWER( *tstr ))
 
         {
             return FALSE;
@@ -69,7 +70,7 @@ BOOL string_compare(const char* ostr, const char* tstr)
 // Going to call nano_malloc directly here for not-so-obvious reasons.
 // This function is rolled, locally, for our memory manager.
 
-char* str_dup1(const char* str, char* file, int line)
+char* str_dup1( const char* str, char* file, int line )
 {
     char* result;
 
@@ -78,22 +79,22 @@ char* str_dup1(const char* str, char* file, int line)
         return NULL;
     }
 
-    result = (char*)nano_malloc(strlen(str) + 10, file, line);
+    result = ( char* ) nano_malloc( strlen( str ) + 10, file, line );
 
     //result = malloc(strlen(str)+2);
-    if (result == (char*)0)
+    if (result == ( char* ) 0)
     {
-        GiveError("Invalid Strdup. Exiting.", 1);
-        free(result);
+        GiveError( "Invalid Strdup. Exiting.", 1 );
+        free( result );
 
-        return (char*)0;
+        return ( char* ) 0;
     }
-    strcpy(result, str);
+    strcpy( result, str );
     return result;
 }
 
 /* Personal string search. Only searches for one char, not a whole string. */
-BOOL str_search(const char* str)
+BOOL str_search( const char* str )
 {
     const char* point = str;
 
@@ -127,7 +128,7 @@ BOOL str_search(const char* str)
         return TRUE;
     }
 }
-int str_ret(const char* str)
+int str_ret( const char* str )
 {
     const char* point = str;
     int i;
@@ -140,7 +141,7 @@ int str_ret(const char* str)
     }
     return 0;
 }
-void strip_junk(char* str)
+void strip_junk( char* str )
 {
     const char* point;
     char fleh[8000];
@@ -165,7 +166,7 @@ void strip_junk(char* str)
     return;
 }
 
-bool strprefix(const char* astr, const char* bstr)
+bool strprefix( const char* astr, const char* bstr )
 {
     if (astr == NULL)
     {
@@ -175,9 +176,9 @@ bool strprefix(const char* astr, const char* bstr)
     {
         return TRUE;
     }
-    for (; (*astr || *bstr) && *astr != '\0'; astr++, bstr++)
+    for (; ( *astr || *bstr ) && *astr != '\0'; astr++, bstr++)
     {
-        if (LOWER(*astr) != LOWER(*bstr))
+        if (LOWER( *astr ) != LOWER( *bstr ))
         {
             return TRUE;
         }
@@ -186,11 +187,11 @@ bool strprefix(const char* astr, const char* bstr)
     return FALSE;
 }
 
-char* one_argument(char* argument, char* arg_first)
+char* one_argument( char* argument, char* arg_first )
 {
     char cEnd;
 
-    while (isspace(*argument))
+    while (isspace( *argument ))
     {
         argument++;
     }
@@ -208,24 +209,24 @@ char* one_argument(char* argument, char* arg_first)
             argument++;
             break;
         }
-        *arg_first = LOWER(*argument);
+        *arg_first = LOWER( *argument );
         arg_first++;
         argument++;
     }
     *arg_first = '\0';
 
-    while (isspace(*argument))
+    while (isspace( *argument ))
     {
         argument++;
     }
 
     return argument;
 }
-char* script_strip(char* argument, char* arg_first)
+char* script_strip( char* argument, char* arg_first )
 {
     char cEnd;
 
-    while (isspace(*argument))
+    while (isspace( *argument ))
     {
         argument++;
     }
@@ -250,7 +251,7 @@ char* script_strip(char* argument, char* arg_first)
     }
     *arg_first = '\0';
 
-    while (isspace(*argument))
+    while (isspace( *argument ))
     {
         argument++;
     }
@@ -262,7 +263,7 @@ char* script_strip(char* argument, char* arg_first)
     return argument;
 }
 
-BOOL simple_str_match(char* input, char* pattern)
+BOOL simple_str_match( char* input, char* pattern )
 {
     char* inputPtr = input;
     char* whereInput = input;
@@ -297,7 +298,7 @@ BOOL simple_str_match(char* input, char* pattern)
 * was written for my wrote_tok function, which is only a development func.
 * Anyhow, i'll leave this function in incase it is needed. Perhaps we may
 * write a makel337(const *str) function :) -mike */
-char*  makeupper(char* str)
+char*  makeupper( char* str )
 {
     static char buf[2056] = "";
     static char buf2[100] = "";
@@ -321,99 +322,99 @@ char*  makeupper(char* str)
         switch (*point)
         {
         case 'a':
-            strcat(buf3, "A");
+            strcat( buf3, "A" );
             break;
         case 'b':
-            strcat(buf3, "B");
+            strcat( buf3, "B" );
             break;
         case 'c':
-            strcat(buf3, "C");
+            strcat( buf3, "C" );
             break;
         case 'd':
-            strcat(buf3, "D");
+            strcat( buf3, "D" );
             break;
         case 'e':
-            strcat(buf3, "E");
+            strcat( buf3, "E" );
             break;
         case 'f':
-            strcat(buf3, "F");
+            strcat( buf3, "F" );
             break;
         case 'g':
-            strcat(buf3, "G");
+            strcat( buf3, "G" );
             break;
         case 'h':
-            strcat(buf3, "H");
+            strcat( buf3, "H" );
             break;
         case 'i':
-            strcat(buf3, "I");
+            strcat( buf3, "I" );
             break;
         case 'j':
-            strcat(buf3, "J");
+            strcat( buf3, "J" );
             break;
         case 'k':
-            strcat(buf3, "K");
+            strcat( buf3, "K" );
             break;
         case 'l':
-            strcat(buf3, "L");
+            strcat( buf3, "L" );
             break;
         case 'm':
-            strcat(buf3, "M");
+            strcat( buf3, "M" );
             break;
         case 'n':
-            strcat(buf3, "N");
+            strcat( buf3, "N" );
             break;
         case 'o':
-            strcat(buf3, "O");
+            strcat( buf3, "O" );
             break;
         case 'p':
-            strcat(buf3, "P");
+            strcat( buf3, "P" );
             break;
         case 'q':
-            strcat(buf3, "Q");
+            strcat( buf3, "Q" );
             break;
         case 'r':
-            strcat(buf3, "R");
+            strcat( buf3, "R" );
             break;
         case 's':
-            strcat(buf3, "S");
+            strcat( buf3, "S" );
             break;
         case 't':
-            strcat(buf3, "T");
+            strcat( buf3, "T" );
             break;
         case 'u':
-            strcat(buf3, "U");
+            strcat( buf3, "U" );
             break;
         case 'v':
-            strcat(buf3, "V");
+            strcat( buf3, "V" );
             break;
         case 'w':
-            strcat(buf3, "W");
+            strcat( buf3, "W" );
             break;
         case 'x':
-            strcat(buf3, "X");
+            strcat( buf3, "X" );
             break;
         case 'y':
-            strcat(buf3, "Y");
+            strcat( buf3, "Y" );
             break;
         case 'z':
-            strcat(buf3, "Z");
+            strcat( buf3, "Z" );
             break;
         default:
-            strcat(buf3, buffer);
+            strcat( buf3, buffer );
             break;
         }
 
-        strcat(buf, buf3);
+        strcat( buf, buf3 );
         buf3[0] = '\0';
     }
 
-    return (char*)to_ret;
+    return ( char* ) to_ret;
 }
 
 /* Same as the makeupper function, but does the latter: Makes it all lowercase
 * and returns an actual string.
 */
-char*  makelower(char* str)
+char*  makelower( char* str )
 {
     static char buf[2056] = "";
     static char buf2[100] = "";
@@ -436,96 +437,96 @@ char*  makelower(char* str)
         switch (*point)
         {
         case 'A':
-            strcat(buf3, "a");
+            strcat( buf3, "a" );
             break;
         case 'B':
-            strcat(buf3, "b");
+            strcat( buf3, "b" );
             break;
         case 'C':
-            strcat(buf3, "c");
+            strcat( buf3, "c" );
             break;
         case 'D':
-            strcat(buf3, "d");
+            strcat( buf3, "d" );
             break;
         case 'E':
-            strcat(buf3, "e");
+            strcat( buf3, "e" );
             break;
         case 'F':
-            strcat(buf3, "f");
+            strcat( buf3, "f" );
             break;
         case 'G':
-            strcat(buf3, "g");
+            strcat( buf3, "g" );
             break;
         case 'H':
-            strcat(buf3, "h");
+            strcat( buf3, "h" );
             break;
         case 'I':
-            strcat(buf3, "i");
+            strcat( buf3, "i" );
             break;
         case 'J':
-            strcat(buf3, "j");
+            strcat( buf3, "j" );
             break;
         case 'K':
-            strcat(buf3, "k");
+            strcat( buf3, "k" );
             break;
         case 'L':
-            strcat(buf3, "l");
+            strcat( buf3, "l" );
             break;
         case 'M':
-            strcat(buf3, "m");
+            strcat( buf3, "m" );
             break;
         case 'N':
-            strcat(buf3, "n");
+            strcat( buf3, "n" );
             break;
         case 'O':
-            strcat(buf3, "o");
+            strcat( buf3, "o" );
             break;
         case 'P':
-            strcat(buf3, "p");
+            strcat( buf3, "p" );
             break;
         case 'Q':
-            strcat(buf3, "q");
+            strcat( buf3, "q" );
             break;
         case 'R':
-            strcat(buf3, "r");
+            strcat( buf3, "r" );
             break;
         case 'S':
-            strcat(buf3, "s");
+            strcat( buf3, "s" );
             break;
         case 'T':
-            strcat(buf3, "t");
+            strcat( buf3, "t" );
             break;
         case 'U':
-            strcat(buf3, "u");
+            strcat( buf3, "u" );
             break;
         case 'V':
-            strcat(buf3, "v");
+            strcat( buf3, "v" );
             break;
         case 'W':
-            strcat(buf3, "w");
+            strcat( buf3, "w" );
             break;
         case 'X':
-            strcat(buf3, "x");
+            strcat( buf3, "x" );
             break;
         case 'Y':
-            strcat(buf3, "y");
+            strcat( buf3, "y" );
             break;
         case 'Z':
-            strcat(buf3, "z");
+            strcat( buf3, "z" );
             break;
         default:
-            strcat(buf3, buffer);
+            strcat( buf3, buffer );
             break;
         }
 
-        strcat(buf, buf3);
+        strcat( buf, buf3 );
         buf3[0] = '\0';
     }
 
     return to_ret;
 }
 
-char* commaize(unsigned long long int x, char buf[])  // Turn a ULONG_INT into a comma string.
+char* commaize( unsigned long long int x, char buf[] )  // Turn a ULONG_INT into a comma string.
 // IE: 300000 = 300,000. Probably not the
 // most efficent way to do it, but ah well
 {
@@ -536,26 +537,26 @@ char* commaize(unsigned long long int x, char buf[])  // Turn a ULONG_INT into a
     buf[0] = '\0';
 
     temp[0] = '\0';
-    sprintf(temp, "%llu", x); // Yes yes, it's a hack.
+    sprintf( temp, "%llu", x ); // Yes yes, it's a hack.
 
     to_ret = temp;
 
     if (x <= 999)
     {
         buf[0] = '\0';
-        sprintf(&buf[0], "%llu", x);
+        sprintf( &buf[0], "%llu", x );
 
         return &buf[0];
     }
     else if (x > 999)
     {
-        point += strlen(temp);
+        point += strlen( temp );
 
         if (!*--point)
         {
             return to_ret;
         }
-        i = strlen(temp) - 1;
+        i = strlen( temp ) - 1;
         c = i / 3; // How many commas. :)
         i += c;
         temp[i + c + 1] = '\0';
@@ -565,7 +566,7 @@ char* commaize(unsigned long long int x, char buf[])  // Turn a ULONG_INT into a
             if (i < 0)
             {
                 buf[0] = '\0';
-                strcat(buf, temp);
+                strcat( buf, temp );
 
                 return to_ret;
             }
@@ -584,7 +585,7 @@ char* commaize(unsigned long long int x, char buf[])  // Turn a ULONG_INT into a
 
         to_ret = temp;
         buf[0] = '\0';
-        strcat(buf, temp);
+        strcat( buf, temp );
 
         return &buf[0];
     }
@@ -592,24 +593,24 @@ char* commaize(unsigned long long int x, char buf[])  // Turn a ULONG_INT into a
     return &buf[0];
 }
 
-LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
+LONG WINAPI MyUnhandledExceptionFilter( EXCEPTION_POINTERS* exceptionInfo )
 {
     DWORD exceptionCode = exceptionInfo->ExceptionRecord->ExceptionCode;
 
-    ShowWindow(MudMain, SW_HIDE);
+    ShowWindow( MudMain, SW_HIDE );
     switch (exceptionCode)
     {
     case EXCEPTION_ACCESS_VIOLATION:
-        GiveError("BioMUD has encountered an Access Violation Error. This is unrecoverable. BioMUD will now Exit.", TRUE);
+        GiveError( "BioMUD has encountered an Access Violation Error. This is unrecoverable. BioMUD will now Exit.", TRUE );
         break;
     case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
-        GiveError("BioMUD has encountered an Array out of bounds error. This is unrecoverable. BioMUD will now exit.", TRUE);
+        GiveError( "BioMUD has encountered an Array out of bounds error. This is unrecoverable. BioMUD will now exit.", TRUE );
         break;
     case EXCEPTION_STACK_OVERFLOW:
-        GiveError("BioMUD Has encountered a STack Overflow error. This is unrecoverable. BioMUD will now exit.", TRUE);
+        GiveError( "BioMUD Has encountered a STack Overflow error. This is unrecoverable. BioMUD will now exit.", TRUE );
         break;
     default:
-        GiveError("An unknown error has occured. BioMUD cannot continue running at this time.", TRUE);
+        GiveError( "An unknown error has occured. BioMUD cannot continue running at this time.", TRUE );
         break;
     }
 
@@ -628,7 +629,7 @@ LONG WINAPI MyUnhandledExceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 
 // strip_newline
 
-void strip_newline(char* str)
+void strip_newline( char* str )
 {
     int i;
     int len;
@@ -639,7 +640,7 @@ void strip_newline(char* str)
     {
         return;    // No string, nothing to do.
     }
-    len = strlen(str);
+    len = strlen( str );
 
     for (i = 0; i <= len; i++)
     {
@@ -678,9 +679,13 @@ int    rregexec(Reprog *prog, Rune *string, Resub *match, int msize)
 void rregsub(Rune *source, Rune *dest, int dlen, Resub *match, int msize)
 void regerror(char *msg)
 DESCRIPTION
-Regcomp compiles a regular expression and returns a pointer to the generated description. The space is allocated by malloc(3) and may be released by free. Regular expressions are exactly as in regexp9(7).
+Regcomp compiles a regular expression and returns a pointer to the generated description. The space is allocated by malloc(3) and may be released by free. Regular expressions are exactly as in
+regexp9(7).
 Regcomplit is like regcomp except that all characters are treated literally. Regcompnl is like regcomp except that the . metacharacter matches all characters, including newlines.
-Regexec matches a null-terminated string against the compiled regular expression in prog. If it matches, regexec returns 1 and fills in the array match with character pointers to the substrings of string that correspond to the parenthesized subexpressions of exp: match[i].sp points to the beginning and match[i].ep points just beyond the end of the ith substring. (Subexpression i begins at the ith left parenthesis, counting from 1.) Pointers in match[0] pick out the substring that corresponds to the whole regular expression. Unused elements of match are filled with zeros. Matches involving *, +, and ? are extended as far as possible. The number of array elements in match is given by msize. The structure of elements of match is:
+Regexec matches a null-terminated string against the compiled regular expression in prog. If it matches, regexec returns 1 and fills in the array match with character pointers to the
+substrings of string that correspond to the parenthesized subexpressions of exp: match[i].sp points to the beginning and match[i].ep points just beyond the end of the ith substring.
+(Subexpression i begins at the ith left parenthesis, counting from 1.) Pointers in match[0] pick out the substring that corresponds to the whole regular expression. Unused elements of
+match are filled with zeros. Matches involving *, +, and ? are extended as far as possible. The number of array elements in match is given by msize. The structure of elements of match is:
 typedef struct {
 union {
 char *sp;
@@ -692,8 +697,10 @@ Rune *rep;
 };
 } Resub;
 If match[0].sp is nonzero on entry, regexec starts matching at that point within string. If match[0].ep is nonzero on entry, the last character matched is the one preceding that point.
-Regsub places in dest a substitution instance of source in the context of the last regexec performed using match. Each instance of \n, where n is a digit, is replaced by the string delimited by match[n].sp and match[n].ep. Each instance of & is replaced by the string delimited by match[0].sp and match[0].ep. The substitution will always be null terminated and trimmed to fit into dlen bytes.
-Regerror, called whenever an error is detected in regcomp, writes the string msg on the standard error file and exits. Regerror can be replaced to perform special error processing. If the user supplied regerror returns rather than exits, regcomp will return 0.
+Regsub places in dest a substitution instance of source in the context of the last regexec performed using match. Each instance of \n, where n is a digit, is replaced by the string delimited by
+match[n].sp and match[n].ep. Each instance of & is replaced by the string delimited by match[0].sp and match[0].ep. The substitution will always be null terminated and trimmed to fit into dlen bytes.
+Regerror, called whenever an error is detected in regcomp, writes the string msg on the standard error file and exits. Regerror can be replaced to perform special error processing. If the user supplied
+regerror returns rather than exits, regcomp will return 0.
 Rregexec and rregsub are variants of regexec and regsub that use strings of Runes instead of strings of chars. With these routines, the rsp and rep fields of the match array elements should be used.
 SOURCE
 http://swtch.com/plan9port/unix
@@ -724,7 +731,7 @@ return 0;
 
 */
 
-void* check_match(char* str /* string to check*/, char* pattern /* pattern we check with */)
+void* check_match( char* str /* string to check*/, char* pattern /* pattern we check with */ )
 {
     /* Using void* because I plan to return a pointer to WHERE we want to look. This could be anything
     * and could even be a struct with multiple infos. That's why I have these wrappers; so I can change
@@ -738,9 +745,9 @@ void* check_match(char* str /* string to check*/, char* pattern /* pattern we ch
 /* enum_fonts: Will allow the user to select from a list of fixed-width fonts inside
 of their computer. It will also calculate width and height for other places.*/
 
-void enum_fonts(void)
+void enum_fonts( void )
 {
-    CHOOSEFONT cf = { sizeof(CHOOSEFONT) };
+    CHOOSEFONT cf = { sizeof( CHOOSEFONT ) };
     LOGFONT lf;
     LOGFONT of;
     static HFONT hhf;
@@ -753,12 +760,12 @@ void enum_fonts(void)
 
     //GetObject(g_hfFont, sizeof(LOGFONT), &lf);
 
-    cf.Flags = (CF_FIXEDPITCHONLY | CF_FORCEFONTEXIST | CF_INITTOLOGFONTSTRUCT | CF_SCREENFONTS | CF_NOOEMFONTS); // Lots of flags, but we're kinda picky.
+    cf.Flags = ( CF_FIXEDPITCHONLY | CF_FORCEFONTEXIST | CF_INITTOLOGFONTSTRUCT | CF_SCREENFONTS | CF_NOOEMFONTS ); // Lots of flags, but we're kinda picky.
 
     cf.hwndOwner = hwnd;
     cf.lpLogFont = &lf;
     cf.lpLogFont = &lf;
-    sprintf(lf.lfFaceName, "%s", this_session->font_name);
+    sprintf( lf.lfFaceName, "%s", this_session->font_name );
     cf.nSizeMax = 18;
     cf.nSizeMin = 8;
     cf.iPointSize = 12;
@@ -769,22 +776,22 @@ void enum_fonts(void)
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = FIXED_PITCH | FF_DONTCARE;
 
-    if (ChooseFont(&cf))
+    if (ChooseFont( &cf ))
     {
-        HFONT hhf = CreateFontIndirect(&lf);
+        HFONT hhf = CreateFontIndirect( &lf );
         if (hhf)
         {
             ocol = cols;
             orow = rows;
-            hhf = CreateFont(cf.iPointSize / 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DEFAULT_QUALITY, 0, lf.lfFaceName); // Create font for terminal.
+            hhf = CreateFont( cf.iPointSize / 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, DEFAULT_QUALITY, 0, lf.lfFaceName ); // Create font for terminal.
 
-            hdc = GetDC(MudMain);
+            hdc = GetDC( MudMain );
 
             hf = hhf;
-            SelectObject(hdc, hf);
-            GetTextMetrics(hdc, &tm);
+            SelectObject( hdc, hf );
+            GetTextMetrics( hdc, &tm );
 
-            this_session->font_name = str_dup(lf.lfFaceName);
+            this_session->font_name = str_dup( lf.lfFaceName );
 #define FIRST '0'
 #define LAST '9'
 #define lenof(x) ((sizeof((x))) / (sizeof(*(x))))
@@ -792,13 +799,13 @@ void enum_fonts(void)
             ABCFLOAT widths[LAST - FIRST + 1];
             int j;
             int ret;
-            if (GetCharABCWidthsFloat(hdc, FIRST, LAST, widths))
+            if (GetCharABCWidthsFloat( hdc, FIRST, LAST, widths ))
             {
                 ret = 0;
-                for (j = 0; j < lenof(widths); j++)
+                for (j = 0; j < lenof( widths ); j++)
                 {
-                    int width = (int)(0.5 + widths[j].abcfA +
-                                      widths[j].abcfB + widths[j].abcfC);
+                    int width = ( int ) ( 0.5 + widths[j].abcfA +
+                                          widths[j].abcfB + widths[j].abcfC );
                     if (ret < width)
                     {
                         ret = width;
@@ -813,15 +820,74 @@ void enum_fonts(void)
             this_session->font_width = ret;
             this_session->font_height = cf.iPointSize / 10;
             this_session->font_size = cf.iPointSize;
-            give_term_error("%d:%d", ret, cf.iPointSize / 10);
-            InvalidateRect(MudMain, NULL, TRUE);
+            give_term_error( "%d:%d", ret, cf.iPointSize / 10 );
+            InvalidateRect( MudMain, NULL, TRUE );
             terminal_resize();
             curdis = 0;
             update_term();
         }
         else
         {
-            GiveError("Font selection dialog failed to create!", FALSE);
+            GiveError( "Font selection dialog failed to create!", FALSE );
         }
     }
+}
+
+// find_term_regex: Search the entire buffer for a specific string and returns the line number
+// inwhich the string was found. IN the future, this needs to return a struct with a x-y and line
+// data so we can do actual word highlighting.
+unsigned long int find_term_regex( char* str )
+{
+    Reprog* reg;
+    Resub* sub;
+    unsigned long int i;
+    char line[2048];
+    extern unsigned long int bufcount;
+    TERMBUF* t;
+    bool found;
+    unsigned long int count;
+
+    found = FALSE;
+    count = 0;
+
+    if (!str)
+    {
+        give_term_error( "No string received for regex match" );
+        return 0;    // Nothing to find.
+    }
+
+    reg = regcomp9( str ); // Precompile so we don't have to recompie for each string.
+
+    line[0] = '\0';
+
+    for (i = 0; i < bufcount; i++)
+    {
+        t = fetch_line( i );
+        if (!t)
+        {
+            continue;
+        }
+        if (t->len <= 0)
+        {
+            continue;
+        }
+        ret_string( t, line );
+        if (regexec9( reg, line, sub, 0 ))
+        {
+            found = TRUE;
+            count++;
+            //  give_term_debug( "Found at line %lu.", i );
+            // break;
+        }
+    }
+
+    if (found)
+    {
+        give_term_debug( "%lu matches of '%s' Found at line %lu.", count, str, i );
+    }
+    else
+    {
+        give_term_debug( "%s not found.", str );
+    }
+    return 0;
 }

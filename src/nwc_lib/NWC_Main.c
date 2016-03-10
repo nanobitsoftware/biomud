@@ -1289,6 +1289,9 @@ void CTRL_List_clearlist( NWC_PARENT* p_window, char* name )
     {
         return;
     }
+    SendMessage( ctrl->handle, LVM_DELETEALLITEMS, 0, 0 );
+
+    return;
 
     if (( count = SendMessage( ctrl->handle, LB_GETCOUNT, 0, 0 ) ) == LB_ERR)
     {
@@ -1300,8 +1303,6 @@ void CTRL_List_clearlist( NWC_PARENT* p_window, char* name )
     {
         SendMessage( ctrl->handle, LB_DELETESTRING, ( WPARAM ) count, 0 );
     }
-
-    return;
 }
 
 void CTRL_combo_delitem( NWC_PARENT* p_window, char* name, char* item )
@@ -1540,6 +1541,45 @@ int CTRL_list_get_sel_idx( NWC_PARENT* p_window, char* name )
     }
 
     count = SendMessage( ctrl->handle, LB_GETCURSEL, 0, 0 );
+
+    if (count == LB_ERR)
+    {
+        return -1;
+    }
+    return count;
+}
+
+int CTRL_clist_get_sel_idx( NWC_PARENT* p_window, char* name )
+{
+    NWC_CTRL* ctrl;
+    int count;
+
+    count = -1;
+
+    if (!p_window || !name)
+    {
+        return -1;
+    }
+
+    ctrl = get_control( p_window, name );
+
+    if (!ctrl || ctrl == NULL)
+    {
+        GiveError( "Listview was not found. (DelitemIDXlist)", 0 );
+        return -1;
+    }
+    if (ctrl->type != LISTBOX)
+    {
+        return -1;
+    }
+
+    if (( count = SendMessage( ctrl->handle, LVM_GETITEMCOUNT, 0, 0 ) ) == LB_ERR)
+    {
+        GiveError( "Sendmessage error for listview (DelitemIDXlist)", 0 );
+        return -1;
+    }
+
+    count = SendMessage( ctrl->handle, LVM_GETSELECTIONMARK, 0, 0 );
 
     if (count == LB_ERR)
     {

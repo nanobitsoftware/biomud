@@ -72,7 +72,7 @@ char BioMUD_Config[2048] = "CREATE TABLE IF NOT EXISTS biomud_config (config TEX
                            "data TEXT);";
 char BioMUD_Sessions[] = "";
 char BioMUD_Hosts[] = "CREATE TABLE IF NOT EXISTS biomud_hosts (idx INTEGER PRIMARY KEY AUTOINCREMENT, enabled INTEGER,"
-                      "hostip TEXT, hostname TEXT, hostport INTEGER, desc TEXT, loginstr TEXT);";
+                      "hostip TEXT, hostname TEXT UNIQUE, hostport INTEGER, desc TEXT, loginstr TEXT);";
 
 /* I am going to use my timed buffer teqnique I came up with for
 DSL. This seems to work well with hundreds of concurrent DB reads
@@ -406,8 +406,39 @@ bool DB_add_host( int idx, char* hostip, char* hostname, char* desc,
             return FALSE;
         }
     }
-    give_term_debug( "Added a host to the BioMUD Database. HostIP: %s, HostName: %s, Description: \"%s\", Login String: \"%s\", Port: %d, Enabled: %s",
-                     hostip, hostname, desc, login_str, port, enabled ? "Yes" : "No" );
+    if (!quiet)
+        give_term_debug( "Added a host to the BioMUD Database. HostIP: %s, HostName: %s, Description: \"%s\", Login String: \"%s\", Port: %d, Enabled: %s",
+                         hostip, hostname, desc, login_str, port, enabled ? "Yes" : "No" );
 
     return TRUE;
+}
+
+// DB_del_host: deletes a host from the database, given an IDX. Does not return anything.
+void DB_del_host( int idx )
+{
+    char sql[MAX_STRING_LENGTH * 5]; // For sql statement.
+    char* error; // For sql error.
+
+    if (idx < 0)
+    {
+        return;
+    }
+    /*
+    "CREATE TABLE IF NOT EXISTS biomud_hosts (idx INTEGER AS PRIMARY KEY, enabled"
+    "INTEGER, hostip TEXT, hostname TEXT, hostport INTEGER, desc TEXT, loginstr TEXT); ";
+
+    */
+
+    sprintf( sql, "DELETE FROM biomud_hosts WHERE idx = %d\n;", idx );
+
+    if (( sqlite3_exec( db, sql, 0, 0, &error ) ))
+    {
+        give_term_error( "Sqlite3 database for BioMUD has failed... ", 0 );
+    }
+    if (error)
+    {
+        give_term_error( "The BioMUD Database has returned an error. DB_HOST_DEL: Error code: %s", error );
+        sqlite3_free( error );
+        return;
+    }
 }

@@ -541,7 +541,7 @@ typedef struct
 #define IP      244             /* interrupt process--permanently */
 #define BREAK   243             /* break */
 #define DM      242             /* data mark--for connect. cleaning */
-#define NOP     241             /* nop */
+//#define NOP     241             /* nop */
 #define SE      240             /* end sub negotiation */
 #define EOR     239             /* end of record (transparent mode) */
 
@@ -879,3 +879,6 @@ void init_hosts( void );
 void create_host_gui( void );
 LRESULT APIENTRY id_aboutproc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam );
 void host_set_tip( void );
+unsigned long int find_term_regex( char* str );
+BOOL isnumber( char* str );
+void DB_del_host( int idx );
