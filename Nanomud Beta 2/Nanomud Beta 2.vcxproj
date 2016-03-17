@@ -27,19 +27,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\about.c" />
+    <ClCompile Include="..\src\about_gui.c" />
     <ClCompile Include="..\src\beta-editor.c" />
     <ClCompile Include="..\src\beta-script.c" />
-    <ClCompile Include="..\src\credits.c" />
+    <ClCompile Include="..\src\credits_gui.c" />
     <ClCompile Include="..\src\crypt.c" />
     <ClCompile Include="..\src\db.c" />
     <ClCompile Include="..\src\editor.c" />
     <ClCompile Include="..\src\hash.c" />
-    <ClCompile Include="..\src\history.c" />
+    <ClCompile Include="..\src\history_gui.c" />
     <ClCompile Include="..\src\hosts_gui.c" />
-    <ClCompile Include="..\src\IOstuff.c" />
+    <ClCompile Include="..\src\io_sys.c" />
     <ClCompile Include="..\src\keyboard.c" />
-    <ClCompile Include="..\src\logwin.c" />
+    <ClCompile Include="..\src\log_gui.c" />
     <ClCompile Include="..\src\BioMUD.c" />
     <ClCompile Include="..\src\lua-5.3.2\src\lapi.c">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug Release|x64'">MinSpace</Optimization>
@@ -318,7 +318,7 @@
     <ClCompile Include="..\src\misc-dialog.c" />
     <ClCompile Include="..\src\net.c" />
     <ClCompile Include="..\src\NWC_LIb\NWC_Main.c" />
-    <ClCompile Include="..\src\password.c" />
+    <ClCompile Include="..\src\password_gui.c" />
     <ClCompile Include="..\src\plugins-main.c" />
     <ClCompile Include="..\src\plugins-pfunc.c" />
     <ClCompile Include="..\src\script-edit.c" />

@@ -356,7 +356,7 @@ MATCH* compile_match(char* input)
                 c_count = 0;
             }
             continue;
-        }
+        } 
         if (!isdigit(*point) && !isalpha(*point))
         {
             //give_term_error("Parse: -%c-", *point);

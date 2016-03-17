@@ -33,16 +33,10 @@
     <ClCompile Include="..\src\sqlite3\sqlite3.c">
       <Filter>sqlite3</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\about.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\beta-editor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\beta-script.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\credits.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\crypt.c">
@@ -57,16 +51,7 @@
     <ClCompile Include="..\src\hash.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\history.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\IOstuff.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\keyboard.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\logwin.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\BioMUD.c">
@@ -222,10 +207,25 @@
     <ClCompile Include="..\src\lua-5.3.2\src\lzio.c">
       <Filter>Lua</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\password.c">
+    <ClCompile Include="..\src\hosts_gui.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hosts_gui.c">
+    <ClCompile Include="..\src\log_gui.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\history_gui.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\password_gui.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\io_sys.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\credits_gui.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\about_gui.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
