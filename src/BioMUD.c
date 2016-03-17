@@ -472,7 +472,7 @@ LRESULT APIENTRY WindowProcedure( HWND hwnd, UINT message, WPARAM wParam, LPARAM
         AppendMenu( hSubMenu, MF_STRING, ID_WINDOW_LOGS, "BioMUD &Logs" );
         AppendMenu( hSubMenu, MF_SEPARATOR, 0, NULL );
         AppendMenu( hSubMenu, MF_STRING, ID_SETTINGS_OPTIONS, "&Options" );
-        AppendMenu( hSubMenu, MF_STRING | MF_GRAYED, ID_WINDOW_PASSWORD, "&Password Window" );
+        AppendMenu( hSubMenu, MF_STRING/* | MF_GRAYED*/, ID_WINDOW_PASSWORD, "&Password Window" );
         AppendMenu( hMenu, MF_STRING | MF_POPUP, ( UINT_PTR ) hSubMenu, "&Window" );
         SetMenu( hwnd, hMenu );
         hSubMenu = CreatePopupMenu();
