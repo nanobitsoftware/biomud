@@ -522,7 +522,7 @@ LRESULT APIENTRY WindowProcedure( HWND hwnd, UINT message, WPARAM wParam, LPARAM
         //SendMessage(MudStatus, EM_SETEVENTMASK,0,0);
         tbuf->hwnd = hwnd;
 
-        CreateCaret( MudInput, caretbm, this_session->font_width, this_session->font_height );
+        CreateCaret( MudInput, caretbm, this_session->font_width, this_session->font_height );  
         FormatText( MudInput );
     }
     break;

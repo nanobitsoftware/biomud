@@ -107,7 +107,7 @@
 #define LOG_ECHO  4
 #define MAX_TERM_LINE 5000000
 #define MAX_STRING_LENGTH 1024 * 5 // Max string length for some buffers.
-#define BioMUD_NANO 1 // 1 to tuirn off, 0 to turn on.
+
 /* Defines used to GUI stuff. Do not change these values! - MH
 * If you have to add stuff, go in the order, or perhaps the
 * pattern as they are shown here. For a new menu, jump 10
